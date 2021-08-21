@@ -81,7 +81,7 @@ function ModalForm({
   SaveButton='Save',
   ...other
 }) {
-  const [open, setOpen] = React.useState({isopen});
+  const [open, setOpen] = React.useState(isopen);
   React.useEffect(() => {
     setOpen(isopen);
   }, [isopen]);
@@ -111,7 +111,7 @@ function ModalForm({
       aria-labelledby="customized-dialog-title"
       open={open}
       maxWidth={maxWidth || 'md'}
-      fullWidth="true"
+      fullWidth= {true}
     >
       <DialogTitle id="customized-dialog-title" onClose={handleToggle}>
         {header}

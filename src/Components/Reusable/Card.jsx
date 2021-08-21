@@ -2,35 +2,20 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import {makeStyles, createStyles} from '@material-ui/core/styles';
 import Card from '@material-ui/core/Card';
-import CardHeader from '@material-ui/core/CardHeader';
 import CardMedia from '@material-ui/core/CardMedia';
-import CardContent from '@material-ui/core/CardContent';
-import IconButton from '@material-ui/core/IconButton';
-import Typography from '@material-ui/core/Typography';
-import {red} from '@material-ui/core/colors';
-import CloseIcon from '@material-ui/icons/Close';
+import {Draggable} from 'react-beautiful-dnd';
+import {CardContent, Typography} from '@material-ui/core';
+import {Rating} from '@material-ui/lab';
 
 const useStyles = makeStyles((theme) =>
   createStyles({
     root: {
-      maxWidth: 345,
+      display: 'flex',
+      width: 200,
     },
     media: {
-      height: 0,
-      paddingTop: '56.25%', // 16:9
-    },
-    expand: {
-      transform: 'rotate(0deg)',
-      marginLeft: 'auto',
-      transition: theme.transitions.create('transform', {
-        duration: theme.transitions.duration.shortest,
-      }),
-    },
-    expandOpen: {
-      transform: 'rotate(180deg)',
-    },
-    avatar: {
-      backgroundColor: red[500],
+      width: '100%',
+      paddingTop: '100%',
     },
   }),
 );
@@ -38,37 +23,38 @@ const useStyles = makeStyles((theme) =>
  * Reusable Card component created from MUI cards
  * @return {func} Card component with the data provided in props
  */
-function MovieReviewCard({title, postersrc, children, rating}) {
+function MovieReviewCard({title, postersrc, children, rating, id, index}) {
   const classes = useStyles();
   return (
-    <Card className={classes.root}>
-      <CardHeader
-        action={
-          <IconButton aria-label="delete">
-            <CloseIcon />
-          </IconButton>
-        }
-        title={title}
-        subheader={rating}
-      />
-      <CardMedia
-        className={classes.media}
-        image={postersrc}
-        title={title}
-      />
-      <CardContent>
-        <Typography variant="body2" color="textSecondary" component="p">
-          {children}
-        </Typography>
-      </CardContent>
-    </Card>
+    <Draggable draggableId={id} index={index}>
+      {(provided, snapshot)=>(<Card className={classes.root} raised
+        {...provided.draggableProps}
+        {...provided.dragHandleProps}
+        innerRef={provided.innerRef}>
+        <CardMedia
+          className={classes.media}
+          image={postersrc}
+          title={title}
+        />
+        <CardContent>
+          <Typography>
+            {title}
+          </Typography>
+          <Typography>
+            <Rating value={rating} precision={0.1} size='small' readOnly/>
+          </Typography>
+        </CardContent>
+      </Card>)}
+    </Draggable>
   );
 }
 
 MovieReviewCard.propTypes = {
   title: PropTypes.string.isRequired,
-  postersrc: PropTypes.string.isRequired,
+  postersrc: PropTypes.any.isRequired,
   children: PropTypes.any.isRequired,
-  rating: PropTypes.number.isRequired,
+  rating: PropTypes.string.isRequired,
+  id: PropTypes.any.isRequired,
+  index: PropTypes.any.isRequired,
 };
 export default MovieReviewCard;

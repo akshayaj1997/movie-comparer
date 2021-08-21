@@ -1,6 +1,6 @@
 import React from 'react';
 import './App.css';
-import MovieGrid from './Pages/movieGrid';
+import MoviePage from './Pages/moviePage';
 
 /**
  * Single App component at the very top of the SPA rendered DOM Tree
@@ -9,7 +9,7 @@ import MovieGrid from './Pages/movieGrid';
 function App() {
   return (
     <div className="App">
-      <MovieGrid/>
+      <MoviePage/>
     </div>
   );
 }

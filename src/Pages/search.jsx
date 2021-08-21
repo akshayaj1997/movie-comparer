@@ -1,6 +1,5 @@
 import React, {Component} from 'react';
 import SearchBar from '../Components/Reusable/searchBar';
-import {Data as options} from '../exampleData';
 /**
  * Renders the movie search component to be rendered in the modal form
  */
@@ -12,8 +11,7 @@ class SearchComponent extends Component {
      */
   render() {
     return (<>
-      <SearchBar options={options} title={'Title'}
-        defaultValue={options[0].Title}/>
+      <SearchBar/>
     </>);
   }
 }

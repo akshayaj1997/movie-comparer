@@ -18,6 +18,7 @@
         "react"
     ],
     "rules": {
+        "linebreak-style": ["error", "windows"]
     },
     "settings": {
         "react":{
