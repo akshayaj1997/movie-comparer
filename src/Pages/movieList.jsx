@@ -12,26 +12,27 @@ class MovieList extends Component {
   }
 
   render() {
-    return (<Grid container justifyContent="center">
-      <Paper elevation={3} style={{width: '70%', height: 200, padding: 20,
-        marginTop: 30, overflow: 'scroll'}}>
+    return (
+      <Grid container justifyContent="center">
         <Droppable droppableId= {this.props.columnId}
           direction='horizontal'>
-          {(provided)=><div
+          {(provided)=>
+            <Paper elevation={3} style={{width: '70%', height: 200, padding: 20,
+              marginTop: 30, display: 'flex', overflowX: 'scroll'}
+            }
             ref={provided.innerRef}
-            {...provided.droppableProps}
-            style={{display: 'flex'}}>
-            {this.props.movies.map((movie, index) =>
-              <MovieCard key={movie.imdbID} title={movie.Title}
-                index={index}
-                postersrc={movie.Poster}
-                rating={movie.imdbRating} id={movie.imdbID}>
-                {movie.Plot}</MovieCard>)}
-            {provided.placeholder}
-          </div>}
+            {...provided.droppableProps}>
+              {this.props.movies.map((movie, index) =>
+                <MovieCard key={movie.imdbID} title={movie.Title}
+                  index={index}
+                  postersrc={movie.Poster}
+                  rating={movie.imdbRating} id={movie.imdbID}>
+                  {movie.Plot}</MovieCard>)}
+              {provided.placeholder}
+            </Paper>
+          }
         </Droppable>
-      </Paper>
-    </Grid>);
+      </Grid>);
   }
 }
 

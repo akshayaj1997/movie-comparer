@@ -6,6 +6,7 @@ import {DragDropContext} from 'react-beautiful-dnd';
 import MovieList from './movieList';
 import SearchComponent from './search';
 import MovieGrid from './movieGrid';
+import {Grid} from '@material-ui/core';
 /**
  * Movie Page component
  */
@@ -163,19 +164,20 @@ class MoviePage extends Component {
       <DragDropContext
         onDragEnd = {this.onDragEnd}
       >
-        <ModalForm enableSaveButton isopen={this.state.openModal}
-          header={'Search Movie'} toggle={this.toggle}
-          savefunc={this.onSaveClick}
-          SaveButton={'Add Movie'}>
-          <SearchComponent sendMovieData= {this.receiveMovieData}/>
-        </ModalForm>
-        <h1>Movie Comparer</h1>
-        {this.state.columnOrder.map((columnId) => {
-          const column = this.state.columns[columnId];
-          const movies = column.movies.map((movie) =>
-            this.state.movies.find((el) => el.imdbID === movie));
+        <Grid>
+          <ModalForm enableSaveButton isopen={this.state.openModal}
+            header={'Search Movie'} toggle={this.toggle}
+            savefunc={this.onSaveClick}
+            SaveButton={'Add Movie'}>
+            <SearchComponent sendMovieData= {this.receiveMovieData}/>
+          </ModalForm>
+          <h1>Movie Comparer</h1>
+          {this.state.columnOrder.map((columnId) => {
+            const column = this.state.columns[columnId];
+            const movies = column.movies.map((movie) =>
+              this.state.movies.find((el) => el.imdbID === movie));
 
-          return <div key={column.id}>{columnId==='movies-list'?
+            return <div key={column.id}>{columnId==='movies-list'?
           <MovieList movies={movies}
             columnId={column.id}/>:
          <><MovieGrid movies={movies}/>
@@ -184,7 +186,8 @@ class MoviePage extends Component {
              variant='outlined' onClick={()=>{
                this.onAddClick();
              }}/></>}<br/></div>;
-        })}
+          })}
+        </Grid>
       </DragDropContext>
     </>);
   }

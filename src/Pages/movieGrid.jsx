@@ -5,6 +5,7 @@ import MovieReviewCard from '../Components/Reusable/Card';
 import PropTypes from 'prop-types';
 import {Droppable} from 'react-beautiful-dnd';
 import {Grid, Paper} from '@material-ui/core';
+import BarChart from '../Components/Reusable/Graph';
 class MovieGrid extends Component {
   constructor(props) {
     super(props);
@@ -12,26 +13,31 @@ class MovieGrid extends Component {
 
   render() {
     return (
-      <Droppable droppableId= {'movies-grid'}
-        direction='horizontal'>
-        {(provided)=> <Grid container justifyContent="center"
-          ref={provided.innerRef}
-          {...provided.droppableProps}>
-          <Paper elevation={3} style={{width: '50%', height: 500, padding: 20,
-            marginBottom: 30}}>
-            <div
-              style={{display: 'flex'}}>
-              {this.props.movies.map((movie, index) =>
-                <MovieReviewCard key={movie.imdbID} title={movie.Title}
-                  index={index}
-                  postersrc={movie.Poster}
-                  rating={movie.imdbRating} id={movie.imdbID}>
-                  {movie.Plot}</MovieReviewCard>)}
-              {provided.placeholder}
-            </div>
-          </Paper>
-        </Grid>}
-      </Droppable>);
+      <>
+        <Droppable droppableId= {'movies-grid'}
+          direction='horizontal'>
+          {(provided)=> <Grid container justifyContent="center"
+            ref={provided.innerRef}
+            {...provided.droppableProps}>
+            <Paper elevation={3} style={{width: '50vw', height: '60vh',
+              padding: 20,
+              marginBottom: 30}}>
+              <div
+                style={{display: 'flex'}}>
+                {this.props.movies.map((movie, index) =>
+                  <MovieReviewCard key={movie.imdbID} title={movie.Title}
+                    index={index}
+                    postersrc={movie.Poster}
+                    rating={movie.imdbRating} id={movie.imdbID}>
+                    {movie.Plot}</MovieReviewCard>)}
+                {provided.placeholder}
+              </div>
+              <BarChart width={1000} height={500}
+                movies={this.props.movies} events/>
+            </Paper>
+          </Grid>}
+        </Droppable>
+      </>);
   }
 }
 

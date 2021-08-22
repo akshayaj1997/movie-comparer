@@ -15,8 +15,6 @@ const useStyles = makeStyles((theme) => ({
   paper: {
     padding: theme.spacing(2),
     margin: 'auto',
-    maxWidth: 500,
-    maxHeight: 200,
     height: 175,
     width: 500,
   },
@@ -67,7 +65,7 @@ function MovieCard({title, postersrc, children, rating, id, index}) {
               </Grid>
             </Grid>
             <Grid item>
-              <CloseOutlined/>
+              <CloseOutlined onClick={()=>alert('hello')}/>
             </Grid>
           </Grid>
         </Grid>
