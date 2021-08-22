@@ -5,25 +5,28 @@ import TextField from '@material-ui/core/TextField';
 import Autocomplete from '@material-ui/lab/Autocomplete';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import {Search} from '@material-ui/icons';
+import PropTypes from 'prop-types';
+import {useState} from 'react';
 
 /**
  * Reusable Search Bar component created from MUI
  * @return {React.Node} Search Bar component with Movies
  */
-export default function SearchBar() {
+function SearchBar({movieDisplay}) {
   const [open, setOpen] = React.useState(false);
   const [options, setOptions] = React.useState([]);
   const loading = open && options.length === 0;
-
+  const [inputValue, setInputValue] = useState('');
   React.useEffect(async () => {
     let active = true;
 
     if (!loading) {
       return undefined;
     }
-    const response = await axios.get('https://www.omdbapi.com/?apikey=15bcf215&s=blade-runner&r=json');
-    const movies = await response['Search'];
-
+    const response = await axios.get(`https://www.omdbapi.com/?apikey=15bcf215&s=${inputValue}r&r=json`);
+    const responseData = await response.data;
+    const movies = responseData.Response==='True' ? (response.data?.Search) :
+                    [];
     if (active) {
       setOptions(movies);
     }
@@ -31,7 +34,7 @@ export default function SearchBar() {
     return () => {
       active = false;
     };
-  }, [loading]);
+  }, [loading, inputValue]);
 
   React.useEffect(() => {
     if (!open) {
@@ -55,6 +58,12 @@ export default function SearchBar() {
       getOptionLabel={(option) => option.Title}
       options={options}
       loading={loading}
+      fullWidth
+      onChange={(event, newValue)=> {
+        if (options.length>0) movieDisplay(newValue);
+      }
+      }
+      onInputChange={(event, value)=>setInputValue(value)}
       renderInput={(params) => (
         <TextField
           {...params}
@@ -76,3 +85,8 @@ export default function SearchBar() {
     />
   );
 }
+
+SearchBar.propTypes = {
+  movieDisplay: PropTypes.func,
+};
+export default SearchBar;

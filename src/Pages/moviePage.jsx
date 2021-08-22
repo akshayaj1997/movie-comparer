@@ -3,7 +3,6 @@ import Button from '../Components/Reusable/Button';
 import ModalForm from '../Components/Reusable/ModalForm';
 import AddCircleOutlineIcon from '@material-ui/icons/AddCircleOutline';
 import {DragDropContext} from 'react-beautiful-dnd';
-import {Data} from '../exampleData';
 import MovieList from './movieList';
 import SearchComponent from './search';
 import MovieGrid from './movieGrid';
@@ -19,12 +18,13 @@ class MoviePage extends Component {
     super(props);
     this.state = {
       openModal: false,
-      movies: Data,
+      movies: [],
+      movieData: {},
       columns: {
         'movies-list': {
           id: 'movies-list',
           title: 'Movies',
-          movies: ['tt0083659', 'tt0083658', 'tt0083660', 'tt0083661'],
+          movies: [],
         },
         'movies-grid': {
           id: 'movies-grid',
@@ -38,6 +38,7 @@ class MoviePage extends Component {
     this.onAddClick = this.onAddClick.bind(this);
     this.onSaveClick = this.onSaveClick.bind(this);
     this.onDragEnd = this.onDragEnd.bind(this);
+    this.receiveMovieData = this.receiveMovieData.bind(this);
   }
 
   /**
@@ -59,6 +60,19 @@ class MoviePage extends Component {
  * Function to be triggered on saving
  */
   onSaveClick() {
+    const moviesData = this.state.movieData;
+    const newState = {
+      ...this.state,
+      movies: [...this.state.movies, moviesData],
+      columns: {
+        ...this.state.columns,
+        'movies-list': {...this.state.columns['movies-list'],
+          movies: [...this.state.columns['movies-list'].movies,
+            moviesData?.imdbID]}
+        ,
+      },
+    };
+    this.setState(newState);
     this.toggle();
   }
   /**
@@ -132,6 +146,14 @@ class MoviePage extends Component {
   };
 
   /**
+   * setting data
+   * @param {object} data sent for movie
+   */
+  receiveMovieData(data) {
+    alert(JSON.stringify(data));
+    this.setState((prevState)=>({...prevState, movieData: data}));
+  }
+  /**
      * render Render a React element into the DOM in the supplied
      * container and return a reference to the component
      * @return {element} Movie Grid Component
@@ -145,7 +167,7 @@ class MoviePage extends Component {
           header={'Search Movie'} toggle={this.toggle}
           savefunc={this.onSaveClick}
           SaveButton={'Add Movie'}>
-          <SearchComponent/>
+          <SearchComponent sendMovieData= {this.receiveMovieData}/>
         </ModalForm>
         <h1>Movie Comparer</h1>
         {this.state.columnOrder.map((columnId) => {

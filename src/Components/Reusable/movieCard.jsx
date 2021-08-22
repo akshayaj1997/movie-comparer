@@ -16,6 +16,9 @@ const useStyles = makeStyles((theme) => ({
     padding: theme.spacing(2),
     margin: 'auto',
     maxWidth: 500,
+    maxHeight: 200,
+    height: 175,
+    width: 500,
   },
   image: {
     width: 128,
@@ -55,7 +58,8 @@ function MovieCard({title, postersrc, children, rating, id, index}) {
                   {title}
                 </Typography>
                 <Typography variant="body2" gutterBottom>
-                  <Rating value={rating} precision={0.1} size='small' readOnly/>
+                  <Rating value={rating/2} precision={0.1} size='small'
+                    readOnly/>
                 </Typography>
                 <Typography variant="body2" color="textSecondary">
                   {children}

@@ -14,7 +14,7 @@ class MovieList extends Component {
   render() {
     return (<Grid container justifyContent="center">
       <Paper elevation={3} style={{width: '70%', height: 200, padding: 20,
-        marginTop: 30}}>
+        marginTop: 30, overflow: 'scroll'}}>
         <Droppable droppableId= {this.props.columnId}
           direction='horizontal'>
           {(provided)=><div
