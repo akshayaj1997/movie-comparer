@@ -23,7 +23,7 @@ class MovieGrid extends Component {
           {(provided)=> <Grid container justifyContent="center"
             ref={provided.innerRef}
             {...provided.droppableProps}>
-            <Paper elevation={3} style={{width: '50vw', height: '60vh',
+            <Paper elevation={3} style={{width: '70vw', height: '60vh',
               padding: 20,
               marginBottom: 30}}>
               <div

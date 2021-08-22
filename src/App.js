@@ -1,5 +1,6 @@
 import React from 'react';
 import './App.css';
+import ErrorBoundary from './Pages/errorBoundary';
 import MoviePage from './Pages/moviePage';
 
 /**
@@ -8,9 +9,11 @@ import MoviePage from './Pages/moviePage';
  */
 function App() {
   return (
-    <div className="App">
-      <MoviePage/>
-    </div>
+    <ErrorBoundary>
+      <div className="App">
+        <MoviePage/>
+      </div>
+    </ErrorBoundary>
   );
 }
 
