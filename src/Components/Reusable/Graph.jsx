@@ -7,6 +7,7 @@ import {
   VerticalGridLines,
   HorizontalGridLines,
   VerticalBarSeries,
+  DiscreteColorLegend,
 } from 'react-vis';
 
 /**
@@ -15,15 +16,31 @@ import {
  * @return {ReactNode} BarGraph
  */
 export default function BarGraph({width, height, movies}) {
-  const [imdbRatings, setRatings] = useState([]);
+  const [imdbRatings, setImdbRatings] = useState([]);
+  const [metaValues, setMetaValues] = useState([]);
   useEffect(()=>{
-    const values = movies?.map((el)=>({x: el.Title, y: el.imdbRating*1}));
-    setRatings(values);
+    const imdbValues = movies?.map((el)=>({x: el.Title, y: el.imdbRating*1}));
+    const metaValues = movies?.map((el)=>({x: el.Title, y: el.Metascore/10}));
+    setImdbRatings(imdbValues);
+    setMetaValues(metaValues);
   }, [movies]);
   return (
     <XYPlot margin={{bottom: 70}} xType="ordinal" width={width} height={height}
-      colorType="category"
-      colorDomain={[0, 1, 2]} yDomain={[1, 10]}>
+      yDomain={[1, 10]}>
+      <DiscreteColorLegend
+        style={{position: 'absolute', left: '50px', top: '10px'}}
+        orientation="horizontal"
+        items={[
+          {
+            title: 'Apples',
+            color: '#12939A',
+          },
+          {
+            title: 'Oranges',
+            color: '#79C7E3',
+          },
+        ]}
+      />
       <VerticalGridLines/>
       <HorizontalGridLines/>
       <XAxis tickLabelAngle={-45}/>
@@ -33,6 +50,12 @@ export default function BarGraph({width, height, movies}) {
           alert('hello');
         }}
         data={imdbRatings}
+      />
+      <VerticalBarSeries
+        onSeriesClick={()=>{
+          alert('hello');
+        }}
+        data={metaValues}
       />
     </XYPlot>
   );
