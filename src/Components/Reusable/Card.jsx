@@ -24,14 +24,17 @@ const useStyles = makeStyles((theme) =>
  * Reusable Card component created from MUI cards
  * @return {func} Card component with the data provided in props
  */
-function MovieReviewCard({title, postersrc, children, rating, id, index}) {
+function MovieReviewCard({title, id, deleteItem, index}) {
 // const classes = useStyles();
   return (
     <Draggable draggableId={id} index={index}>
       {(provided, snapshot)=>(
         <Chip {...provided.draggableProps}
           {...provided.dragHandleProps}
-          innerRef={provided.innerRef} label={title}/>
+          innerRef={provided.innerRef} label={title}
+          onDelete={()=>{
+            deleteItem(id);
+          }}/>
       )}
     </Draggable>
   );
@@ -39,10 +42,8 @@ function MovieReviewCard({title, postersrc, children, rating, id, index}) {
 
 MovieReviewCard.propTypes = {
   title: PropTypes.string.isRequired,
-  postersrc: PropTypes.any.isRequired,
-  children: PropTypes.any.isRequired,
-  rating: PropTypes.string.isRequired,
   id: PropTypes.any.isRequired,
   index: PropTypes.any.isRequired,
+  deleteItem: PropTypes.func.isRequired,
 };
 export default MovieReviewCard;

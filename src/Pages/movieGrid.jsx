@@ -4,13 +4,17 @@ import React, {Component} from 'react';
 import MovieReviewCard from '../Components/Reusable/Card';
 import PropTypes from 'prop-types';
 import {Droppable} from 'react-beautiful-dnd';
-import {Grid, Paper} from '@material-ui/core';
+import {Container, Grid, Paper} from '@material-ui/core';
 import BarChart from '../Components/Reusable/Graph';
 class MovieGrid extends Component {
   constructor(props) {
     super(props);
+    this.deleteItem = this.deleteItem.bind(this);
   }
 
+  deleteItem(itemId) {
+    this.props.deleteItemFromGrid(itemId);
+  }
   render() {
     return (
       <>
@@ -24,16 +28,19 @@ class MovieGrid extends Component {
               marginBottom: 30}}>
               <div
                 style={{display: 'flex'}}>
-                {this.props.movies.map((movie, index) =>
+                {this.props.movies?.length?
+                this.props.movies?.map((movie, index) =>
                   <MovieReviewCard key={movie.imdbID} title={movie.Title}
                     index={index}
-                    postersrc={movie.Poster}
-                    rating={movie.imdbRating} id={movie.imdbID}>
-                    {movie.Plot}</MovieReviewCard>)}
+                    deleteItem={this.deleteItem}
+                    id={movie.imdbID} >
+                    {movie.Plot}</MovieReviewCard>):<></>}
                 {provided.placeholder}
               </div>
-              <BarChart width={1000} height={500}
-                movies={this.props.movies} events/>
+              <br/>
+              <Container style={{height: '45vh'}}>
+                <BarChart movies={this.props.movies} />
+              </Container>
             </Paper>
           </Grid>}
         </Droppable>
@@ -43,6 +50,7 @@ class MovieGrid extends Component {
 
 MovieGrid.propTypes = {
   movies: PropTypes.arrayOf(PropTypes.object).isRequired,
+  deleteItemFromGrid: PropTypes.func.isRequired,
 };
 
 export default MovieGrid;

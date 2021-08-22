@@ -40,8 +40,48 @@ class MoviePage extends Component {
     this.onSaveClick = this.onSaveClick.bind(this);
     this.onDragEnd = this.onDragEnd.bind(this);
     this.receiveMovieData = this.receiveMovieData.bind(this);
+    this.deleteFromGrid = this.deleteFromGrid.bind(this);
+    this.deleteFromList = this.deleteFromList.bind(this);
+  }
+  /**
+   * deletes item from grid/graph component
+   * @param {string} itemId the item that needs to be deleted
+   */
+  deleteFromGrid(itemId) {
+    const movies = this.state.movies;
+    const colMovies = this.state.columns['movies-grid'].movies;
+    const newState = {
+      ...this.state,
+      movies: movies.filter((el)=> el.imdbID !== itemId),
+      columns: {
+        ...this.state.columns,
+        'movies-grid': {...this.state.columns['movies-grid'],
+          movies: colMovies.filter((el)=> el !== itemId)}
+        ,
+      },
+    };
+    this.setState(newState);
   }
 
+  /**
+   * deletes item from list component
+   * @param {string} itemId the item that needs to be deleted
+   */
+  deleteFromList(itemId) {
+    const movies = this.state.movies;
+    const colMovies = this.state.columns['movies-list'].movies;
+    const newState = {
+      ...this.state,
+      movies: movies.filter((el)=> el.imdbID !== itemId),
+      columns: {
+        ...this.state.columns,
+        'movies-list': {...this.state.columns['movies-list'],
+          movies: colMovies.filter((el)=> el !== itemId)}
+        ,
+      },
+    };
+    this.setState(newState);
+  }
   /**
    * Opens the modal box
    */
@@ -179,8 +219,9 @@ class MoviePage extends Component {
 
             return <div key={column.id}>{columnId==='movies-list'?
           <MovieList movies={movies}
+            deleteItemFromGrid={this.deleteFromList}
             columnId={column.id}/>:
-         <><MovieGrid movies={movies}/>
+         <><MovieGrid movies={movies} deleteItemFromGrid={this.deleteFromGrid}/>
            <Button text={'Add Movie'} startIcon={<AddCircleOutlineIcon/>}
              size='large' color='default'
              variant='outlined' onClick={()=>{

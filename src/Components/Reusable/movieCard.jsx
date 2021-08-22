@@ -34,7 +34,8 @@ const useStyles = makeStyles((theme) => ({
  * Reusable Movie List object component
  * @return {ReactNode} Movie List object component
  */
-function MovieCard({title, postersrc, children, rating, id, index}) {
+function MovieCard({title, postersrc, children, rating, id, index,
+  deleteItemFromGrid}) {
   const classes = useStyles();
 
   return (
@@ -65,7 +66,7 @@ function MovieCard({title, postersrc, children, rating, id, index}) {
               </Grid>
             </Grid>
             <Grid item>
-              <CloseOutlined onClick={()=>alert('hello')}/>
+              <CloseOutlined onClick={()=>deleteItemFromGrid(id)}/>
             </Grid>
           </Grid>
         </Grid>
@@ -80,5 +81,6 @@ MovieCard.propTypes = {
   rating: PropTypes.string.isRequired,
   id: PropTypes.any.isRequired,
   index: PropTypes.any.isRequired,
+  deleteItemFromGrid: PropTypes.func.isRequired,
 };
 export default MovieCard;

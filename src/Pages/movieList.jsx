@@ -9,6 +9,11 @@ import MovieCard from '../Components/Reusable/movieCard';
 class MovieList extends Component {
   constructor(props) {
     super(props);
+    this.deleteFromGrid = this.deleteFromGrid.bind(this);
+  }
+
+  deleteFromGrid(item) {
+    this.props.deleteItemFromGrid(item);
   }
 
   render() {
@@ -26,6 +31,7 @@ class MovieList extends Component {
                 <MovieCard key={movie.imdbID} title={movie.Title}
                   index={index}
                   postersrc={movie.Poster}
+                  deleteItemFromGrid={this.deleteFromGrid}
                   rating={movie.imdbRating} id={movie.imdbID}>
                   {movie.Plot}</MovieCard>)}
               {provided.placeholder}
@@ -39,6 +45,7 @@ class MovieList extends Component {
 MovieList.propTypes = {
   columnId: PropTypes.any,
   movies: PropTypes.arrayOf(PropTypes.object).isRequired,
+  deleteItemFromGrid: PropTypes.func.isRequired,
 };
 
 export default MovieList;
