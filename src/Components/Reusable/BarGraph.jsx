@@ -30,6 +30,7 @@ const MovieBarGraph = ({data}) => {
     enableLabel
     minValue={0}
     maxValue={10}
+    borderRadius={4}
     label={(d) => `${d.id}: ${d.value}`}
     labelSkipWidth={1}
     padding={0.5}
