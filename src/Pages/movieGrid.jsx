@@ -1,51 +1,73 @@
 /* eslint-disable require-jsdoc */
 
-import React, {Component} from 'react';
-import MovieReviewCard from '../Components/Reusable/Card';
+import React from 'react';
 import PropTypes from 'prop-types';
 import {Droppable} from 'react-beautiful-dnd';
-import {Container, Grid, Paper} from '@material-ui/core';
-import BarChart from '../Components/Reusable/Graph';
-class MovieGrid extends Component {
-  constructor(props) {
-    super(props);
-    this.deleteItem = this.deleteItem.bind(this);
-  }
+import {Container, Grid, List, Paper} from '@material-ui/core';
+import MovieBarGraph from '../Components/Reusable/BarGraph';
+import {makeStyles} from '@material-ui/core/styles';
+import MovieCard from '../Components/Reusable/movieCard';
 
-  deleteItem(itemId) {
-    this.props.deleteItemFromGrid(itemId);
-  }
-  render() {
-    return (
-      <>
+const useStyles = makeStyles((theme) => ({
+  root: {
+    display: 'flex',
+    flexWrap: 'wrap',
+    justifyContent: 'space-around',
+    overflow: 'hidden',
+    backgroundColor: theme.palette.background.paper,
+    width: '100vw',
+  },
+  list: {
+    flexWrap: 'nowrap',
+    overflow: 'scroll',
+  },
+  paper: {
+    backgroundColor: (props) => props.isDraggingOver? 'lightgrey':'white',
+    width: '70vw',
+    justifyContent: 'center',
+    padding: 20,
+    height: '60vh',
+    display: 'flex',
+    borderRadius: 8,
+  },
+}));
+function MovieGrid({deleteItemFromGrid, movies}) {
+  const classes = useStyles();
+  const deleteItem =(itemId) =>{
+    deleteItemFromGrid(itemId);
+  };
+  return (
+    <>
+      <Grid container justifyContent="center">
         <Droppable droppableId= {'movies-grid'}
           direction='horizontal'>
-          {(provided)=> <Grid container justifyContent="center"
-            ref={provided.innerRef}
-            {...provided.droppableProps}>
-            <Paper elevation={3} style={{width: '70vw', height: '60vh',
-              padding: 20,
-              marginBottom: 30}}>
-              <div
-                style={{display: 'flex'}}>
-                {this.props.movies?.length?
-                this.props.movies?.map((movie, index) =>
-                  <MovieReviewCard key={movie.imdbID} title={movie.Title}
-                    index={index}
-                    deleteItem={this.deleteItem}
-                    id={movie.imdbID} >
-                    {movie.Plot}</MovieReviewCard>):<></>}
-                {provided.placeholder}
-              </div>
-              <br/>
+          {(provided, snapshot)=>
+            <Paper elevation={10}
+              className=
+                {useStyles({isDraggingOver: snapshot.isDraggingOver}).paper}
+              ref={provided.innerRef}
+              {...provided.droppableProps}
+              isDraggingOver={snapshot.isDraggingOver}>
               <Container style={{height: '45vh'}}>
-                <BarChart movies={this.props.movies} />
+                <MovieBarGraph data={movies}/>
               </Container>
+              <List className={classes.list}>
+                {movies?.length?
+                movies?.map((movie, index) =>
+                  <MovieCard key={movie.imdbID} title={movie.Title}
+                    index={index}
+                    postersrc={movie.Poster}
+                    deleteItemFromGrid={deleteItem}
+                    rating={movie.imdbRating} id={movie.imdbID}>
+                    {movie.Plot}</MovieCard>):<></>}
+                {provided.placeholder}
+              </List>
+              <br/>
             </Paper>
-          </Grid>}
+          }
         </Droppable>
-      </>);
-  }
+      </Grid>
+    </>);
 }
 
 MovieGrid.propTypes = {
