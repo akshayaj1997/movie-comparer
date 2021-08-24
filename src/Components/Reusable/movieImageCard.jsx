@@ -84,8 +84,8 @@ MovieImageItem.propTypes = {
   title: PropTypes.string.isRequired,
   postersrc: PropTypes.string.isRequired,
   children: PropTypes.any,
-  rating: PropTypes.oneOfType(PropTypes.string, PropTypes.number).isRequired,
-  id: PropTypes.oneOfType(PropTypes.string, PropTypes.number).isRequired,
+  rating: PropTypes.oneOfType([PropTypes.string, PropTypes.number]).isRequired,
+  id: PropTypes.oneOfType([PropTypes.string, PropTypes.number]).isRequired,
   index: PropTypes.any.isRequired,
   deleteItemFromGrid: PropTypes.func.isRequired,
 };

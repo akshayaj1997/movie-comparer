@@ -18,7 +18,8 @@ const useStyles = makeStyles((theme) => ({
     backgroundColor: theme.palette.background.paper,
   },
   list: {
-    flexWrap: 'nowrap',
+    display: 'flex',
+    marginLeft: '10vw',
   },
   paper: {
     backgroundColor: (props) => props.isDraggingOver? 'lightgrey': '#f8f9fa',
@@ -62,8 +63,7 @@ function MovieGrid({deleteItemFromGrid, movies}) {
               className=
                 {useStyles({isDraggingOver: snapshot.isDraggingOver}).paper}
               ref={provided.innerRef}
-              {...provided.droppableProps}
-              isDraggingOver={snapshot.isDraggingOver}>
+              {...provided.droppableProps}>
               {movies?.length? isDesktop?
               <Paper elevation={10} className={classes.listPaper}>
                 <List>
@@ -75,12 +75,12 @@ function MovieGrid({deleteItemFromGrid, movies}) {
                       rating={movie.imdbRating} id={movie.imdbID}>
                       {movie.Plot}</MovieCard>)}
                 </List>
-              </Paper>:<><br/> <List classes={classes.list}>
+              </Paper>:<><div className={classes.list}>
                 {movies?.map((movie, index) =>
                   <MovieChip key={movie.imdbID} title={movie.Title}
                     index={index}
                     deleteItem={deleteItem} id={movie.imdbID}/>)}
-              </List></>:<></>}
+              </div></>:<></>}
               <Container style={{height: '45vh'}}>
                 <MovieBarGraph data={movies}/>
               </Container>

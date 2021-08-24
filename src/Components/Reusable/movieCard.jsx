@@ -56,7 +56,7 @@ function MovieCard({title, postersrc, children, rating, id, index,
             </Grid>
           </Hidden>
           <Hidden xlUp smDown>
-            <Grid item sm={8} direction='row'>
+            <Grid item sm={8}>
               <Typography gutterBottom variant="subtitle1">
                 {title}
               </Typography>

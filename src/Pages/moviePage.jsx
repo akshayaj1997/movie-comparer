@@ -7,6 +7,7 @@ import MovieList from './movieList';
 import SearchComponent from './search';
 import MovieGrid from './movieGrid';
 import {Grid} from '@material-ui/core';
+import {Alert} from '@material-ui/lab';
 /**
  * Movie Page component
  */
@@ -21,6 +22,8 @@ class MoviePage extends Component {
       openModal: false,
       movies: [],
       movieData: {},
+      errorMsg: '',
+      showError: false,
       columns: {
         'movies-list': {
           id: 'movies-list',
@@ -102,8 +105,22 @@ class MoviePage extends Component {
  */
   onSaveClick() {
     const moviesData = this.state.movieData;
+    if (this.state.movies
+        .findIndex((el)=> moviesData?.imdbID === el.imdbID) >= 0) {
+      this.setState({...this.state,
+        errorMsg: 'This movie already exists in the comparitive list.',
+        showError: true});
+      return;
+    }
+    if (moviesData?.imdbRating === 'N/A') {
+      this.setState({...this.state,
+        errorMsg: 'There is no comparable rating on this movie.',
+        showError: true}); return;
+    };
     const newState = {
       ...this.state,
+      errorMsg: '',
+      showError: false,
       movies: [...this.state.movies, moviesData],
       columns: {
         ...this.state.columns,
@@ -192,7 +209,8 @@ class MoviePage extends Component {
    */
   receiveMovieData(data) {
     alert(JSON.stringify(data));
-    this.setState((prevState)=>({...prevState, movieData: data}));
+    this.setState((prevState)=>({...prevState, errorMsg: '',
+      showError: false, movieData: data}));
   }
   /**
      * render Render a React element into the DOM in the supplied
@@ -209,6 +227,8 @@ class MoviePage extends Component {
             header={'Search Movie'} toggle={this.toggle}
             savefunc={this.onSaveClick}
             SaveButton={'Add Movie'}>
+            {this.state.showError? <Alert severity='error'>
+              {this.state.errorMsg}</Alert>:<></> }
             <SearchComponent sendMovieData= {this.receiveMovieData}/>
           </ModalForm>
           <h1>Movie Comparer</h1>

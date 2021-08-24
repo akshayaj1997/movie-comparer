@@ -81,7 +81,7 @@ function MovieMetaData({movie}) {
           {Genre.split(',')?.map((el) => (<Chip variant='outlined' disabled
             label={el}
             key={el} />))}
-          <Avatar sizes variant= 'square' className={classes.avatar}>
+          <Avatar variant= 'square' className={classes.avatar}>
             {Metascore}
           </Avatar>
         </Box>

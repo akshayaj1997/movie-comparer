@@ -59,13 +59,12 @@ function MovieList({deleteItemFromGrid, columnId, movies}) {
             className=
               {useStyles({isDraggingOver: snapshot.isDraggingOver}).paper}
             ref={provided.innerRef}
-            {...provided.droppableProps}
-            isDraggingOver={snapshot.isDraggingOver}>
+            {...provided.droppableProps}>
             <ImageList
               className=
                 {classes.imageList}
               cols={100}
-              gap={9} rowHeight={'35vh'}
+              gap={9}
               ref={scrollingListRef}
             >
               {movies.map((movie, index) => (
