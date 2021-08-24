@@ -3,10 +3,12 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import {Droppable} from 'react-beautiful-dnd';
-import {Grid, Paper} from '@material-ui/core';
+import {Button, Grid, Paper} from '@material-ui/core';
 import {makeStyles} from '@material-ui/core/styles';
 import ImageList from '@material-ui/core/ImageList';
 import MovieImageItem from '../Components/Reusable/movieImageCard';
+import {useRef} from 'react';
+import {ArrowBackIos, ArrowForwardIos} from '@material-ui/icons';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -32,12 +34,24 @@ const useStyles = makeStyles((theme) => ({
 }));
 function MovieList({deleteItemFromGrid, columnId, movies}) {
   const classes = useStyles();
+  const scrollingListRef = useRef(null);
   const deleteFromGrid = (item) => {
     deleteItemFromGrid(item);
   };
 
+  const handleOnClick = (offset) => {
+    // .current is verification that your element has rendered
+    const scrollByVal = (window.innerWidth*offset)/100;
+    if (scrollingListRef.current) {
+      scrollingListRef.current.scroll(
+          {left: scrollingListRef.current.scrollLeft+scrollByVal,
+            behavior: 'smooth'});
+    }
+  };
+
   return (
     <Grid container justifyContent="center">
+      <Button onClick={()=>handleOnClick(-50)}><ArrowBackIos/></Button>
       <Droppable droppableId= {columnId}
         direction='horizontal'>
         {(provided, snapshot)=>
@@ -52,6 +66,7 @@ function MovieList({deleteItemFromGrid, columnId, movies}) {
                 {classes.imageList}
               cols={100}
               gap={9} rowHeight={'35vh'}
+              ref={scrollingListRef}
             >
               {movies.map((movie, index) => (
                 <MovieImageItem key={movie.imdbID} title={movie.Title}
@@ -65,6 +80,7 @@ function MovieList({deleteItemFromGrid, columnId, movies}) {
           </Paper>
         }
       </Droppable>
+      <Button onClick={()=>handleOnClick(50)}><ArrowForwardIos/></Button>
     </Grid>);
 }
 

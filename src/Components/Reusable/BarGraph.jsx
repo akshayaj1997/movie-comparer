@@ -1,3 +1,4 @@
+/* eslint-disable react/prop-types */
 import React from 'react';
 import {ResponsiveBar} from '@nivo/bar';
 import PropTypes from 'prop-types';
@@ -23,7 +24,19 @@ const MovieBarGraph = ({data}) => {
     colorBy={'id'}
     colors={{scheme: 'pastel2'}}
     initialHiddenIds={keys.slice(1)}
-    theme={{fontSize: 15}}
+    theme={{fontSize: 15, axis: {legend: {
+      text: {
+        fontSize: 20,
+        fontWeight: 300,
+      },
+    },
+    domain: {
+      line: {
+        strokeWidth: 20,
+        stroke: 10,
+      },
+    },
+    }}}
     layout={'horizontal'}
     enableGridX
     enableGridY={false}
@@ -34,7 +47,7 @@ const MovieBarGraph = ({data}) => {
     label={(d) => `${d.id}: ${d.value}`}
     labelSkipWidth={1}
     padding={0.5}
-    margin= {{top: 60, right: 150, bottom: 60, left: 150}}
+    margin= {{top: 60, right: 200, bottom: 60, left: 150}}
     axisBottom={{
       tickSize: 5,
       tickPadding: 5,
@@ -43,13 +56,14 @@ const MovieBarGraph = ({data}) => {
       legendPosition: 'middle',
       legendOffset: 45,
     }}
+    legendLabel={(datum) => `${datum.id} (${datum.value})`}
     axisLeft={{
       tickSize: 5,
       tickPadding: 10,
       tickRotation: 0,
-      legend: 'Movie',
       legendPosition: 'middle',
-      legendOffset: -60,
+      legendOffset: -120,
+      legend: 'Movie / TV Show',
       format: (value)=>{
         const acronym = value.split(/\s/)
             .reduce((response, word)=> response+=word.slice(0, 1), '');
@@ -66,6 +80,7 @@ const MovieBarGraph = ({data}) => {
         toggleSerie: true,
         translateY: 90,
         translateX: 100,
+        symbolShape: CustomSymbolShape,
       },
     ]}
     tooltip={({id, value, data, color}) => (
@@ -94,3 +109,20 @@ MovieBarGraph.propTypes = {
 };
 
 export default MovieBarGraph;
+
+const CustomSymbolShape = ({
+  x, y, size, fill, borderWidth, borderColor,
+}) => (
+  <rect
+    x={x}
+    y={y}
+    transform={`rotate(45 ${size/2} ${size/2})`}
+    fill={fill}
+    strokeWidth={borderWidth}
+    stroke={borderColor}
+    width={size}
+    height={size}
+    style={{pointerEvents: 'none'}}
+  />
+);
+

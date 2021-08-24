@@ -16,6 +16,7 @@ const useStyles = makeStyles((theme) => ({
     overflow: 'hidden',
     backgroundColor: theme.palette.background.paper,
     width: '70vw',
+    margin: 10,
   },
   title: {
     color: theme.palette.primary.light,

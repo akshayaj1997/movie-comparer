@@ -1,12 +1,13 @@
 /* eslint-disable require-jsdoc */
 
-import React from 'react';
+import React, {useState, useEffect} from 'react';
 import PropTypes from 'prop-types';
 import {Droppable} from 'react-beautiful-dnd';
 import {Container, Grid, List, Paper} from '@material-ui/core';
 import MovieBarGraph from '../Components/Reusable/BarGraph';
 import {makeStyles} from '@material-ui/core/styles';
 import MovieCard from '../Components/Reusable/movieCard';
+import MovieChip from '../Components/Reusable/Card';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -15,23 +16,38 @@ const useStyles = makeStyles((theme) => ({
     justifyContent: 'space-around',
     overflow: 'hidden',
     backgroundColor: theme.palette.background.paper,
-    width: '100vw',
   },
   list: {
     flexWrap: 'nowrap',
-    overflow: 'scroll',
   },
   paper: {
-    backgroundColor: (props) => props.isDraggingOver? 'lightgrey':'white',
-    width: '70vw',
+    backgroundColor: (props) => props.isDraggingOver? 'lightgrey': '#f8f9fa',
+    width: '100vw',
     justifyContent: 'center',
     padding: 20,
     height: '60vh',
     display: 'flex',
     borderRadius: 8,
+    margin: '1vw',
+  },
+  listPaper: {
+    overflow: 'scroll',
+    borderRadius: 8,
+    padding: 10,
+    width: '40vw',
   },
 }));
 function MovieGrid({deleteItemFromGrid, movies}) {
+  const [isDesktop, setDesktop] = useState(window.innerWidth > 1450);
+
+  const updateMedia = () => {
+    setDesktop(window.innerWidth > 1450);
+  };
+
+  useEffect(() => {
+    window.addEventListener('resize', updateMedia);
+    return () => window.removeEventListener('resize', updateMedia);
+  });
   const classes = useStyles();
   const deleteItem =(itemId) =>{
     deleteItemFromGrid(itemId);
@@ -42,27 +58,34 @@ function MovieGrid({deleteItemFromGrid, movies}) {
         <Droppable droppableId= {'movies-grid'}
           direction='horizontal'>
           {(provided, snapshot)=>
-            <Paper elevation={10}
+            <Paper elevation={0}
               className=
                 {useStyles({isDraggingOver: snapshot.isDraggingOver}).paper}
               ref={provided.innerRef}
               {...provided.droppableProps}
               isDraggingOver={snapshot.isDraggingOver}>
+              {movies?.length? isDesktop?
+              <Paper elevation={10} className={classes.listPaper}>
+                <List>
+                  {movies?.map((movie, index) =>
+                    <MovieCard key={movie.imdbID} title={movie.Title}
+                      index={index}
+                      postersrc={movie.Poster}
+                      deleteItemFromGrid={deleteItem}
+                      rating={movie.imdbRating} id={movie.imdbID}>
+                      {movie.Plot}</MovieCard>)}
+                </List>
+              </Paper>:<><br/> <List classes={classes.list}>
+                {movies?.map((movie, index) =>
+                  <MovieChip key={movie.imdbID} title={movie.Title}
+                    index={index}
+                    deleteItem={deleteItem} id={movie.imdbID}/>)}
+              </List></>:<></>}
               <Container style={{height: '45vh'}}>
                 <MovieBarGraph data={movies}/>
               </Container>
-              <List className={classes.list}>
-                {movies?.length?
-                movies?.map((movie, index) =>
-                  <MovieCard key={movie.imdbID} title={movie.Title}
-                    index={index}
-                    postersrc={movie.Poster}
-                    deleteItemFromGrid={deleteItem}
-                    rating={movie.imdbRating} id={movie.imdbID}>
-                    {movie.Plot}</MovieCard>):<></>}
-                {provided.placeholder}
-              </List>
               <br/>
+              {provided.placeholder}
             </Paper>
           }
         </Droppable>
