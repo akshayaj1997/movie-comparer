@@ -36,8 +36,9 @@ const useStyles = makeStyles((theme) => ({
 }));
 /**
  * Renders movies which are being compared and the comparision graph
- * @param {function} deleteItemFromGrid: callback to delete movie from grid
- * @param {array} array of the movie objects to be rendered in grid
+ * @param {Object} obj {deleteItemFromGrid, movies}
+ * @param {function} obj.deleteItemFromGrid: callback to delete movie from grid
+ * @param {Array} obj.movie array of the movie objects to be rendered in grid
  * @return {ReactNode} returns movie grid component
  */
 function MovieGrid({deleteItemFromGrid, movies}) {

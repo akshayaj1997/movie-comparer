@@ -11,7 +11,7 @@ function SearchComponent({sendMovieData}) {
   const [movieDisplay, setMovieDisplay] = useState({});
   /**
    * props callback to display movie
-   * @param {object} movie
+   * @param {Object} movie
    */
   async function setMovie(movie) {
     const response = await axios.get(`https://www.omdbapi.com/?apikey=15bcf215&i=${movie.imdbID}&r=json`);

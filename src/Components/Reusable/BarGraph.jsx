@@ -6,7 +6,7 @@ import {useState, useEffect} from 'react';
 
 /**
  * Bar Graph comparing movies based on IMDb Rating
- * @param {array} data array of the movies compared in graphical form
+ * @param {Array} data array of the movies compared in graphical form
  * @return {ReactNode} Graph Component comparing movies based on IMDb Rating
  */
 const MovieBarGraph = ({data: movies}) => {

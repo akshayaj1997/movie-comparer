@@ -33,19 +33,21 @@ const useStyles = makeStyles((theme) => ({
 
 /**
  * Returns list item of movie object for horizontally scrollable list
- * @param {string} title Movie title
- * @param {string} postersrc url of the src of the poster of the movie
- * @param {string/number} rating rating of the movie
- * @param {string/number} id imdb id of the movie to uniquely identify it
- * @param {any} index unique index of the item in the dragdropcontext
- * @param {function} deleteItemFromGrid callback to delete the item from
+ * @param {Object} obj {title, postersrc, rating,
+ *   id, index, deleteItemFromGrid, customClick}
+ * @param {string} obj.title Movie title
+ * @param {string} obj.postersrc url of the src of the poster of the movie
+ * @param {string/number} obj.rating rating of the movie
+ * @param {string/number} obj.id imdb id of the movie to uniquely identify it
+ * @param {any} obj.index unique index of the item in the dragdropcontext
+ * @param {function} obj.deleteItemFromGrid callback to delete the item from
  * the list grid
- * @param {function} customClick callback to onclick function to display
+ * @param {function} obj.customClick callback to onclick function to display
  * movie meta on clicking movie
  * @return {ReactNode} HorizontalScrollList Component that allows
  * list of children to be horizontally scrollable.
  */
-export default function MovieImageItem({title, postersrc, rating,
+function MovieImageItem({title, postersrc, rating,
   id, index, deleteItemFromGrid, customClick}) {
   const classes = useStyles();
 
@@ -87,10 +89,12 @@ MovieImageItem.propTypes = {
   customClick: PropTypes.func.isRequired,
 };
 
+export default MovieImageItem;
 /**
  * Movie card title
- * @param {string} title title of the card to be returned
- * @param {string/number} rating rating of the movie
+ * @param {Object} obj {title, rating}
+ * @param {string} obj.title title of the card to be returned
+ * @param {string/number} obj.rating rating of the movie
  * @return {ReactNode} title for the image
  */
 function ItemTitle({title, rating}) {

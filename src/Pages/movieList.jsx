@@ -36,8 +36,10 @@ const useStyles = makeStyles((theme) => ({
 }));
 /**
  * Renders movies which have been added to be picked to compare
- * @param {function} deleteItemFromGrid: callback to delete movie from grid
- * @param {array} array of the movie objects to be rendered in list
+ * @param {Object} obj {deleteItemFromGrid, columnId, movies}
+ * @param {function} obj.deleteItemFromGrid: callback to delete movie from grid
+ * @param {Array} obj.movies of the movie objects to be rendered in list
+ * @param {string/number} obj.columnId to uniquely identify the droppable area
  * @return {ReactNode} returns movie list component
  */
 function MovieList({deleteItemFromGrid, columnId, movies}) {
@@ -50,7 +52,6 @@ function MovieList({deleteItemFromGrid, columnId, movies}) {
   };
 
   const handleScrollButtonOnClick = (offset) => {
-    // .current is verification that your element has rendered
     const scrollByVal = (window.innerWidth*offset)/100;
     if (scrollingListRef.current) {
       scrollingListRef.current.scroll(

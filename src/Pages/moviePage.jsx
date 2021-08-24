@@ -135,7 +135,7 @@ class MoviePage extends Component {
   }
   /**
   * Operation to be performed on dropping the object
-  * @param {object} result is the result object that is given on dragging
+  * @param {Object} result is the result object that is given on dragging
   * and dropping
   */
   onDragEnd(result) {
@@ -208,7 +208,7 @@ class MoviePage extends Component {
   /**
    * Callback function which is passed down to the child to
    * receive the data of the movie added
-   * @param {object} data movie object passed while trying to add the movie
+   * @param {Object} data movie object passed while trying to add the movie
    */
   receiveMovieData(data) {
     this.setState((prevState)=>({...prevState, errorMsg: '',
