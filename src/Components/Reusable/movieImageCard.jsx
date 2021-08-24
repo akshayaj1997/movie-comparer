@@ -50,7 +50,7 @@ const useStyles = makeStyles((theme) => ({
  * @return {ReactNode} ImageList
  */
 export default function MovieImageItem({title, postersrc, children, rating,
-  id, index, deleteItemFromGrid}) {
+  id, index, deleteItemFromGrid, customClick}) {
   const classes = useStyles();
 
   return (
@@ -61,7 +61,8 @@ export default function MovieImageItem({title, postersrc, children, rating,
           {...provided.draggableProps}
           {...provided.dragHandleProps}
           innerRef={provided.innerRef}>
-          <img src={postersrc} alt={title} height={'100%'}/>
+          <img src={postersrc} alt={title} height={'100%'}
+            onClick={customClick}/>
           <ImageListItemBar
             title= {<ItemTitle title={title} rating={rating/2}/>}
             classes={{
@@ -88,6 +89,7 @@ MovieImageItem.propTypes = {
   id: PropTypes.oneOfType([PropTypes.string, PropTypes.number]).isRequired,
   index: PropTypes.any.isRequired,
   deleteItemFromGrid: PropTypes.func.isRequired,
+  customClick: PropTypes.func.isRequired,
 };
 
 /**

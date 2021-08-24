@@ -1,6 +1,6 @@
 /* eslint-disable require-jsdoc */
 
-import React from 'react';
+import React, {useState} from 'react';
 import PropTypes from 'prop-types';
 import {Droppable} from 'react-beautiful-dnd';
 import {Button, Grid, Paper} from '@material-ui/core';
@@ -9,6 +9,8 @@ import ImageList from '@material-ui/core/ImageList';
 import MovieImageItem from '../Components/Reusable/movieImageCard';
 import {useRef} from 'react';
 import {ArrowBackIos, ArrowForwardIos} from '@material-ui/icons';
+import ModalForm from '../Components/Reusable/ModalForm';
+import MovieMetaData from '../Components/Reusable/metaData';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -35,11 +37,13 @@ const useStyles = makeStyles((theme) => ({
 function MovieList({deleteItemFromGrid, columnId, movies}) {
   const classes = useStyles();
   const scrollingListRef = useRef(null);
+  const [openModal, setOpenModal] = useState(false);
+  const [movieData, setMovieData] = useState({});
   const deleteFromGrid = (item) => {
     deleteItemFromGrid(item);
   };
 
-  const handleOnClick = (offset) => {
+  const handleScrollButtonOnClick = (offset) => {
     // .current is verification that your element has rendered
     const scrollByVal = (window.innerWidth*offset)/100;
     if (scrollingListRef.current) {
@@ -51,7 +55,16 @@ function MovieList({deleteItemFromGrid, columnId, movies}) {
 
   return (
     <Grid container justifyContent="center">
-      <Button onClick={()=>handleOnClick(-50)}><ArrowBackIos/></Button>
+      <ModalForm
+        isopen={openModal}
+        enableSaveButton={false}
+        header={'Show Movie'} toggle={()=>{
+          setOpenModal(!openModal);
+        }}>
+        <MovieMetaData movie={movieData}/>
+      </ModalForm>
+      <Button onClick={()=>handleScrollButtonOnClick(-50)}>
+        <ArrowBackIos/></Button>
       <Droppable droppableId= {columnId}
         direction='horizontal'>
         {(provided, snapshot)=>
@@ -72,14 +85,19 @@ function MovieList({deleteItemFromGrid, columnId, movies}) {
                   index={index}
                   postersrc={movie.Poster}
                   deleteItemFromGrid={deleteFromGrid}
-                  rating={movie.imdbRating} id={movie.imdbID}/>
+                  rating={movie.imdbRating} id={movie.imdbID}
+                  customClick={()=>{
+                    setMovieData(movie);
+                    setOpenModal(!openModal);
+                  }}/>
               ))}
               {provided.placeholder}
             </ImageList>
           </Paper>
         }
       </Droppable>
-      <Button onClick={()=>handleOnClick(50)}><ArrowForwardIos/></Button>
+      <Button onClick={()=>handleScrollButtonOnClick(50)}>
+        <ArrowForwardIos/></Button>
     </Grid>);
 }
 

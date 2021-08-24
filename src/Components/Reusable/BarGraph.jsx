@@ -67,7 +67,7 @@ const MovieBarGraph = ({data}) => {
       format: (value)=>{
         const acronym = value.split(/\s/)
             .reduce((response, word)=> response+=word.slice(0, 1), '');
-        return value.length < 15? value: acronym;
+        return acronym ? acronym: value;
       },
     }}
     legends={[

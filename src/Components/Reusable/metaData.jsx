@@ -22,10 +22,10 @@ const useStyles = makeStyles((theme) => ({
     maxWidth: '100%',
   },
   media: {
-    height: 0,
-    width: '40%',
-    paddingTop: '56.25%',
-    justifyItems: 'center',
+    width: '100%',
+    height: '100%',
+    paddingTop: '100%',
+    justifyContent: 'center',
   },
   expand: {
     transform: 'rotate(0deg)',
@@ -68,8 +68,11 @@ function MovieMetaData({movie}) {
         title={Title}
         subheader={<HeaderSubtitle Year={Year} Rated={Rated}
           Runtime={Runtime} Type={Type}/>}
-        action={ <TableCell><h3><Star/> {imdbRating}/10</h3>
-          {imdbVotes}</TableCell>}
+        action={ <Box display='flex' flexDirection='row'>
+          {imdbRating!=='N/A'? <RatingCard votes={imdbVotes} rating={imdbRating}
+            source={'IMDb score'} width='100%'/>:<></>}
+          {Metascore!=='N/A'?<RatingCard rating={Metascore}
+            source={'MetaScore'} width='100%'/>:<></>}</Box>}
       />
       <CardMedia
         className={classes.media}
@@ -81,9 +84,6 @@ function MovieMetaData({movie}) {
           {Genre.split(',')?.map((el) => (<Chip variant='outlined' disabled
             label={el}
             key={el} />))}
-          <Avatar variant= 'square' className={classes.avatar}>
-            {Metascore}
-          </Avatar>
         </Box>
         <Typography paragraph>
           {Plot}
@@ -106,7 +106,7 @@ function MovieMetaData({movie}) {
         <Divider variant = 'fullWidth' />
       </CardContent>
       <CollapsibleArea title='Details'>
-        <Typography paragraph>
+        <Typography paragraph gutterBottom>
           <b>Release Date </b> {Released}
           <Divider variant='fullWidth'/>
           <b>Countries of Origin </b> {Country?.split(',')?.map((el) => (el))}
@@ -124,17 +124,13 @@ function MovieMetaData({movie}) {
       </CollapsibleArea>
       <CollapsibleArea title = 'Ratings'>
         <Grid container direction='row' alignItems='center'>
-          <Table>
-            <colgroup>
-              <col style={{width: '25%'}}/>
-              <col style={{width: '25%'}}/>
-              <col style={{width: '25%'}}/>
-              <col style={{width: '25%'}}/>
-            </colgroup>
-            {Ratings?.map((rating)=><><TableCell>{rating.Value}
-              <br/> {rating.Source}</TableCell></>)}
-            <TableCell>{imdbRating}<br/>IMDB</TableCell>
-          </Table>
+          <Box display='flex' flexDirection='row'>
+            {Ratings?.map((rating)=>
+              <RatingCard key={rating.Source} rating={rating.Value} width='25%'
+                source={rating.Source}/>)}
+            <RatingCard rating={imdbRating} width='25%'
+              source={'IMDb'}/>
+          </Box>
         </Grid>
       </CollapsibleArea>
     </Card>: <></>
@@ -204,4 +200,22 @@ function CollapsibleArea({title, children}) {
 CollapsibleArea.propTypes = {
   title: PropTypes.string.isRequired,
   children: PropTypes.any.isRequired,
+};
+
+const RatingCard = ({rating, source, votes, width}) => {
+  return (<Card style={{width: width}}>
+    <CardContent>
+      <Typography variant='h5' gutterBottom>
+        <Star/> {rating}</Typography>
+      {votes?<Typography> {votes}</Typography>:<></>}
+      <Typography variant='h6' gutterBottom>{source}</Typography>
+    </CardContent>
+  </Card>);
+};
+
+RatingCard.propTypes = {
+  rating: PropTypes.string.isRequired,
+  source: PropTypes.string.isRequired,
+  votes: PropTypes.string,
+  width: PropTypes.string,
 };

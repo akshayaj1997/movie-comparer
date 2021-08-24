@@ -19,7 +19,7 @@ const useStyles = makeStyles((theme) => ({
   },
   list: {
     display: 'flex',
-    marginLeft: '10vw',
+    zIndex: 100,
   },
   paper: {
     backgroundColor: (props) => props.isDraggingOver? 'lightgrey': '#f8f9fa',
@@ -75,13 +75,13 @@ function MovieGrid({deleteItemFromGrid, movies}) {
                       rating={movie.imdbRating} id={movie.imdbID}>
                       {movie.Plot}</MovieCard>)}
                 </List>
-              </Paper>:<><div className={classes.list}>
+              </Paper>:<List className={classes.list}>
                 {movies?.map((movie, index) =>
                   <MovieChip key={movie.imdbID} title={movie.Title}
                     index={index}
                     deleteItem={deleteItem} id={movie.imdbID}/>)}
-              </div></>:<></>}
-              <Container style={{height: '45vh'}}>
+              </List>:<></>}
+              <Container style={{height: '50vh'}}>
                 <MovieBarGraph data={movies}/>
               </Container>
               <br/>
