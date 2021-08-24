@@ -86,7 +86,7 @@ class MoviePage extends Component {
     this.setState(newState);
   }
   /**
-   * Opens the modal box
+   * Opens the modal box to add the movie
    */
   onAddClick() {
     this.setState((prevstate)=>
@@ -94,14 +94,14 @@ class MoviePage extends Component {
   }
 
   /**
-   * Function to toggle the modal form
+   * Function to toggle(open/close) the modal form
    */
   toggle() {
     this.setState((prevState) =>
       ({...prevState, openModal: !prevState.openModal}));
   }
   /**
- * Function to be triggered on saving
+ * Function to be triggered on trying adding the movie to the grid
  */
   onSaveClick() {
     const moviesData = this.state.movieData;
@@ -134,7 +134,7 @@ class MoviePage extends Component {
     this.toggle();
   }
   /**
-  * What operation must be performed on dropping the object
+  * Operation to be performed on dropping the object
   * @param {object} result is the result object that is given on dragging
   * and dropping
   */
@@ -177,7 +177,9 @@ class MoviePage extends Component {
       return;
     }
 
-    // Moving from one list to another
+    /**
+     * Moving movie object from one grid to list or vice-versa
+    */
     const startMovies = Array.from(start.movies);
     startMovies.splice(source.index, 1);
     const newStart = {
@@ -204,18 +206,20 @@ class MoviePage extends Component {
   };
 
   /**
-   * setting data
-   * @param {object} data sent for movie
+   * Callback function which is passed down to the child to
+   * receive the data of the movie added
+   * @param {object} data movie object passed while trying to add the movie
    */
   receiveMovieData(data) {
-    alert(JSON.stringify(data));
     this.setState((prevState)=>({...prevState, errorMsg: '',
       showError: false, movieData: data}));
   }
   /**
      * render Render a React element into the DOM in the supplied
      * container and return a reference to the component
-     * @return {element} Movie Grid Component
+     * (in this case the movie page)
+     * @return {ReactNode} Movie Page Component containing the
+     * comparison region and list of movies
      */
   render() {
     return (<>

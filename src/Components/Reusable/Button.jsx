@@ -3,13 +3,13 @@ import {Button as MuiButton} from '@material-ui/core';
 import PropTypes from 'prop-types';
 /**
  * Renders reusable Button Component using MUI
- * @param {text} text value to be passed to component display
- * @param {size} size of the button to be rendered
- * @param {color} color of the button
- * @param {variant} type of the button to render
- * @param {onClick} functionality to be triggered when onClick event
- * @param {other} any other additional parameters you want to pass
- * @return {func} reusable button
+ * @param {string} text text value to be passed to component display
+ * @param {string} size size of the button to be rendered
+ * @param {string} color color of the button
+ * @param {string} variant type of the button to render
+ * @param {function} onClick functionality to be triggered when onClick event
+ * @param {any} other any other additional parameters you want to pass
+ * @return {ReactNode} reusable button
  */
 function Button({text, size, color, variant, onClick, ...other}) {
   return (

@@ -1,4 +1,4 @@
-/* eslint-disable require-jsdoc */
+
 
 import React, {useState} from 'react';
 import PropTypes from 'prop-types';
@@ -34,6 +34,12 @@ const useStyles = makeStyles((theme) => ({
     borderRadius: 8,
   },
 }));
+/**
+ * Renders movies which have been added to be picked to compare
+ * @param {function} deleteItemFromGrid: callback to delete movie from grid
+ * @param {array} array of the movie objects to be rendered in list
+ * @return {ReactNode} returns movie list component
+ */
 function MovieList({deleteItemFromGrid, columnId, movies}) {
   const classes = useStyles();
   const scrollingListRef = useRef(null);

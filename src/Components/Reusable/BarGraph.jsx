@@ -1,22 +1,26 @@
-/* eslint-disable react/prop-types */
+
 import React from 'react';
 import {ResponsiveBar} from '@nivo/bar';
 import PropTypes from 'prop-types';
 import {useState, useEffect} from 'react';
 
-
-const MovieBarGraph = ({data}) => {
+/**
+ * Bar Graph comparing movies based on IMDb Rating
+ * @param {array} data array of the movies compared in graphical form
+ * @return {ReactNode} Graph Component comparing movies based on IMDb Rating
+ */
+const MovieBarGraph = ({data: movies}) => {
   const [ratings, setRatings] = useState([]);
-  const keys = ['imdbRating', 'Metascore'];
+  const keys = ['imdbRating'];
   useEffect(()=>{
-    const imdbValues = data?.map((el)=>
+    const imdbValues = movies?.map((el)=>
       ({'imdbRating': isNaN(el.imdbRating*1) ? 0:el.imdbRating*1,
         'Metascore': isNaN(el.Metascore/10)? 0: el.Metascore/10,
         'Title': el.Title, 'Poster': el.Poster}
       ));
     setRatings(imdbValues);
-  }, [data]);
-  return (data?.length>0? <ResponsiveBar
+  }, [movies]);
+  return (movies?.length>0? <ResponsiveBar
     data={ratings}
     keys={keys}
     indexBy={['Title']}
@@ -77,7 +81,6 @@ const MovieBarGraph = ({data}) => {
         dataFrom: 'keys',
         itemHeight: 20,
         itemWidth: 80,
-        toggleSerie: true,
         translateY: 90,
         translateX: 100,
         symbolShape: CustomSymbolShape,
@@ -116,7 +119,6 @@ const CustomSymbolShape = ({
   <rect
     x={x}
     y={y}
-    transform={`rotate(45 ${size/2} ${size/2})`}
     fill={fill}
     strokeWidth={borderWidth}
     stroke={borderColor}
@@ -125,4 +127,13 @@ const CustomSymbolShape = ({
     style={{pointerEvents: 'none'}}
   />
 );
+
+CustomSymbolShape.propTypes = {
+  x: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
+  y: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
+  fill: PropTypes.string,
+  borderWidth: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
+  borderColor: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
+  size: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
+};
 

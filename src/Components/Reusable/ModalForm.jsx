@@ -59,16 +59,16 @@ const DialogActions = withStyles((theme) => ({
 
 /**
  * Renders the modal form component
- * @param {children} Child components to render inside modal body
- * @param {enableSaveButton}  enable save button in Modal
- * @param {isopen} show the modal
- * @param {maxWidth} maximum width of the modal to render in the page
- * @param {header} header/title of the modal
- * @param {toggle} function on toggling the modal (open/close)
+ * @param {JSXElement} children Child components to render inside modal body
+ * @param {boolean} [enableSaveButton=true]  enable save button in Modal
+ * @param {boolean} isopen show the modal
+ * @param {string/bool} maxWidth maximum width of the modal to render
+ * @param {string} header header/title of the modal
+ * @param {function} toggle function on toggling the modal (open/close)
  * @param {function} {SaveFunction} function to call on save
- * @param {SaveButton} text in save button
- * @param {other} any other additional parameters you want to pass
- * @return {func} Modal form component
+ * @param {string} SaveButton text in save button
+ * @param {any} other any other additional parameters you want to pass
+ * @return {ReactNode} Modal form component
  */
 function ModalForm({
   children,
@@ -88,12 +88,12 @@ function ModalForm({
 
   React.useEffect(() => {
     if (open) {
-      document.body.style.overflow = 'hidden';
+      document.body.style.overflow = 'scroll';
     } else {
-      document.body.style.overflow = 'hidden auto';
+      document.body.style.overflow = 'auto';
     }
     return () => {
-      document.body.style.overflow = 'hidden auto';
+      document.body.style.overflow = 'auto';
     };
   }, [open]);
 

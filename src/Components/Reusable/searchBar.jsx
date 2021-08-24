@@ -9,6 +9,7 @@ import PropTypes from 'prop-types';
 
 /**
  * Reusable Search Bar component created from MUI
+ * @param {function} callback function that returns to movie selected
  * @return {React.Node} Search Bar component with Movies
  */
 function SearchBar({movieDisplay}) {

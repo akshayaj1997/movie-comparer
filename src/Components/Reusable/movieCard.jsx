@@ -32,8 +32,17 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 /**
- * Reusable Movie List object component
- * @return {ReactNode} Movie List object component
+ * Returns list item of movie object for scrollable list
+ * @param {string} title Movie title
+ * @param {string} postersrc url of the src of the poster of the movie
+ * @param {JSXElement} children children to the movie component
+ * @param {string/number} rating rating of the movie
+ * @param {string/number} id imdb id of the movie to uniquely identify it
+ * @param {any} index unique index of the item in the dragdropcontext
+ * @param {function} deleteItemFromGrid callback to delete the item from
+ * the list grid
+ * @return {ReactNode} ScrollList Component that allows
+ * list of children to be scrollable.
  */
 function MovieCard({title, postersrc, children, rating, id, index,
   deleteItemFromGrid}) {

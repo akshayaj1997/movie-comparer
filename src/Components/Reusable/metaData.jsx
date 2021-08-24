@@ -1,4 +1,3 @@
-/* eslint-disable no-unused-vars */
 import React from 'react';
 import {makeStyles} from '@material-ui/core/styles';
 import Card from '@material-ui/core/Card';
@@ -6,17 +5,13 @@ import CardHeader from '@material-ui/core/CardHeader';
 import CardMedia from '@material-ui/core/CardMedia';
 import CardContent from '@material-ui/core/CardContent';
 import Typography from '@material-ui/core/Typography';
-import {Rating} from '@material-ui/lab';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import PropTypes from 'prop-types';
-import {Avatar, Box, Chip, Divider, Grid, Table} from '@material-ui/core';
+import {Box, Chip, Divider, Grid} from '@material-ui/core';
 import Accordion from '@material-ui/core/Accordion';
 import AccordionSummary from '@material-ui/core/AccordionSummary';
 import AccordionDetails from '@material-ui/core/AccordionDetails';
-import TableCell from '@material-ui/core/TableCell';
-import {Star} from '@material-ui/icons';
-
-
+import Star from '@material-ui/icons/Star';
 const useStyles = makeStyles((theme) => ({
   root: {
     maxWidth: '100%',
@@ -45,9 +40,9 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 /**
- * Movie Meta data display element to display movie data
- * @param {any} props props passed to the component
- * @return {ReactNode} Movie Meta data display element
+ * Movie Meta data display element to display the movie data in modal
+ * @param {Array} movie object passed to render metadata
+ * @return {ReactNode} MovieMetaData movie details display element
  */
 function MovieMetaData({movie}) {
   const classes = useStyles();
@@ -55,11 +50,6 @@ function MovieMetaData({movie}) {
     Writer, Actors, Plot, Country, Awards, Poster, Ratings, Metascore,
     imdbRating, imdbVotes, Type, DVD, BoxOffice, Production,
     Website, Response} = movie;
-  const [expanded, setExpanded] = React.useState(false);
-
-  const handleExpandClick = () => {
-    setExpanded(!expanded);
-  };
 
   return (
     Response?

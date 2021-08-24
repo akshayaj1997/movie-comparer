@@ -32,24 +32,20 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 /**
- * The example data is structured as follows:
- *
- * import image from 'path/to/image.jpg';
- * [etc...]
- *
- * const itemData = [
- *   {
- *     img: image,
- *     title: 'Image',
- *     author: 'author',
- *   },
- *   {
- *     [etc...]
- *   },
- * ];
- * @return {ReactNode} ImageList
+ * Returns list item of movie object for horizontally scrollable list
+ * @param {string} title Movie title
+ * @param {string} postersrc url of the src of the poster of the movie
+ * @param {string/number} rating rating of the movie
+ * @param {string/number} id imdb id of the movie to uniquely identify it
+ * @param {any} index unique index of the item in the dragdropcontext
+ * @param {function} deleteItemFromGrid callback to delete the item from
+ * the list grid
+ * @param {function} customClick callback to onclick function to display
+ * movie meta on clicking movie
+ * @return {ReactNode} HorizontalScrollList Component that allows
+ * list of children to be horizontally scrollable.
  */
-export default function MovieImageItem({title, postersrc, children, rating,
+export default function MovieImageItem({title, postersrc, rating,
   id, index, deleteItemFromGrid, customClick}) {
   const classes = useStyles();
 
@@ -84,7 +80,6 @@ export default function MovieImageItem({title, postersrc, children, rating,
 MovieImageItem.propTypes = {
   title: PropTypes.string.isRequired,
   postersrc: PropTypes.string.isRequired,
-  children: PropTypes.any,
   rating: PropTypes.oneOfType([PropTypes.string, PropTypes.number]).isRequired,
   id: PropTypes.oneOfType([PropTypes.string, PropTypes.number]).isRequired,
   index: PropTypes.any.isRequired,
@@ -94,8 +89,8 @@ MovieImageItem.propTypes = {
 
 /**
  * Movie card title
- * @param {string} title of the card to be returned
- * @param {any} rating of the movie
+ * @param {string} title title of the card to be returned
+ * @param {string/number} rating rating of the movie
  * @return {ReactNode} title for the image
  */
 function ItemTitle({title, rating}) {

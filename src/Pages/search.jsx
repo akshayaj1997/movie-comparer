@@ -22,7 +22,8 @@ function SearchComponent({sendMovieData}) {
   /**
      * render Render a React element into the DOM in the supplied
      * container and return a reference to the component
-     * @return {func} search component to be rendered on the page
+     * (in this case the search component)
+     * @return {ReactNode} search component to be rendered on the modal form
      */
   return (<>
     <SearchBar movieDisplay={setMovie}/>

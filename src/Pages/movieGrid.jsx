@@ -1,4 +1,4 @@
-/* eslint-disable require-jsdoc */
+
 
 import React, {useState, useEffect} from 'react';
 import PropTypes from 'prop-types';
@@ -7,27 +7,23 @@ import {Container, Grid, List, Paper} from '@material-ui/core';
 import MovieBarGraph from '../Components/Reusable/BarGraph';
 import {makeStyles} from '@material-ui/core/styles';
 import MovieCard from '../Components/Reusable/movieCard';
-import MovieChip from '../Components/Reusable/Card';
+import MovieChip from '../Components/Reusable/MovieChip';
 
 const useStyles = makeStyles((theme) => ({
-  root: {
-    display: 'flex',
-    flexWrap: 'wrap',
-    justifyContent: 'space-around',
-    overflow: 'hidden',
-    backgroundColor: theme.palette.background.paper,
-  },
   list: {
     display: 'flex',
-    zIndex: 100,
+    overflow: 'scroll',
+    justifyContent: 'center',
+    marginInlineEnd: '10vw',
+    marginInlineStart: '10vw',
   },
   paper: {
     backgroundColor: (props) => props.isDraggingOver? 'lightgrey': '#f8f9fa',
     width: '100vw',
     justifyContent: 'center',
+    display: (props) => props.isDesktop? 'flex':'block',
     padding: 20,
     height: '60vh',
-    display: 'flex',
     borderRadius: 8,
     margin: '1vw',
   },
@@ -38,6 +34,12 @@ const useStyles = makeStyles((theme) => ({
     width: '40vw',
   },
 }));
+/**
+ * Renders movies which are being compared and the comparision graph
+ * @param {function} deleteItemFromGrid: callback to delete movie from grid
+ * @param {array} array of the movie objects to be rendered in grid
+ * @return {ReactNode} returns movie grid component
+ */
 function MovieGrid({deleteItemFromGrid, movies}) {
   const [isDesktop, setDesktop] = useState(window.innerWidth > 1450);
 
@@ -61,7 +63,8 @@ function MovieGrid({deleteItemFromGrid, movies}) {
           {(provided, snapshot)=>
             <Paper elevation={0}
               className=
-                {useStyles({isDraggingOver: snapshot.isDraggingOver}).paper}
+                {useStyles({isDraggingOver: snapshot.isDraggingOver,
+                  isDesktop: isDesktop}).paper}
               ref={provided.innerRef}
               {...provided.droppableProps}>
               {movies?.length? isDesktop?
@@ -81,7 +84,8 @@ function MovieGrid({deleteItemFromGrid, movies}) {
                     index={index}
                     deleteItem={deleteItem} id={movie.imdbID}/>)}
               </List>:<></>}
-              <Container style={{height: '50vh'}}>
+              <br/>
+              <Container style={{height: '45vh'}}>
                 <MovieBarGraph data={movies}/>
               </Container>
               <br/>
