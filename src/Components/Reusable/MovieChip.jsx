@@ -6,12 +6,12 @@ import {Chip} from '@material-ui/core';
 
 /**
  * Returns list item of movie object in a MUI chip shape for scrollable list
- * @param {Object} obj {title, id, deleteItem, index}
- * @param {string} obj.title Movie title
- * @param {string/number} obj.id imdb id of the movie to uniquely identify it
- * @param {function} obj.deleteItemFromGrid callback to delete the item from
+ * @param {Object} props {title, id, deleteItem, index}
+ * @param {string} props.title Movie title
+ * @param {string/number} props.id imdb id of the movie to uniquely identify it
+ * @param {function} props.deleteItemFromGrid callback to delete the item from
  * the list grid
- * @param {any} obj.index unique index of the item in the dragdropcontext
+ * @param {any} props.index unique index of the item in the dragdropcontext
  * @return {ReactNode} Card component with the data provided in props
  */
 function MovieChip({title, id, deleteItem, index}) {

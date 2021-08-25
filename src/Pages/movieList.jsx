@@ -36,10 +36,10 @@ const useStyles = makeStyles((theme) => ({
 }));
 /**
  * Renders movies which have been added to be picked to compare
- * @param {Object} obj {deleteItemFromGrid, columnId, movies}
- * @param {function} obj.deleteItemFromGrid: callback to delete movie from grid
- * @param {Array} obj.movies of the movie objects to be rendered in list
- * @param {string/number} obj.columnId to uniquely identify the droppable area
+ * @param {Object} props {deleteItemFromGrid, columnId, movies}
+ * @param {function} props.deleteItemFromGrid:callback to delete movie from grid
+ * @param {Array} props.movies of the movie objects to be rendered in list
+ * @param {string/number} props.columnId to uniquely identify the droppable area
  * @return {ReactNode} returns movie list component
  */
 function MovieList({deleteItemFromGrid, columnId, movies}) {

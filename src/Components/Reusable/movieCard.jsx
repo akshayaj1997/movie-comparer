@@ -33,15 +33,15 @@ const useStyles = makeStyles((theme) => ({
 
 /**
  * Returns list item of movie object for scrollable list
- * @param {Object} obj {title, postersrc, children, rating, id, index,
+ * @param {Object} props {title, postersrc, children, rating, id, index,
  *   deleteItemFromGrid}
- * @param {string} obj.title Movie title
- * @param {string} obj.postersrc url of the src of the poster of the movie
- * @param {JSXElement} obj.children children to the movie component
- * @param {string/number} obj.rating rating of the movie
- * @param {string/number} obj.id imdb id of the movie to uniquely identify it
- * @param {any} obj.index unique index of the item in the dragdropcontext
- * @param {function} obj.deleteItemFromGrid callback to delete the item from
+ * @param {string} props.title Movie title
+ * @param {string} props.postersrc url of the src of the poster of the movie
+ * @param {JSXElement} props.children children to the movie component
+ * @param {string/number} props.rating rating of the movie
+ * @param {string/number} props.id imdb id of the movie to uniquely identify it
+ * @param {any} props.index unique index of the item in the dragdropcontext
+ * @param {function} props.deleteItemFromGrid callback to delete the item from
  * the list grid
  * @return {ReactNode} ScrollList Component that allows
  * list of children to be scrollable.

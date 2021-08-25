@@ -61,9 +61,17 @@
 
 ## App
 
-Single App component at the very top of the SPA rendered DOM Tree
+SPA application root for an application that compares movies by graphing the
+IMDb rating of films. The page is divided into 2 parts + Search functionality
 
-Returns **Component** App component rendered from the root
+1.  Movie Grid which contains the graphing region for visual comparision of
+
+the movies
+2. Movie List that contain the list of movies we can add to the comparison
+After searching for a movie, the user will be able to view
+the metadata in the movie details section in the wireframe
+
+Returns **ReactNode** App component rendered from the root
 
 ## MovieBarGraph
 
@@ -81,14 +89,14 @@ Returns **ReactNode** Graph Component comparing movies based on IMDb Rating
 
 ### Parameters
 
-*   `obj` **[Object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)** {text, size, color, variant, onClick, ...other}
+*   `props` **[Object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)** {text, size, color, variant, onClick, ...other}
 
-    *   `obj.text` **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** text value to be passed to component display
-    *   `obj.size` **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** size of the button to be rendered
-    *   `obj.color` **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** color of the button
-    *   `obj.variant` **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** type of the button to render
-    *   `obj.onClick` **[function](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Statements/function)** functionality to be triggered on onClick
-    *   `obj.other` **any** any other additional parameters you want to pass
+    *   `props.text` **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** text value to be passed to component display
+    *   `props.size` **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** size of the button to be rendered
+    *   `props.color` **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** color of the button
+    *   `props.variant` **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** type of the button to render
+    *   `props.onClick` **[function](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Statements/function)** functionality to be triggered on onClick
+    *   `props.other` **any** any other additional parameters you want to pass
 
 Returns **ReactNode** reusable button
 
@@ -110,28 +118,28 @@ Returns header element
 
 ### Parameters
 
-*   `obj` **[Object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)** {Year, Rated, Runtime, Type}
+*   `props` **[Object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)** {Year, Rated, Runtime, Type}
 
-    *   `obj.Year` **string/number** Year of release
-    *   `obj.Runtime` **string/number** length of the movie
-    *   `obj.Rating` **string/number** Rating of the movie
-    *   `obj.type` **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** determines if movie, TV show or short film
-    *   `obj.Rated`  
-    *   `obj.Type`  
+    *   `props.Year` **string/number** Year of release
+    *   `props.Runtime` **string/number** length of the movie
+    *   `props.Rating` **string/number** Rating of the movie
+    *   `props.type` **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** determines if movie, TV show or short film
+    *   `props.Rated`  
+    *   `props.Type`  
 
 Returns **ReactNode** subtitle
 
 ## CollapsibleArea
 
-Accordian Component
+Accordian Component used to show additional movie details
 
 ### Parameters
 
-*   `obj` **[Object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)** {title, children}
+*   `props` **[Object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)** {title, children}
 
-    *   `obj.title` **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** of the collapsible area
-    *   `obj.Children` **JSXElements** to the accordian
-    *   `obj.children`  
+    *   `props.title` **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** of the collapsible area
+    *   `props.Children` **JSXElements** to the accordian
+    *   `props.children`  
 
 Returns **ReactNode** Accordian component
 
@@ -141,19 +149,19 @@ Renders the modal form component
 
 ### Parameters
 
-*   `obj` **[Object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)** {children,enableSaveButton,isopen,maxWidth,header,
+*   `props` **[Object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)** {children,enableSaveButton,isopen,maxWidth,header,
     toggle,savefunc,SaveButton=,...other}
 
-    *   `obj.children` **JSXElement** Child components to render inside modal body
-    *   `obj.enableSaveButton` **[boolean](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Boolean)** enable save button in Modal (optional, default `true`)
-    *   `obj.isopen` **[boolean](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Boolean)** show the modal
-    *   `obj.maxWidth` **string/bool** maximum width of the modal to render
-    *   `obj.header` **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** header/title of the modal
-    *   `obj.toggle` **[function](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Statements/function)** function on toggling the modal (open/close)
-    *   `obj.SaveButton` **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** text in save button (optional, default `'Save'`)
-    *   `obj.other` **any** any other additional parameters you want to pass
-    *   `obj.SaveFunction` **[function](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Statements/function)** function to call on save
-    *   `obj.savefunc`  
+    *   `props.children` **JSXElement** Child components to render inside modal body
+    *   `props.enableSaveButton` **[boolean](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Boolean)** enable save button in Modal (optional, default `true`)
+    *   `props.isopen` **[boolean](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Boolean)** show the modal
+    *   `props.maxWidth` **string/bool** maximum width of the modal to render
+    *   `props.header` **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** header/title of the modal
+    *   `props.toggle` **[function](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Statements/function)** function on toggling the modal (open/close)
+    *   `props.SaveButton` **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** text in save button (optional, default `'Save'`)
+    *   `props.other` **any** any other additional parameters you want to pass
+    *   `props.SaveFunction` **[function](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Statements/function)** function to call on save
+    *   `props.savefunc`  
 
 Returns **ReactNode** Modal form component
 
@@ -163,16 +171,16 @@ Returns list item of movie object for scrollable list
 
 ### Parameters
 
-*   `obj` **[Object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)** {title, postersrc, children, rating, id, index,
+*   `props` **[Object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)** {title, postersrc, children, rating, id, index,
     deleteItemFromGrid}
 
-    *   `obj.title` **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** Movie title
-    *   `obj.postersrc` **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** url of the src of the poster of the movie
-    *   `obj.children` **JSXElement** children to the movie component
-    *   `obj.rating` **string/number** rating of the movie
-    *   `obj.id` **string/number** imdb id of the movie to uniquely identify it
-    *   `obj.index` **any** unique index of the item in the dragdropcontext
-    *   `obj.deleteItemFromGrid` **[function](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Statements/function)** callback to delete the item from
+    *   `props.title` **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** Movie title
+    *   `props.postersrc` **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** url of the src of the poster of the movie
+    *   `props.children` **JSXElement** children to the movie component
+    *   `props.rating` **string/number** rating of the movie
+    *   `props.id` **string/number** imdb id of the movie to uniquely identify it
+    *   `props.index` **any** unique index of the item in the dragdropcontext
+    *   `props.deleteItemFromGrid` **[function](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Statements/function)** callback to delete the item from
         the list grid
 
 Returns **ReactNode** ScrollList Component that allows
@@ -184,14 +192,14 @@ Returns list item of movie object in a MUI chip shape for scrollable list
 
 ### Parameters
 
-*   `obj` **[Object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)** {title, id, deleteItem, index}
+*   `props` **[Object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)** {title, id, deleteItem, index}
 
-    *   `obj.title` **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** Movie title
-    *   `obj.id` **string/number** imdb id of the movie to uniquely identify it
-    *   `obj.index` **any** unique index of the item in the dragdropcontext
-    *   `obj.deleteItemFromGrid` **[function](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Statements/function)** callback to delete the item from
+    *   `props.title` **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** Movie title
+    *   `props.id` **string/number** imdb id of the movie to uniquely identify it
+    *   `props.index` **any** unique index of the item in the dragdropcontext
+    *   `props.deleteItemFromGrid` **[function](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Statements/function)** callback to delete the item from
         the list grid
-    *   `obj.deleteItem`  
+    *   `props.deleteItem`  
 
 Returns **ReactNode** Card component with the data provided in props
 
@@ -201,17 +209,17 @@ Returns list item of movie object for horizontally scrollable list
 
 ### Parameters
 
-*   `obj` **[Object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)** {title, postersrc, rating,
+*   `props` **[Object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)** {title, postersrc, rating,
     id, index, deleteItemFromGrid, customClick}
 
-    *   `obj.title` **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** Movie title
-    *   `obj.postersrc` **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** url of the src of the poster of the movie
-    *   `obj.rating` **string/number** rating of the movie
-    *   `obj.id` **string/number** imdb id of the movie to uniquely identify it
-    *   `obj.index` **any** unique index of the item in the dragdropcontext
-    *   `obj.deleteItemFromGrid` **[function](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Statements/function)** callback to delete the item from
+    *   `props.title` **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** Movie title
+    *   `props.postersrc` **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** url of the src of the poster of the movie
+    *   `props.rating` **string/number** rating of the movie
+    *   `props.id` **string/number** imdb id of the movie to uniquely identify it
+    *   `props.index` **any** unique index of the item in the dragdropcontext
+    *   `props.deleteItemFromGrid` **[function](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Statements/function)** callback to delete the item from
         the list grid
-    *   `obj.customClick` **[function](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Statements/function)** callback to onclick function to display
+    *   `props.customClick` **[function](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Statements/function)** callback to onclick function to display
         movie meta on clicking movie
 
 Returns **ReactNode** HorizontalScrollList Component that allows
@@ -223,10 +231,10 @@ Movie card title
 
 ### Parameters
 
-*   `obj` **[Object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)** {title, rating}
+*   `props` **[Object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)** {title, rating}
 
-    *   `obj.title` **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** title of the card to be returned
-    *   `obj.rating` **string/number** rating of the movie
+    *   `props.title` **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** title of the card to be returned
+    *   `props.rating` **string/number** rating of the movie
 
 Returns **ReactNode** title for the image
 
@@ -286,11 +294,11 @@ Renders movies which are being compared and the comparision graph
 
 ### Parameters
 
-*   `obj` **[Object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)** {deleteItemFromGrid, movies}
+*   `props` **[Object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)** {deleteItemFromGrid, movies}
 
-    *   `obj.deleteItemFromGrid` **[function](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Statements/function)** : callback to delete movie from grid
-    *   `obj.movie` **[Array](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Array)** array of the movie objects to be rendered in grid
-    *   `obj.movies`  
+    *   `props.deleteItemFromGrid` **[function](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Statements/function)** : callback to delete movie from grid
+    *   `props.movie` **[Array](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Array)** array of the movie objects to be rendered in grid
+    *   `props.movies`  
 
 Returns **ReactNode** returns movie grid component
 
@@ -300,11 +308,11 @@ Renders movies which have been added to be picked to compare
 
 ### Parameters
 
-*   `obj` **[Object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)** {deleteItemFromGrid, columnId, movies}
+*   `props` **[Object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)** {deleteItemFromGrid, columnId, movies}
 
-    *   `obj.deleteItemFromGrid` **[function](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Statements/function)** : callback to delete movie from grid
-    *   `obj.columnId` **string/number** to uniquely identify the droppable area
-    *   `obj.movies` **[Array](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Array)** of the movie objects to be rendered in list
+    *   `props.deleteItemFromGrid` **[function](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Statements/function)** :callback to delete movie from grid
+    *   `props.columnId` **string/number** to uniquely identify the droppable area
+    *   `props.movies` **[Array](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Array)** of the movie objects to be rendered in list
 
 Returns **ReactNode** returns movie list component
 

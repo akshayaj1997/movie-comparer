@@ -133,11 +133,11 @@ export default MovieMetaData;
 
 /**
  * Returns header element
- *  @param {Object} obj {Year, Rated, Runtime, Type}
- * @param {string/number} obj.Year Year of release
- * @param {string/number} obj.Rating Rating of the movie
- * @param {string/number} obj.Runtime length of the movie
- * @param {string} obj.type determines if movie, TV show or short film
+ *  @param {Object} props {Year, Rated, Runtime, Type}
+ * @param {string/number} props.Year Year of release
+ * @param {string/number} props.Rating Rating of the movie
+ * @param {string/number} props.Runtime length of the movie
+ * @param {string} props.type determines if movie, TV show or short film
  * @return {ReactNode} subtitle
  */
 function HeaderSubtitle({Year, Rated, Runtime, Type}) {
@@ -167,9 +167,9 @@ const useAccordianStyles = makeStyles((theme) => ({
 }));
 /**
  * Accordian Component
- * @param {Object} obj {title, children}
- * @param {string} obj.title of the collapsible area
- * @param {JSXElements} obj.Children to the accordian
+ * @param {Object} props {title, children}
+ * @param {string} props.title of the collapsible area
+ * @param {JSXElements} props.Children to the accordian
  * @return {ReactNode} Accordian component
  */
 function CollapsibleArea({title, children}) {

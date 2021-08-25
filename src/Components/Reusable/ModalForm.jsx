@@ -59,17 +59,17 @@ const DialogActions = withStyles((theme) => ({
 
 /**
  * Renders the modal form component
- * @param {Object} obj {children,enableSaveButton,isopen,maxWidth,header,
+ * @param {Object} props {children,enableSaveButton,isopen,maxWidth,header,
  * toggle,savefunc,SaveButton=,...other}
- * @param {JSXElement} obj.children Child components to render inside modal body
- * @param {boolean} [obj.enableSaveButton=true]  enable save button in Modal
- * @param {boolean} obj.isopen show the modal
- * @param {string/bool} obj.maxWidth maximum width of the modal to render
- * @param {string} obj.header header/title of the modal
- * @param {function} obj.toggle function on toggling the modal (open/close)
- * @param {function} obj.SaveFunction function to call on save
- * @param {string} obj.SaveButton text in save button
- * @param {any} obj.other any other additional parameters you want to pass
+ * @param {JSXElement} props.children Child components to render inside modal body
+ * @param {boolean} [props.enableSaveButton=true]  enable save button in Modal
+ * @param {boolean} props.isopen show the modal
+ * @param {string/bool} props.maxWidth maximum width of the modal to render
+ * @param {string} props.header header/title of the modal
+ * @param {function} props.toggle function on toggling the modal (open/close)
+ * @param {function} props.SaveFunction function to call on save
+ * @param {string} props.SaveButton text in save button
+ * @param {any} props.other any other additional parameters you want to pass
  * @return {ReactNode} Modal form component
  */
 function ModalForm({

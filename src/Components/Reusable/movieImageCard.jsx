@@ -33,16 +33,16 @@ const useStyles = makeStyles((theme) => ({
 
 /**
  * Returns list item of movie object for horizontally scrollable list
- * @param {Object} obj {title, postersrc, rating,
+ * @param {Object} props {title, postersrc, rating,
  *   id, index, deleteItemFromGrid, customClick}
- * @param {string} obj.title Movie title
- * @param {string} obj.postersrc url of the src of the poster of the movie
- * @param {string/number} obj.rating rating of the movie
- * @param {string/number} obj.id imdb id of the movie to uniquely identify it
- * @param {any} obj.index unique index of the item in the dragdropcontext
- * @param {function} obj.deleteItemFromGrid callback to delete the item from
+ * @param {string} props.title Movie title
+ * @param {string} props.postersrc url of the src of the poster of the movie
+ * @param {string/number} props.rating rating of the movie
+ * @param {string/number} props.id imdb id of the movie to uniquely identify it
+ * @param {any} props.index unique index of the item in the dragdropcontext
+ * @param {function} props.deleteItemFromGrid callback to delete the item from
  * the list grid
- * @param {function} obj.customClick callback to onclick function to display
+ * @param {function} props.customClick callback to onclick function to display
  * movie meta on clicking movie
  * @return {ReactNode} HorizontalScrollList Component that allows
  * list of children to be horizontally scrollable.
@@ -92,9 +92,9 @@ MovieImageItem.propTypes = {
 export default MovieImageItem;
 /**
  * Movie card title
- * @param {Object} obj {title, rating}
- * @param {string} obj.title title of the card to be returned
- * @param {string/number} obj.rating rating of the movie
+ * @param {Object} props {title, rating}
+ * @param {string} props.title title of the card to be returned
+ * @param {string/number} props.rating rating of the movie
  * @return {ReactNode} title for the image
  */
 function ItemTitle({title, rating}) {

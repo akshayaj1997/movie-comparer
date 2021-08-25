@@ -5,13 +5,13 @@ import PropTypes from 'prop-types';
 /**
  *
  *
- * @param {Object} obj {text, size, color, variant, onClick, ...other}
- * @param {string} obj.text text value to be passed to component display
- * @param {string} obj.size size of the button to be rendered
- * @param {string} obj.color color of the button
- * @param {string} obj.variant type of the button to render
- * @param {function} obj.onClick functionality to be triggered on onClick
- * @param {any}  obj.other any other additional parameters you want to pass
+ * @param {Object} props {text, size, color, variant, onClick, ...other}
+ * @param {string} props.text text value to be passed to component display
+ * @param {string} props.size size of the button to be rendered
+ * @param {string} props.color color of the button
+ * @param {string} props.variant type of the button to render
+ * @param {function} props.onClick functionality to be triggered on onClick
+ * @param {any}  props.other any other additional parameters you want to pass
  * @return {ReactNode} reusable button
  */
 function Button({text, size, color, variant, onClick, ...other}) {
