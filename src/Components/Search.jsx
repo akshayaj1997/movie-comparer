@@ -1,7 +1,7 @@
 import React, {useState} from 'react';
-import SearchBar from '../Components/Reusable/searchBar';
+import SearchBar from './Reusable/SearchBar';
 import axios from 'axios';
-import MovieMetaData from '../Components/Reusable/metaData';
+import MovieMetaData from './Reusable/MetaData';
 import PropTypes from 'prop-types';
 /**
  * Renders the movie search component to be rendered in the modal form
@@ -9,6 +9,8 @@ import PropTypes from 'prop-types';
  */
 function SearchComponent({sendMovieData}) {
   const [movieDisplay, setMovieDisplay] = useState({});
+  const [movieOpen, setMovieOpen] = useState(false);
+  const loading = JSON.stringify(movieDisplay) !== JSON.stringify({});
   /**
    * props callback to display movie
    * @param {Object} movie
@@ -27,7 +29,7 @@ function SearchComponent({sendMovieData}) {
      */
   return (<>
     <SearchBar movieDisplay={setMovie}/>
-    {JSON.stringify(movieDisplay) !== JSON.stringify({})?
+    {loading ?
     <MovieMetaData movie={movieDisplay}/>:<></>}
   </>);
 }

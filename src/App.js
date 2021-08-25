@@ -1,7 +1,7 @@
 import React from 'react';
 import './App.css';
-import ErrorBoundary from './Pages/errorBoundary';
-import MoviePage from './Pages/moviePage';
+import ErrorBoundary from './Pages/ErrorBoundary';
+import MoviePage from './Pages/MoviePage';
 
 /**
  * SPA application root for an application that compares movies by graphing the

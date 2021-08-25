@@ -3,9 +3,9 @@ import Button from '../Components/Reusable/Button';
 import ModalForm from '../Components/Reusable/ModalForm';
 import AddCircleOutlineIcon from '@material-ui/icons/AddCircleOutline';
 import {DragDropContext} from 'react-beautiful-dnd';
-import MovieList from './movieList';
-import SearchComponent from './search';
-import MovieGrid from './movieGrid';
+import MovieList from '../Components/MovieList';
+import SearchComponent from '../Components/Search';
+import MovieGrid from '../Components/MovieGrid';
 import {Grid} from '@material-ui/core';
 import {Alert} from '@material-ui/lab';
 /**

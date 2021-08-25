@@ -61,7 +61,7 @@ const DialogActions = withStyles((theme) => ({
  * Renders the modal form component
  * @param {Object} props {children,enableSaveButton,isopen,maxWidth,header,
  * toggle,savefunc,SaveButton=,...other}
- * @param {JSXElement} props.children Child components to render inside modal body
+ * @param {JSXElement} props.children Children to render inside modal body
  * @param {boolean} [props.enableSaveButton=true]  enable save button in Modal
  * @param {boolean} props.isopen show the modal
  * @param {string/bool} props.maxWidth maximum width of the modal to render

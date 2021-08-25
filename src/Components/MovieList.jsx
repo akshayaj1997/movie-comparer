@@ -6,11 +6,11 @@ import {Droppable} from 'react-beautiful-dnd';
 import {Button, Grid, Paper} from '@material-ui/core';
 import {makeStyles} from '@material-ui/core/styles';
 import ImageList from '@material-ui/core/ImageList';
-import MovieImageItem from '../Components/Reusable/movieImageCard';
+import MovieImageItem from './Reusable/MovieImageCard';
 import {useRef} from 'react';
 import {ArrowBackIos, ArrowForwardIos} from '@material-ui/icons';
-import ModalForm from '../Components/Reusable/ModalForm';
-import MovieMetaData from '../Components/Reusable/metaData';
+import ModalForm from './Reusable/ModalForm';
+import MovieMetaData from './Reusable/MetaData';
 
 const useStyles = makeStyles((theme) => ({
   root: {

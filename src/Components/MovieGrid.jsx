@@ -4,10 +4,10 @@ import React, {useState, useEffect} from 'react';
 import PropTypes from 'prop-types';
 import {Droppable} from 'react-beautiful-dnd';
 import {Container, Grid, List, Paper} from '@material-ui/core';
-import MovieBarGraph from '../Components/Reusable/BarGraph';
+import MovieBarGraph from './Reusable/BarGraph';
 import {makeStyles} from '@material-ui/core/styles';
-import MovieCard from '../Components/Reusable/movieCard';
-import MovieChip from '../Components/Reusable/MovieChip';
+import MovieCard from './Reusable/MovieCard';
+import MovieChip from './Reusable/MovieChip';
 
 const useStyles = makeStyles((theme) => ({
   list: {
@@ -37,7 +37,7 @@ const useStyles = makeStyles((theme) => ({
 /**
  * Renders movies which are being compared and the comparision graph
  * @param {Object} props {deleteItemFromGrid, movies}
- * @param {function} props.deleteItemFromGrid: callback to delete movie from grid
+ * @param {function} props.deleteItemFromGrid:callback to delete movie from grid
  * @param {Array} props.movie array of the movie objects to be rendered in grid
  * @return {ReactNode} returns movie grid component
  */

@@ -43,7 +43,13 @@ class ErrorBoundary extends React.Component {
   render() {
     if (this.state.hasError) {
       <>
-        <ModalForm ></ModalForm> <img src={require('../Fallback.png')}/></>;
+        <ModalForm enableSaveButton={false} isopen={this.state.hasError}
+          header={'Error Occurred'} toggle={()=>{
+            this.setState({...this.state, hasError: !this.state.hasError});
+          }}>
+          {this.state.errorInfo}
+        </ModalForm>
+        <img src={require('../Fallback.png')}/></>;
     }
 
     return this.props.children;
