@@ -47,6 +47,7 @@ const DialogTitle = withStyles(styles)((props) => {
 const DialogContent = withStyles((theme) => ({
   root: {
     padding: theme.spacing(3),
+    height: '60vh',
   },
 }))(MuiDialogContent);
 

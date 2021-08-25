@@ -9,13 +9,14 @@ import {makeStyles} from '@material-ui/core/styles';
 import MovieCard from './Reusable/MovieCard';
 import MovieChip from './Reusable/MovieChip';
 
-const useStyles = makeStyles((theme) => ({
+const useStyles = makeStyles(() => ({
   list: {
-    display: 'flex',
-    overflow: 'scroll',
+    display: 'inline-block',
+    overflow: 'auto',
     justifyContent: 'center',
-    marginInlineEnd: '10vw',
-    marginInlineStart: '10vw',
+    width: '70vw',
+    padding: '2vw',
+    zIndex: 10,
   },
   paper: {
     backgroundColor: (props) => props.isDraggingOver? 'lightgrey': '#f8f9fa',
@@ -87,7 +88,7 @@ function MovieGrid({deleteItemFromGrid, movies}) {
               </List>:<></>}
               <br/>
               <Container style={{height: '45vh'}}>
-                <MovieBarGraph data={movies}/>
+                <MovieBarGraph data={movies} isLargeScreen={isDesktop}/>
               </Container>
               <br/>
               {provided.placeholder}

@@ -1,6 +1,5 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import ModalForm from '../Components/Reusable/ModalForm';
 /**
  * Error boundary component that will catch all the errors and display the error
  */
@@ -11,7 +10,7 @@ class ErrorBoundary extends React.Component {
      */
   constructor(props) {
     super(props);
-    this.state = {hasError: false, errorInfo: ''};
+    this.state = {hasError: false};
   }
   /**
  * Update state so the next render will show the fallback UI.
@@ -29,10 +28,7 @@ class ErrorBoundary extends React.Component {
    * information about which component threw the error.
    */
   componentDidCatch(error, errorInfo) {
-    this.setState((prevState)=>({
-      ...prevState,
-      errorInfo: `${error},${errorInfo}`,
-    }));
+    console.log(error, errorInfo);
   }
   /**
    * render Render a React element into the DOM in the supplied
@@ -43,12 +39,7 @@ class ErrorBoundary extends React.Component {
   render() {
     if (this.state.hasError) {
       <>
-        <ModalForm enableSaveButton={false} isopen={this.state.hasError}
-          header={'Error Occurred'} toggle={()=>{
-            this.setState({...this.state, hasError: !this.state.hasError});
-          }}>
-          {this.state.errorInfo}
-        </ModalForm>
+
         <img src={require('../Fallback.png')}/></>;
     }
 

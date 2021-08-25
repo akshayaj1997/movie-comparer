@@ -25,7 +25,7 @@ const useStyles = makeStyles((theme) => ({
     flexWrap: 'nowrap',
   },
   paper: {
-    backgroundColor: (props) => props.isDraggingOver? 'lightgray':'white',
+    backgroundColor: (props) => props.isDraggingOver? 'lightgray':'#f8f9fa',
     width: '70vw',
     height: '30vh',
     justifyContent: 'center',
@@ -50,7 +50,6 @@ function MovieList({deleteItemFromGrid, columnId, movies}) {
   const deleteFromGrid = (item) => {
     deleteItemFromGrid(item);
   };
-
   const handleScrollButtonOnClick = (offset) => {
     const scrollByVal = (window.innerWidth*offset)/100;
     if (scrollingListRef.current) {
@@ -70,16 +69,16 @@ function MovieList({deleteItemFromGrid, columnId, movies}) {
         }}>
         <MovieMetaData movie={movieData}/>
       </ModalForm>
-      <Button onClick={()=>handleScrollButtonOnClick(-50)}>
-        <ArrowBackIos/></Button>
       <Droppable droppableId= {columnId}
         direction='horizontal'>
         {(provided, snapshot)=>
-          <Paper elevation={10}
+          <Paper elevation={0}
             className=
               {useStyles({isDraggingOver: snapshot.isDraggingOver}).paper}
             ref={provided.innerRef}
             {...provided.droppableProps}>
+            <Button onClick={()=>handleScrollButtonOnClick(-50)}>
+              <ArrowBackIos/></Button>
             <ImageList
               className=
                 {classes.imageList}
@@ -100,11 +99,11 @@ function MovieList({deleteItemFromGrid, columnId, movies}) {
               ))}
               {provided.placeholder}
             </ImageList>
+            <Button onClick={()=>handleScrollButtonOnClick(50)}>
+              <ArrowForwardIos/></Button>
           </Paper>
         }
       </Droppable>
-      <Button onClick={()=>handleScrollButtonOnClick(50)}>
-        <ArrowForwardIos/></Button>
     </Grid>);
 }
 

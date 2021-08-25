@@ -33,13 +33,11 @@ function SearchBar({movieDisplay}) {
   return (
     <Autocomplete
       id="search-component"
-      style={{width: '100%'}}
+      style={{width: '80%'}}
       open={open}
       onOpen={() => {
         setOpen(true);
       }}
-      autoSelect
-      autoHighlight
       onClose={() => {
         setOpen(false);
       }}

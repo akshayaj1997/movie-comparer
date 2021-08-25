@@ -15,7 +15,6 @@ import {Chip} from '@material-ui/core';
  * @return {ReactNode} Card component with the data provided in props
  */
 function MovieChip({title, id, deleteItem, index}) {
-// const classes = useStyles();
   return (
     <Draggable draggableId={id} index={index}>
       {(provided, snapshot)=>(

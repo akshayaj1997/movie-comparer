@@ -9,7 +9,7 @@ import {useState, useEffect} from 'react';
  * @param {Array} data array of the movies compared in graphical form
  * @return {ReactNode} Graph Component comparing movies based on IMDb Rating
  */
-const MovieBarGraph = ({data: movies}) => {
+const MovieBarGraph = ({data: movies, isLargeScreen}) => {
   const [ratings, setRatings] = useState([]);
   const keys = ['imdbRating'];
   useEffect(()=>{
@@ -44,12 +44,12 @@ const MovieBarGraph = ({data: movies}) => {
     layout={'horizontal'}
     enableGridX
     enableGridY={false}
-    enableLabel
+    enableLabel={isLargeScreen}
     minValue={0}
     maxValue={10}
     borderRadius={4}
     label={(d) => `${d.id}: ${d.value}`}
-    labelSkipWidth={1}
+    labelSkipHeight={0}
     padding={0.5}
     margin= {{top: 60, right: 200, bottom: 60, left: 150}}
     axisBottom={{
@@ -60,7 +60,7 @@ const MovieBarGraph = ({data: movies}) => {
       legendPosition: 'middle',
       legendOffset: 45,
     }}
-    legendLabel={(datum) => `${datum.id} (${datum.value})`}
+    legendLabel={(datum) => `${datum.id}`}
     axisLeft={{
       tickSize: 5,
       tickPadding: 10,
@@ -89,7 +89,7 @@ const MovieBarGraph = ({data: movies}) => {
     tooltip={({id, value, data, color}) => (
       <div
         style={{
-          padding: 12,
+          padding: 6,
           color,
           background: '#222222',
         }}
@@ -109,6 +109,7 @@ const MovieBarGraph = ({data: movies}) => {
 
 MovieBarGraph.propTypes = {
   data: PropTypes.arrayOf(PropTypes.object),
+  isLargeScreen: PropTypes.bool.isRequired,
 };
 
 export default MovieBarGraph;

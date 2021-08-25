@@ -14,13 +14,15 @@ import AccordionDetails from '@material-ui/core/AccordionDetails';
 import Star from '@material-ui/icons/Star';
 const useStyles = makeStyles((theme) => ({
   root: {
-    maxWidth: '100%',
+    maxWidth: '80%',
+    margin: '10%',
   },
   media: {
-    width: '100%',
-    height: '100%',
+    maxWidth: '80%',
+    height: '80%',
     paddingTop: '100%',
-    justifyContent: 'center',
+    margin: '10%',
+    alignContent: 'center',
   },
   expand: {
     transform: 'rotate(0deg)',
@@ -116,10 +118,8 @@ function MovieMetaData({movie}) {
         <Grid container direction='row' alignItems='center'>
           <Box display='flex' flexDirection='row'>
             {Ratings?.map((rating)=>
-              <RatingCard key={rating.Source} rating={rating.Value} width='25%'
+              <RatingCard key={rating.Source} rating={rating.Value}
                 source={rating.Source}/>)}
-            <RatingCard rating={imdbRating} width='25%'
-              source={'IMDb'}/>
           </Box>
         </Grid>
       </CollapsibleArea>
@@ -161,7 +161,7 @@ const useAccordianStyles = makeStyles((theme) => ({
     width: '100%',
   },
   heading: {
-    fontSize: theme.typography.pxToRem(15),
+    fontSize: '1.25vw',
     fontWeight: theme.typography.fontWeightRegular,
   },
 }));
@@ -198,12 +198,12 @@ CollapsibleArea.propTypes = {
 };
 
 const RatingCard = ({rating, source, votes, width}) => {
-  return (<Card style={{width: width}}>
+  return (<Card style={{maxWidth: width}}>
     <CardContent>
       <Typography variant='h5' gutterBottom>
         <Star/> {rating}</Typography>
       {votes?<Typography> {votes}</Typography>:<></>}
-      <Typography variant='h6' gutterBottom>{source}</Typography>
+      {source}
     </CardContent>
   </Card>);
 };

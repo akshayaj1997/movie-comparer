@@ -9,7 +9,6 @@ import PropTypes from 'prop-types';
  */
 function SearchComponent({sendMovieData}) {
   const [movieDisplay, setMovieDisplay] = useState({});
-  const [movieOpen, setMovieOpen] = useState(false);
   const loading = JSON.stringify(movieDisplay) !== JSON.stringify({});
   /**
    * props callback to display movie
