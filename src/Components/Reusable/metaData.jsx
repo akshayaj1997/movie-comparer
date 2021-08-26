@@ -12,6 +12,7 @@ import Accordion from '@material-ui/core/Accordion';
 import AccordionSummary from '@material-ui/core/AccordionSummary';
 import AccordionDetails from '@material-ui/core/AccordionDetails';
 import Star from '@material-ui/icons/Star';
+import {Skeleton} from '@material-ui/lab';
 const useStyles = makeStyles((theme) => ({
   root: {
     maxWidth: '80%',
@@ -33,12 +34,6 @@ const useStyles = makeStyles((theme) => ({
   },
   expandOpen: {
     transform: 'rotate(180deg)',
-  },
-  avatar: {
-    backgroundColor: 'Green',
-    fontSize: 15,
-    width: theme.spacing(5),
-    height: theme.spacing(5),
   },
 }));
 /**
@@ -98,21 +93,19 @@ function MovieMetaData({movie}) {
         <Divider variant = 'fullWidth' />
       </CardContent>
       <CollapsibleArea title='Details'>
-        <Typography paragraph gutterBottom>
-          <b>Release Date </b> {Released}
-          <Divider variant='fullWidth'/>
-          <b>Countries of Origin </b> {Country?.split(',')?.map((el) => (el))}
-          <Divider variant='fullWidth'/>
-          <b>Official Websites </b> {Website?.split(',')?.map((el)=>(el))}
-          <Divider variant='fullWidth'/>
-          <b>Production Companies</b> {Production?.split(',')?.map((el)=>(el))}
-          <Divider variant='fullWidth'/>
-          <b>Box Office </b> {BoxOffice}
-          <Divider variant='fullWidth'/>
-          <b>Awards </b> {Awards}
-          <Divider variant='fullWidth'/>
-          <b>DVD Release</b> {DVD}
-        </Typography>
+        <b>Release Date </b> {Released}
+        <Divider variant='fullWidth'/>
+        <b>Countries of Origin </b> {Country?.split(',')?.map((el) => (el))}
+        <Divider variant='fullWidth'/>
+        <b>Official Websites </b> {Website?.split(',')?.map((el)=>(el))}
+        <Divider variant='fullWidth'/>
+        <b>Production Companies</b> {Production?.split(',')?.map((el)=>(el))}
+        <Divider variant='fullWidth'/>
+        <b>Box Office </b> {BoxOffice}
+        <Divider variant='fullWidth'/>
+        <b>Awards </b> {Awards}
+        <Divider variant='fullWidth'/>
+        <b>DVD Release</b> {DVD}
       </CollapsibleArea>
       <CollapsibleArea title = 'Ratings'>
         <Grid container direction='row' alignItems='center'>
@@ -123,7 +116,7 @@ function MovieMetaData({movie}) {
           </Box>
         </Grid>
       </CollapsibleArea>
-    </Card>: <></>
+    </Card>: <Skeleton/>
   );
 }
 MovieMetaData.propTypes = {
@@ -159,9 +152,11 @@ HeaderSubtitle.propTypes = {
 const useAccordianStyles = makeStyles((theme) => ({
   root: {
     width: '100%',
+    display: 'block',
+    fontSize: '1.1em',
   },
   heading: {
-    fontSize: '1.25vw',
+    fontSize: '1vw',
     fontWeight: theme.typography.fontWeightRegular,
   },
 }));
@@ -183,10 +178,8 @@ function CollapsibleArea({title, children}) {
       >
         <Typography className={classes.heading}><b>{title}</b></Typography>
       </AccordionSummary>
-      <AccordionDetails>
-        <Typography>
-          {children}
-        </Typography>
+      <AccordionDetails className={classes.root}>
+        {children}
       </AccordionDetails>
     </Accordion>
   </div>);
@@ -200,9 +193,10 @@ CollapsibleArea.propTypes = {
 const RatingCard = ({rating, source, votes, width}) => {
   return (<Card style={{maxWidth: width}}>
     <CardContent>
-      <Typography variant='h5' gutterBottom>
-        <Star/> {rating}</Typography>
-      {votes?<Typography> {votes}</Typography>:<></>}
+      <Star/> {rating}
+      <br/>
+      {votes?<i>{votes}</i>:<></>}
+      <br/>
       {source}
     </CardContent>
   </Card>);

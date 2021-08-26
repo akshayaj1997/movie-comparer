@@ -51,7 +51,10 @@ function MovieList({deleteItemFromGrid, columnId, movies}) {
     deleteItemFromGrid(item);
   };
   const handleScrollButtonOnClick = (offset) => {
-    const scrollByVal = (window.innerWidth*offset)/100;
+    const scrollByVal = scrollingListRef.current.scrollWidth >
+    window.innerWidth*0.7?
+    (window.innerWidth*offset)/100 :
+    (scrollingListRef.current.scrollWidth*offset)/100;
     if (scrollingListRef.current) {
       scrollingListRef.current.scroll(
           {left: scrollingListRef.current.scrollLeft+scrollByVal,

@@ -47,7 +47,6 @@ const DialogTitle = withStyles(styles)((props) => {
 const DialogContent = withStyles((theme) => ({
   root: {
     padding: theme.spacing(3),
-    height: '60vh',
   },
 }))(MuiDialogContent);
 
@@ -145,7 +144,7 @@ ModalForm.propTypes = {
   header: PropTypes.string,
   savefunc: PropTypes.func,
   toggle: PropTypes.func,
-  SaveButton: PropTypes.string.isRequired,
+  SaveButton: PropTypes.string,
   other: PropTypes.any,
 };
 export default ModalForm;

@@ -15,6 +15,7 @@ import PropTypes from 'prop-types';
 function SearchBar({movieDisplay}) {
   const [open, setOpen] = React.useState(false);
   const [options, setOptions] = React.useState([]);
+  const [noOptionsText, setNoOptionsText] = React.useState('No Options');
   const loading = open && options.length === 0;
   const handleSearchChange = async (value) => {
     const response = await axios.get(`https://www.omdbapi.com/?apikey=15bcf215&s=${value}&r=json`);
@@ -22,6 +23,7 @@ function SearchBar({movieDisplay}) {
     const movies = responseData.Response==='True' ? (response.data?.Search) :
                     [];
     setOptions(movies);
+    if (options.length === 0) setNoOptionsText(responseData.Error);
   };
 
   React.useEffect(() => {
@@ -41,8 +43,10 @@ function SearchBar({movieDisplay}) {
       onClose={() => {
         setOpen(false);
       }}
+      noOptionsText={noOptionsText}
       freeSolo
-      getOptionSelected={(option, value) => option.name === value.name}
+      openOnFocus
+      getOptionSelected={(option, value) => option.Title === value.Title}
       getOptionLabel={(option) => option.Title}
       options={options}
       loading={loading}

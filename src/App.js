@@ -1,7 +1,8 @@
 import React from 'react';
 import './App.css';
-import ErrorBoundary from './Pages/ErrorBoundary';
+import {ErrorBoundary} from 'react-error-boundary';
 import MoviePage from './Pages/MoviePage';
+import errorBoundaryHandler from './Components/errorBoundaryHandler';
 
 /**
  * SPA application root for an application that compares movies by graphing the
@@ -15,7 +16,7 @@ import MoviePage from './Pages/MoviePage';
  */
 function App() {
   return (
-    <ErrorBoundary>
+    <ErrorBoundary FallbackComponent={errorBoundaryHandler}>
       <div className="App">
         <MoviePage/>
       </div>

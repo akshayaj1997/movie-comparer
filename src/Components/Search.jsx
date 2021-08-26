@@ -3,21 +3,26 @@ import SearchBar from './Reusable/SearchBar';
 import axios from 'axios';
 import MovieMetaData from './Reusable/MetaData';
 import PropTypes from 'prop-types';
+import MovieMetaDataSkeleton from './Reusable/CardSkeleton';
 /**
  * Renders the movie search component to be rendered in the modal form
  * @return {ReactNode} search component
  */
 function SearchComponent({sendMovieData}) {
   const [movieDisplay, setMovieDisplay] = useState({});
+  const [fetchInProgress, setFetchInProgress] = useState(false);
   const loading = JSON.stringify(movieDisplay) !== JSON.stringify({});
   /**
    * props callback to display movie
    * @param {Object} movie
    */
   async function setMovie(movie) {
+    setFetchInProgress(true);
+    setMovieDisplay({});
     const response = await axios.get(`https://www.omdbapi.com/?apikey=15bcf215&i=${movie.imdbID}&r=json`);
     const movies = await response.data;
-    if (response.data.Response) sendMovieData(response.data);
+    setFetchInProgress(false);
+    if (movies.Response === 'True') sendMovieData(response.data);
     setMovieDisplay(movies);
   }
   /**
@@ -29,7 +34,8 @@ function SearchComponent({sendMovieData}) {
   return (<>
     <SearchBar movieDisplay={setMovie}/>
     {loading ?
-    <MovieMetaData movie={movieDisplay}/>:<></>}
+    <MovieMetaData movie={movieDisplay}/>:fetchInProgress?
+    <MovieMetaDataSkeleton/>:<></>}
   </>);
 }
 
