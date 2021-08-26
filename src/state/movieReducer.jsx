@@ -1,3 +1,4 @@
+/* eslint-disable require-jsdoc */
 import {createStore} from 'redux';
 export const DELETE_FROM_LIST = 'DELETE_FROM_LIST';
 export const DELETE_FROM_GRID = 'DELETE_FROM_GRID';
@@ -21,7 +22,7 @@ export const initialState = {
   },
   columnOrder: ['movies-grid', 'movies-list'],
 };
-export const moviesReducer = (state = initialState, action) => {
+export function moviesReducer(state = initialState, action) {
   switch (action.type) {
     case DELETE_FROM_GRID:
     {
@@ -49,36 +50,40 @@ export const moviesReducer = (state = initialState, action) => {
           ,
         }};}
     case ADD_MOVIE:
-      return {
-        ...state,
-        movies: [...state.movies, action.payload],
-        columns: {
-          ...state.columns,
-          'movies-list': {...state.columns['movies-list'],
-            movies: [...state.columns['movies-list'].movies,
-              action.payload?.imdbID]}
-          ,
-        },
-      };
+      {
+        alert(JSON.stringify(action.payload));
+        return {
+          ...state,
+          movies: [...state.movies, action.payload],
+          columns: {
+            ...state.columns,
+            'movies-list': {...state.columns['movies-list'],
+              movies: [...state.columns['movies-list'].movies,
+                action.payload?.imdbID]}
+            ,
+          },
+        };};
     case ON_DRAG_END: {
-      if (!payload.destination) {
+      if (!action.payload.destination) {
         return state;
       }
 
       if (
-        payload.destination.droppableId === payload.source.droppableId &&
-            payload.destination.index === payload.source.index
+        action.payload.destination.droppableId ===
+        action.payload.source.droppableId &&
+            action.payload.destination.index === action.payload.source.index
       ) {
         return state;
       }
 
-      const start = state.columns[payload.source.droppableId];
-      const finish = state.columns[payload.destination.droppableId];
+      const start = state.columns[action.payload.source.droppableId];
+      const finish = state.columns[action.payload.destination.droppableId];
 
       if (start === finish) {
         const newMovies = Array.from(start.movies);
-        newMovies.splice(payload.source.index, 1);
-        newMovies.splice(payload.destination.index, 0, payload.draggableId);
+        newMovies.splice(action.payload.source.index, 1);
+        newMovies.splice(action.payload.destination.index, 0,
+            action.payload.draggableId);
 
         const newColumn = {
           ...start,
@@ -99,14 +104,15 @@ export const moviesReducer = (state = initialState, action) => {
      * Moving movie object from one grid to list or vice-versa
     */
       const startMovies = Array.from(start.movies);
-      startMovies.splice(payload.source.index, 1);
+      startMovies.splice(action.payload.source.index, 1);
       const newStart = {
         ...start,
         movies: startMovies,
       };
 
       const finishMovies = Array.from(finish.movies);
-      finishMovies.splice(payload.destination.index, 0, payload.draggableId);
+      finishMovies.splice(action.payload.destination.index, 0,
+          action.payload.draggableId);
       const newFinish = {
         ...finish,
         movies: finishMovies,
@@ -127,4 +133,4 @@ export const moviesReducer = (state = initialState, action) => {
   }
 };
 
-export const store = createStore(moviesReducer, intialState);
+export const store = createStore(moviesReducer);

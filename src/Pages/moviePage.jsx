@@ -1,3 +1,4 @@
+/* eslint-disable react/prop-types */
 import React, {Component} from 'react';
 import Button from '../Components/Reusable/Button';
 import ModalForm from '../Components/Reusable/ModalForm';
@@ -8,6 +9,7 @@ import SearchComponent from '../Components/Search';
 import MovieGrid from '../Components/MovieGrid';
 import {Grid} from '@material-ui/core';
 import {Alert} from '@material-ui/lab';
+import {connect} from 'react-redux';
 /**
  * Movie Page component
  */
@@ -20,23 +22,9 @@ class MoviePage extends Component {
     super(props);
     this.state = {
       openModal: false,
-      movies: [],
-      movieData: {},
       errorMsg: '',
       showError: false,
-      columns: {
-        'movies-list': {
-          id: 'movies-list',
-          title: 'Movies',
-          movies: [],
-        },
-        'movies-grid': {
-          id: 'movies-grid',
-          title: 'Movies',
-          movies: [],
-        },
-      },
-      columnOrder: ['movies-grid', 'movies-list'],
+      movieData: {},
     };
     this.toggle = this.toggle.bind(this);
     this.onAddClick = this.onAddClick.bind(this);
@@ -51,19 +39,7 @@ class MoviePage extends Component {
    * @param {string} itemId the item that needs to be deleted
    */
   deleteFromGrid(itemId) {
-    const movies = this.state.movies;
-    const colMovies = this.state.columns['movies-grid'].movies;
-    const newState = {
-      ...this.state,
-      movies: movies.filter((el)=> el.imdbID !== itemId),
-      columns: {
-        ...this.state.columns,
-        'movies-grid': {...this.state.columns['movies-grid'],
-          movies: colMovies.filter((el)=> el !== itemId)}
-        ,
-      },
-    };
-    this.setState(newState);
+    this.props.deleteFromGrid(itemId);
   }
 
   /**
@@ -71,19 +47,7 @@ class MoviePage extends Component {
    * @param {string} itemId the item that needs to be deleted
    */
   deleteFromList(itemId) {
-    const movies = this.state.movies;
-    const colMovies = this.state.columns['movies-list'].movies;
-    const newState = {
-      ...this.state,
-      movies: movies.filter((el)=> el.imdbID !== itemId),
-      columns: {
-        ...this.state.columns,
-        'movies-list': {...this.state.columns['movies-list'],
-          movies: colMovies.filter((el)=> el !== itemId)}
-        ,
-      },
-    };
-    this.setState(newState);
+    this.props.deleteFromList(itemId);
   }
   /**
    * Opens the modal box to add the movie
@@ -105,7 +69,7 @@ class MoviePage extends Component {
  */
   onSaveClick() {
     const moviesData = this.state.movieData;
-    if (this.state.movies
+    if (this.props.movies
         .findIndex((el)=> moviesData?.imdbID === el.imdbID) >= 0) {
       this.setState({...this.state,
         errorMsg: 'This movie already exists in the comparitive list.',
@@ -117,20 +81,7 @@ class MoviePage extends Component {
         errorMsg: 'There is no comparable rating on this movie.',
         showError: true}); return;
     };
-    const newState = {
-      ...this.state,
-      errorMsg: '',
-      showError: false,
-      movies: [...this.state.movies, moviesData],
-      columns: {
-        ...this.state.columns,
-        'movies-list': {...this.state.columns['movies-list'],
-          movies: [...this.state.columns['movies-list'].movies,
-            moviesData?.imdbID]}
-        ,
-      },
-    };
-    this.setState(newState);
+    this.props.addMovie(moviesData);
     this.toggle();
   }
   /**
@@ -139,70 +90,7 @@ class MoviePage extends Component {
   * and dropping
   */
   onDragEnd(result) {
-    const {destination, source, draggableId} = result;
-
-    if (!destination) {
-      return;
-    }
-
-    if (
-      destination.droppableId === source.droppableId &&
-      destination.index === source.index
-    ) {
-      return;
-    }
-
-    const start = this.state.columns[source.droppableId];
-    const finish = this.state.columns[destination.droppableId];
-
-    if (start === finish) {
-      const newMovies = Array.from(start.movies);
-      newMovies.splice(source.index, 1);
-      newMovies.splice(destination.index, 0, draggableId);
-
-      const newColumn = {
-        ...start,
-        movies: newMovies,
-      };
-
-      const newState = {
-        ...this.state,
-        columns: {
-          ...this.state.columns,
-          [newColumn.id]: newColumn,
-        },
-      };
-
-      this.setState(newState);
-      return;
-    }
-
-    /**
-     * Moving movie object from one grid to list or vice-versa
-    */
-    const startMovies = Array.from(start.movies);
-    startMovies.splice(source.index, 1);
-    const newStart = {
-      ...start,
-      movies: startMovies,
-    };
-
-    const finishMovies = Array.from(finish.movies);
-    finishMovies.splice(destination.index, 0, draggableId);
-    const newFinish = {
-      ...finish,
-      movies: finishMovies,
-    };
-
-    const newState = {
-      ...this.state,
-      columns: {
-        ...this.state.columns,
-        [newStart.id]: newStart,
-        [newFinish.id]: newFinish,
-      },
-    };
-    this.setState(newState);
+    this.props.onDragEnd(result);
   };
 
   /**
@@ -236,10 +124,10 @@ class MoviePage extends Component {
             <SearchComponent sendMovieData= {this.receiveMovieData}/>
           </ModalForm>
           <h1>Movie Comparer</h1>
-          {this.state.columnOrder.map((columnId) => {
-            const column = this.state.columns[columnId];
+          {this.props.columnOrder.map((columnId) => {
+            const column = this.props.columns[columnId];
             const movies = column.movies.map((movie) =>
-              this.state.movies.find((el) => el.imdbID === movie));
+              this.props.movies.find((el) => el.imdbID === movie));
 
             return <div key={column.id}>{columnId==='movies-list'?
           <MovieList movies={movies}
@@ -258,4 +146,20 @@ class MoviePage extends Component {
   }
 }
 
-export default MoviePage;
+const mapStateToProps = (state) =>({
+  movies: state.movies,
+  movieData: state.movieData,
+  columns: state.columns,
+  columnOrder: state.columnOrder,
+});
+const mapDispatchToProps = (dispatch) => ({
+  deleteFromList: (itemId) => dispatch({type: 'DELETE_FROM_LIST',
+    payload: itemId}),
+  deleteFromGrid: (itemId) => dispatch({type: 'DELETE_FROM_GRID',
+    payload: itemId}),
+  addMovie: (movie) => dispatch({type: 'ADD_MOVIE',
+    payload: movie}),
+  onDragEnd: (result) => dispatch({type: 'ON_DRAG_END', payload: result}),
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(MoviePage);
