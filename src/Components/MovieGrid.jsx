@@ -8,6 +8,9 @@ import MovieBarGraph from './Reusable/BarGraph';
 import {makeStyles} from '@material-ui/core/styles';
 import MovieCard from './Reusable/MovieCard';
 import MovieChip from './Reusable/MovieChip';
+import {useDispatch, useSelector} from 'react-redux';
+import {createSelector} from 'reselect';
+
 
 const useStyles = makeStyles(() => ({
   list: {
@@ -42,8 +45,16 @@ const useStyles = makeStyles(() => ({
  * @param {Array} props.movie array of the movie objects to be rendered in grid
  * @return {ReactNode} returns movie grid component
  */
-function MovieGrid({deleteItemFromGrid, movies}) {
+function MovieGrid({columnId}) {
   const [isDesktop, setDesktop] = useState(window.innerWidth > 1450);
+  const dispatch = useDispatch();
+  const moviesIds = (state)=>state.columns[columnId].movies;
+  const moviesData = (state)=>state.movies;
+
+  const selectMovies = createSelector([moviesData, moviesIds], (a, b)=> {
+    return a.filter((movie)=> b.includes(movie.imdbID));
+  });
+  const movies = useSelector(selectMovies);
 
   const updateMedia = () => {
     setDesktop(window.innerWidth > 1450);
@@ -55,7 +66,8 @@ function MovieGrid({deleteItemFromGrid, movies}) {
   });
   const classes = useStyles();
   const deleteItem =(itemId) =>{
-    deleteItemFromGrid(itemId);
+    dispatch({type: 'DELETE_FROM_GRID',
+      payload: itemId});
   };
   return (
     <>
@@ -100,8 +112,7 @@ function MovieGrid({deleteItemFromGrid, movies}) {
 }
 
 MovieGrid.propTypes = {
-  movies: PropTypes.arrayOf(PropTypes.object).isRequired,
-  deleteItemFromGrid: PropTypes.func.isRequired,
+  columnId: PropTypes.string.isRequired,
 };
 
 export default MovieGrid;

@@ -11,6 +11,8 @@ import {useRef} from 'react';
 import {ArrowBackIos, ArrowForwardIos} from '@material-ui/icons';
 import ModalForm from './Reusable/ModalForm';
 import MovieMetaData from './Reusable/MetaData';
+import {useDispatch, useSelector} from 'react-redux';
+import {createSelector} from 'reselect';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -42,13 +44,22 @@ const useStyles = makeStyles((theme) => ({
  * @param {string/number} props.columnId to uniquely identify the droppable area
  * @return {ReactNode} returns movie list component
  */
-function MovieList({deleteItemFromGrid, columnId, movies}) {
+function MovieList({columnId}) {
   const classes = useStyles();
   const scrollingListRef = useRef(null);
   const [openModal, setOpenModal] = useState(false);
   const [movieData, setMovieData] = useState({});
+  const dispatch = useDispatch();
+  const moviesIds = (state)=>state.columns[columnId].movies;
+  const moviesData = (state)=>state.movies;
+
+  const selectMovies = createSelector([moviesData, moviesIds], (a, b)=> {
+    return a.filter((movie)=> b.includes(movie.imdbID));
+  });
+  const movies = useSelector(selectMovies);
   const deleteFromGrid = (item) => {
-    deleteItemFromGrid(item);
+    dispatch({type: 'DELETE_FROM_LIST',
+      payload: item});
   };
   const handleScrollButtonOnClick = (offset) => {
     const scrollByVal = scrollingListRef.current.scrollWidth >
@@ -114,8 +125,6 @@ function MovieList({deleteItemFromGrid, columnId, movies}) {
 
 MovieList.propTypes = {
   columnId: PropTypes.any,
-  movies: PropTypes.arrayOf(PropTypes.object).isRequired,
-  deleteItemFromGrid: PropTypes.func.isRequired,
 };
 
 export default MovieList;

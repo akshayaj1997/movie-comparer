@@ -30,11 +30,11 @@ export function moviesReducer(state = initialState, action) {
       const colMovies = state.columns['movies-grid'].movies;
       return {
         ...state,
-        movies: movies.filter((el)=> el.imdbID !== itemId),
+        movies: movies.filter((el)=> el.imdbID !== action.payload),
         columns: {
           ...state.columns,
           'movies-grid': {...state.columns['movies-grid'],
-            movies: colMovies.filter((el)=> el !== itemId)}
+            movies: colMovies.filter((el)=> el !== action.payload)}
           ,
         }};}
     case DELETE_FROM_LIST: {
@@ -42,11 +42,11 @@ export function moviesReducer(state = initialState, action) {
       const colMovies = state.columns['movies-list'].movies;
       return {
         ...state,
-        movies: movies.filter((el)=> el.imdbID !== itemId),
+        movies: movies.filter((el)=> el.imdbID !== action.payload),
         columns: {
           ...state.columns,
           'movies-list': {...state.columns['movies-list'],
-            movies: colMovies.filter((el)=> el !== itemId)}
+            movies: colMovies.filter((el)=> el !== action.payload)}
           ,
         }};}
     case ADD_MOVIE:
