@@ -80,8 +80,9 @@ function MovieList({deleteItemFromGrid, columnId, movies}) {
               {useStyles({isDraggingOver: snapshot.isDraggingOver}).paper}
             ref={provided.innerRef}
             {...provided.droppableProps}>
+            {movies.length !== 0 &&
             <Button onClick={()=>handleScrollButtonOnClick(-50)}>
-              <ArrowBackIos/></Button>
+              <ArrowBackIos/></Button>}
             <ImageList
               className=
                 {classes.imageList}
@@ -102,8 +103,9 @@ function MovieList({deleteItemFromGrid, columnId, movies}) {
               ))}
               {provided.placeholder}
             </ImageList>
+            {movies.length !== 0 &&
             <Button onClick={()=>handleScrollButtonOnClick(50)}>
-              <ArrowForwardIos/></Button>
+              <ArrowForwardIos/></Button>}
           </Paper>
         }
       </Droppable>
