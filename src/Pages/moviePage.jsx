@@ -1,3 +1,4 @@
+/* eslint-disable react/prop-types */
 import React, {Component} from 'react';
 import Button from '../Components/Reusable/Button';
 import ModalForm from '../Components/Reusable/ModalForm';
@@ -9,7 +10,6 @@ import MovieGrid from '../Components/MovieGrid';
 import {Grid} from '@material-ui/core';
 import {Alert} from '@material-ui/lab';
 import {connect} from 'react-redux';
-import PropTypes from 'prop-types';
 /**
  * Movie Page component
  */
@@ -123,6 +123,7 @@ class MoviePage extends Component {
               {this.state.errorMsg}</Alert>:<></> }
             <SearchComponent sendMovieData= {this.receiveMovieData}/>
           </ModalForm>
+          <h1>Movie Comparer</h1>
           {this.props.columnOrder.map((columnId) => {
             const column = this.props.columns[columnId];
 
@@ -159,14 +160,3 @@ const mapDispatchToProps = (dispatch) => ({
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(MoviePage);
-
-MoviePage.propTypes = {
-  deleteFromList: PropTypes.func,
-  deleteFromGrid: PropTypes.func,
-  onDragEnd: PropTypes.func,
-  addMovie: PropTypes.func,
-  movies: PropTypes.arrayOf(PropTypes.object),
-  movieData: PropTypes.object,
-  columns: PropTypes.object,
-  columnOrder: PropTypes.array,
-};

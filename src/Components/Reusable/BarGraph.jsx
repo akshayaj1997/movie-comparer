@@ -77,6 +77,7 @@ const MovieBarGraph = ({data: movies, isLargeScreen, showMovie}) => {
         },
       }}
       onClick={({data})=>{
+        alert(data);
         showMovie(data);
       }}
       legends={[
