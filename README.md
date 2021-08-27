@@ -19,6 +19,7 @@ The page is divided into 2 parts + Search functionality:
 * * OMDb API (https://www.omdbapi.com/)
 
 ## User Guide 
+You can access the page to play around with it here (https://akshayaj1997.github.io/movie-comparer/)
 Download or clone the repository onto your system 
 #### Prerequisites
 Install NodeJS and npm (https://nodejs.org/en/download/)
@@ -349,9 +350,8 @@ Renders the movie search component to be rendered in the modal form
 
 ### Parameters
 
-*   `$0` **[Object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)** 
+*   `sendMovieData` **[Object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)** 
 
-    *   `$0.sendMovieData`  
 
 Returns **ReactNode** search component
 
