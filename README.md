@@ -24,8 +24,8 @@ Download or clone the repository onto your system
 Install NodeJS and npm (https://nodejs.org/en/download/)
 Check if the installation is successful via
 ``
-* * node -v
-* * npm -v
+ node -v
+ npm -v
 ``
 #### Install/ running
 
