@@ -1,10 +1,12 @@
-/* eslint-disable require-jsdoc */
 import {createStore} from 'redux';
 export const DELETE_FROM_LIST = 'DELETE_FROM_LIST';
 export const DELETE_FROM_GRID = 'DELETE_FROM_GRID';
 export const ADD_MOVIE = 'ADD_MOVIE';
 export const ON_DRAG_END = 'ON_DRAG_END';
 
+/**
+ * Initial state of the redux store.
+ */
 export const initialState = {
   movies: [],
   movieData: {},
@@ -22,6 +24,18 @@ export const initialState = {
   },
   columnOrder: ['movies-grid', 'movies-list'],
 };
+
+/**
+ * a reducer is a pure function that takes an action and the previous
+ * state of the application and returns the new state.
+ * In this case, it is taking in the state of the drag and drop context
+ * with the drag and drop results and returning the new drag and drop state
+ * of the application.
+ * @param {Object} state is the previous state of the redux store
+ * passed to the reducer
+ * @param {any} action is the action to be performed on the store.
+ * @return {Object} new state of the store to be used in the application
+ */
 export function moviesReducer(state = initialState, action) {
   switch (action.type) {
     case DELETE_FROM_GRID:
@@ -51,7 +65,6 @@ export function moviesReducer(state = initialState, action) {
         }};}
     case ADD_MOVIE:
       {
-        alert(JSON.stringify(action.payload));
         return {
           ...state,
           movies: [...state.movies, action.payload],

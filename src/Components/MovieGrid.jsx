@@ -40,9 +40,7 @@ const useStyles = makeStyles(() => ({
 }));
 /**
  * Renders movies which are being compared and the comparision graph
- * @param {Object} props {deleteItemFromGrid, movies}
- * @param {function} props.deleteItemFromGrid:callback to delete movie from grid
- * @param {Array} props.movie array of the movie objects to be rendered in grid
+ * @param {string/number} props.columnId to uniquely identify the droppable area
  * @return {ReactNode} returns movie grid component
  */
 function MovieGrid({columnId}) {
