@@ -1,7 +1,4 @@
-
-
 import React, {useState, useEffect} from 'react';
-import PropTypes from 'prop-types';
 import {Droppable} from 'react-beautiful-dnd';
 import {Container, Grid, List, Paper} from '@material-ui/core';
 import MovieBarGraph from './Reusable/BarGraph';
@@ -45,10 +42,10 @@ const useStyles = makeStyles(() => ({
  * @param {Array} props.movie array of the movie objects to be rendered in grid
  * @return {ReactNode} returns movie grid component
  */
-function MovieGrid({columnId}) {
+function MovieGrid() {
   const [isDesktop, setDesktop] = useState(window.innerWidth > 1450);
   const dispatch = useDispatch();
-  const moviesIds = (state)=>state.columns[columnId].movies;
+  const moviesIds = (state)=>state.columns['movies-grid'].movies;
   const moviesData = (state)=>state.movies;
 
   const selectMovies = createSelector([moviesData, moviesIds], (a, b)=> {
@@ -110,9 +107,5 @@ function MovieGrid({columnId}) {
       </Grid>
     </>);
 }
-
-MovieGrid.propTypes = {
-  columnId: PropTypes.string.isRequired,
-};
 
 export default MovieGrid;

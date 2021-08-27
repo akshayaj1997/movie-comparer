@@ -124,19 +124,13 @@ class MoviePage extends Component {
             <SearchComponent sendMovieData= {this.receiveMovieData}/>
           </ModalForm>
           <h1>Movie Comparer</h1>
-          {this.props.columnOrder.map((columnId) => {
-            const column = this.props.columns[columnId];
-
-            return <div key={column.id}>{columnId==='movies-list'?
-          <MovieList
-            columnId={column.id}/>:
-         <><MovieGrid columnId={column.id}/>
-           <Button text={'Add Movie'} startIcon={<AddCircleOutlineIcon/>}
-             size='large' color='default'
-             variant='outlined' onClick={()=>{
-               this.onAddClick();
-             }}/></>}<br/></div>;
-          })}
+          <MovieGrid/>
+          <Button text={'Add Movie'} startIcon={<AddCircleOutlineIcon/>}
+            size='large' color='default'
+            variant='outlined' onClick={()=>{
+              this.onAddClick();
+            }}/>
+          <MovieList/>
         </Grid>
       </DragDropContext>
     </>);

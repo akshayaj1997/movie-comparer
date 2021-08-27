@@ -51,7 +51,6 @@ export function moviesReducer(state = initialState, action) {
         }};}
     case ADD_MOVIE:
       {
-        alert(JSON.stringify(action.payload));
         return {
           ...state,
           movies: [...state.movies, action.payload],

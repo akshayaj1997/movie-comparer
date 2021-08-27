@@ -1,7 +1,6 @@
 
 
 import React, {useState} from 'react';
-import PropTypes from 'prop-types';
 import {Droppable} from 'react-beautiful-dnd';
 import {Button, Grid, Paper} from '@material-ui/core';
 import {makeStyles} from '@material-ui/core/styles';
@@ -38,25 +37,22 @@ const useStyles = makeStyles((theme) => ({
 }));
 /**
  * Renders movies which have been added to be picked to compare
- * @param {Object} props {deleteItemFromGrid, columnId, movies}
- * @param {function} props.deleteItemFromGrid:callback to delete movie from grid
- * @param {Array} props.movies of the movie objects to be rendered in list
- * @param {string/number} props.columnId to uniquely identify the droppable area
  * @return {ReactNode} returns movie list component
  */
-function MovieList({columnId}) {
+function MovieList() {
   const classes = useStyles();
   const scrollingListRef = useRef(null);
   const [openModal, setOpenModal] = useState(false);
   const [movieData, setMovieData] = useState({});
   const dispatch = useDispatch();
-  const moviesIds = (state)=>state.columns[columnId].movies;
+  const moviesIds = (state)=>state.columns['movies-list'].movies;
   const moviesData = (state)=>state.movies;
 
   const selectMovies = createSelector([moviesData, moviesIds], (a, b)=> {
     return a.filter((movie)=> b.includes(movie.imdbID));
   });
   const movies = useSelector(selectMovies);
+
   const deleteFromGrid = (item) => {
     dispatch({type: 'DELETE_FROM_LIST',
       payload: item});
@@ -83,7 +79,7 @@ function MovieList({columnId}) {
         }}>
         <MovieMetaData movie={movieData}/>
       </ModalForm>
-      <Droppable droppableId= {columnId}
+      <Droppable droppableId= {'movies-list'}
         direction='horizontal'>
         {(provided, snapshot)=>
           <Paper elevation={0}
@@ -122,9 +118,5 @@ function MovieList({columnId}) {
       </Droppable>
     </Grid>);
 }
-
-MovieList.propTypes = {
-  columnId: PropTypes.any,
-};
 
 export default MovieList;
