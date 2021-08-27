@@ -18,6 +18,8 @@ The page is divided into 2 parts + Search functionality:
 * * Nivo (https://nivo.rocks/components)
 * * OMDb API (https://www.omdbapi.com/)
 
+![Demo for the movie page](/../state-management/Movie Comparer.gif)
+
 ## User Guide 
 You can access the page to play around with it here (https://akshayaj1997.github.io/movie-comparer/)
 
