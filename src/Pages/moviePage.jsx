@@ -6,8 +6,9 @@ import {DragDropContext} from 'react-beautiful-dnd';
 import MovieList from '../Components/MovieList';
 import SearchComponent from '../Components/Search';
 import MovieGrid from '../Components/MovieGrid';
-import {Grid} from '@material-ui/core';
-import {Alert} from '@material-ui/lab';
+import {Grid, IconButton, Snackbar} from '@material-ui/core';
+import {CloseOutlined} from '@material-ui/icons';
+
 /**
  * Movie Page component
  */
@@ -98,13 +99,21 @@ class MoviePage extends Component {
    */
   toggle() {
     this.setState((prevState) =>
-      ({...prevState, openModal: !prevState.openModal}));
+      ({...prevState, openModal: !prevState.openModal, movieData: {},
+        errorMsg: '',
+        showError: false}));
   }
   /**
  * Function to be triggered on trying adding the movie to the grid
  */
   onSaveClick() {
     const moviesData = this.state.movieData;
+    if (JSON.stringify(moviesData) === JSON.stringify({})) {
+      this.setState({...this.state,
+        errorMsg: 'Please select a movie',
+        showError: true});
+      return;
+    }
     if (this.state.movies
         .findIndex((el)=> moviesData?.imdbID === el.imdbID) >= 0) {
       this.setState({...this.state,
@@ -119,8 +128,6 @@ class MoviePage extends Component {
     };
     const newState = {
       ...this.state,
-      errorMsg: '',
-      showError: false,
       movies: [...this.state.movies, moviesData],
       columns: {
         ...this.state.columns,
@@ -231,8 +238,24 @@ class MoviePage extends Component {
             header={'Search Movie'} toggle={this.toggle}
             savefunc={this.onSaveClick}
             SaveButton={'Add Movie'}>
-            {this.state.showError? <Alert severity='error'>
-              {this.state.errorMsg}</Alert>:<></> }
+            <Snackbar open={this.state.showError} autoHideDuration={5000}
+              message={this.state.errorMsg}
+              anchorOrigin={{
+                vertical: 'top',
+                horizontal: 'center',
+              }}
+              onClose={()=>{
+                this.setState((prevState)=> ({...prevState, showError: false}));
+              }}
+              action={
+                <IconButton size="small" aria-label="close" color="inherit"
+                  onClick={()=>{
+                    this.setState((prevState)=>
+                      ({...prevState, showError: false}));
+                  }}>
+                  <CloseOutlined fontSize="small" />
+                </IconButton>}
+            />
             <SearchComponent sendMovieData= {this.receiveMovieData}/>
           </ModalForm>
           <h1>Movie Comparer</h1>
