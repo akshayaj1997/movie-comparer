@@ -1,7 +1,7 @@
 import React, {useState} from 'react';
-import SearchBar from './Reusable/SearchBar';
+import SearchBar from './Reusable/MovieSearchBar';
 import axios from 'axios';
-import MovieMetaData from './Reusable/MetaData';
+import MovieMetaData from './Reusable/MovieMetaData';
 import PropTypes from 'prop-types';
 import MovieMetaDataSkeleton from './Reusable/CardSkeleton';
 /**

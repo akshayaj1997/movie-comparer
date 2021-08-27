@@ -1,7 +1,7 @@
 import React from 'react';
 import './App.css';
 import {ErrorBoundary} from 'react-error-boundary';
-import MoviePage from './Pages/MoviePage';
+import MoviePage from './Pages/MovieComparePage';
 import errorBoundaryHandler from './Components/errorBoundaryHandler';
 import {AppBar, Toolbar, Typography} from '@material-ui/core';
 
