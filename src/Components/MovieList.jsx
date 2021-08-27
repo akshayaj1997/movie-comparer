@@ -6,11 +6,11 @@ import {Droppable} from 'react-beautiful-dnd';
 import {Button, Grid, Paper} from '@material-ui/core';
 import {makeStyles} from '@material-ui/core/styles';
 import ImageList from '@material-ui/core/ImageList';
-import MovieImageItem from './Reusable/MovieImageCard';
+import MovieImageItem from './Reusable/MoviePosterCard';
 import {useRef} from 'react';
 import {ArrowBackIos, ArrowForwardIos} from '@material-ui/icons';
 import ModalForm from './Reusable/ModalForm';
-import MovieMetaData from './Reusable/MetaData';
+import MovieMetaData from './Reusable/MovieMetaData';
 import {useDispatch, useSelector} from 'react-redux';
 import {createSelector} from 'reselect';
 

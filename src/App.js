@@ -1,10 +1,10 @@
 import React from 'react';
 import './App.css';
 import {ErrorBoundary} from 'react-error-boundary';
-import MoviePage from './Pages/MoviePage';
+import MoviePage from './Pages/MovieComparePage';
 import errorBoundaryHandler from './Components/errorBoundaryHandler';
 import {Provider} from 'react-redux';
-import {store} from './state/movieReducer';
+import {store} from './state/MovieDetailsReducer';
 
 /**
  * SPA application root for an application that compares movies by graphing the

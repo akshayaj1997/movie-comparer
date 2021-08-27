@@ -6,7 +6,7 @@ import {Droppable} from 'react-beautiful-dnd';
 import {Container, Grid, List, Paper} from '@material-ui/core';
 import MovieBarGraph from './Reusable/BarGraph';
 import {makeStyles} from '@material-ui/core/styles';
-import MovieCard from './Reusable/MovieCard';
+import MovieCard from './Reusable/MovieDetailsCard';
 import MovieChip from './Reusable/MovieChip';
 import {useDispatch, useSelector} from 'react-redux';
 import {createSelector} from 'reselect';
