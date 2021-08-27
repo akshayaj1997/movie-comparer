@@ -20,6 +20,7 @@ The page is divided into 2 parts + Search functionality:
 
 ## User Guide 
 You can access the page to play around with it here (https://akshayaj1997.github.io/movie-comparer/)
+
 Download or clone the repository onto your system 
 #### Prerequisites
 Install NodeJS and npm (https://nodejs.org/en/download/)
