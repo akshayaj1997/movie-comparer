@@ -6,6 +6,7 @@ import Autocomplete from '@material-ui/lab/Autocomplete';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import {Search} from '@material-ui/icons';
 import PropTypes from 'prop-types';
+import {APIKey} from '../../APIKey';
 
 /**
  * Reusable Search Bar component created from MUI
@@ -18,7 +19,7 @@ function SearchBar({movieDisplay}) {
   const [noOptionsText, setNoOptionsText] = React.useState('No Options');
   const loading = open && options.length === 0;
   const handleSearchChange = async (value) => {
-    const response = await axios.get(`https://www.omdbapi.com/?apikey=15bcf215&s=${value}&r=json`);
+    const response = await axios.get(`https://www.omdbapi.com/?apikey=${APIKey}&s=${value}&r=json`);
     const responseData = await response.data;
     const movies = responseData.Response==='True' ? (response.data?.Search) :
                     [];
