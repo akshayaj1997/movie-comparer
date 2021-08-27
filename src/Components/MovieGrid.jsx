@@ -8,6 +8,8 @@ import MovieBarGraph from './Reusable/BarGraph';
 import {makeStyles} from '@material-ui/core/styles';
 import MovieCard from './Reusable/MovieDetailsCard';
 import MovieChip from './Reusable/MovieChip';
+import ModalForm from './Reusable/ModalForm';
+import MovieMetaData from './Reusable/MovieMetaData';
 
 const useStyles = makeStyles(() => ({
   list: {
@@ -44,6 +46,8 @@ const useStyles = makeStyles(() => ({
  */
 function MovieGrid({deleteItemFromGrid, movies}) {
   const [isDesktop, setDesktop] = useState(window.innerWidth > 1450);
+  const [displayMovie, setDisplayMovie] = useState({});
+  const [openModal, setOpenModal] = useState(false);
 
   const updateMedia = () => {
     setDesktop(window.innerWidth > 1450);
@@ -57,9 +61,21 @@ function MovieGrid({deleteItemFromGrid, movies}) {
   const deleteItem =(itemId) =>{
     deleteItemFromGrid(itemId);
   };
+  const showMovie = (movieData) =>{
+    setDisplayMovie(movieData);
+    setOpenModal(!openModal);
+  };
   return (
     <>
       <Grid container justifyContent="center">
+        <ModalForm
+          isopen={openModal}
+          enableSaveButton={false}
+          header={'Show Movie'} toggle={()=>{
+            setOpenModal(!openModal);
+          }}>
+          <MovieMetaData movie={displayMovie}/>
+        </ModalForm>
         <Droppable droppableId= {'movies-grid'}
           direction='horizontal'>
           {(provided, snapshot)=>
@@ -77,18 +93,21 @@ function MovieGrid({deleteItemFromGrid, movies}) {
                       index={index}
                       postersrc={movie.Poster}
                       deleteItemFromGrid={deleteItem}
-                      rating={movie.imdbRating} id={movie.imdbID}>
+                      rating={movie.imdbRating} id={movie.imdbID}
+                      customClick={()=>showMovie(movie)}>
                       {movie.Plot}</MovieCard>)}
                 </List>
               </Paper>:<List className={classes.list}>
                 {movies?.map((movie, index) =>
                   <MovieChip key={movie.imdbID} title={movie.Title}
                     index={index}
-                    deleteItem={deleteItem} id={movie.imdbID}/>)}
+                    deleteItem={deleteItem} id={movie.imdbID}
+                    customClick={()=>showMovie(movie)}/>)}
               </List>:<></>}
               <br/>
               <Container style={{height: '45vh'}}>
-                <MovieBarGraph data={movies} isLargeScreen={isDesktop}/>
+                <MovieBarGraph data={movies} isLargeScreen={isDesktop}
+                  customClick={showMovie}/>
               </Container>
               <br/>
               {provided.placeholder}

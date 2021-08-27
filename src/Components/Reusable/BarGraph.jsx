@@ -9,14 +9,14 @@ import {useState, useEffect} from 'react';
  * @param {Array} data array of the movies compared in graphical form
  * @return {ReactNode} Graph Component comparing movies based on IMDb Rating
  */
-const MovieBarGraph = ({data: movies, isLargeScreen, showMovie}) => {
+const MovieBarGraph = ({data: movies, isLargeScreen, customClick}) => {
   const [ratings, setRatings] = useState([]);
   const keys = ['imdbRating'];
   useEffect(()=>{
     const imdbValues = movies?.map((el)=>
       ({...{'imdbRating': isNaN(el.imdbRating*1) ? 0:el.imdbRating*1,
         'Metascore': isNaN(el.Metascore/10)? 0: el.Metascore/10,
-        'Title': el.Title, 'Poster': el.Poster}, ...{el}}
+        'Title': el.Title, 'Poster': el.Poster}, ...el}
       ));
     setRatings(imdbValues);
   }, [movies]);
@@ -77,8 +77,7 @@ const MovieBarGraph = ({data: movies, isLargeScreen, showMovie}) => {
         },
       }}
       onClick={({data})=>{
-        alert(data);
-        showMovie(data);
+        customClick(data);
       }}
       legends={[
         {
@@ -116,7 +115,7 @@ const MovieBarGraph = ({data: movies, isLargeScreen, showMovie}) => {
 MovieBarGraph.propTypes = {
   data: PropTypes.arrayOf(PropTypes.object),
   isLargeScreen: PropTypes.bool.isRequired,
-  showMovie: PropTypes.func.isRequired,
+  customClick: PropTypes.func.isRequired,
 };
 
 export default MovieBarGraph;
