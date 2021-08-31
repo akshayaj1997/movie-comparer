@@ -1,9 +1,16 @@
 import React from 'react';
-import {render, screen} from '@testing-library/react';
+import {shallow} from 'enzyme';
 import App from './App';
-
-test('renders learn react link', () => {
-  render(<App />);
-  const linkElement = screen.getByText(/learn react/i);
-  expect(linkElement).toBeInTheDocument();
+describe('MovieComparePage Tests', () => {
+  let shallowWrapper;
+  beforeEach(() => {
+    shallowWrapper = shallow(<App/>);
+  });
+  afterEach(() => {
+    jest.clearAllMocks();
+  });
+  it('should render all required children', () => {
+    expect(shallowWrapper.find('MoviePage').length)
+        .toEqual(1);
+  });
 });
