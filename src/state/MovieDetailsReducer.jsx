@@ -56,10 +56,10 @@ export function moviesReducer(state = initialState, action) {
           movies: [...state.movies, action.payload],
           columns: {
             ...state.columns,
-            'movies-list': {...state.columns['movies-list'],
+            'movies-list': {
+              ...state.columns['movies-list'],
               movies: [...state.columns['movies-list'].movies,
-                action.payload?.imdbID]}
-            ,
+                action.payload?.imdbID]},
           },
         };};
     case ON_DRAG_END: {

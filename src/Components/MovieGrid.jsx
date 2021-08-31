@@ -1,13 +1,15 @@
+
+
 import React, {useState, useEffect} from 'react';
+import PropTypes from 'prop-types';
 import {Droppable} from 'react-beautiful-dnd';
 import {Container, Grid, List, Paper} from '@material-ui/core';
 import MovieBarGraph from './Reusable/BarGraph';
 import {makeStyles} from '@material-ui/core/styles';
 import MovieCard from './Reusable/MovieDetailsCard';
 import MovieChip from './Reusable/MovieChip';
-import {useDispatch, useSelector} from 'react-redux';
-import {createSelector} from 'reselect';
-
+import ModalForm from './Reusable/ModalForm';
+import MovieMetaData from './Reusable/MovieMetaData';
 
 const useStyles = makeStyles(() => ({
   list: {
@@ -42,16 +44,10 @@ const useStyles = makeStyles(() => ({
  * @param {Array} props.movie array of the movie objects to be rendered in grid
  * @return {ReactNode} returns movie grid component
  */
-function MovieGrid() {
+function MovieGrid({deleteItemFromGrid, movies}) {
   const [isDesktop, setDesktop] = useState(window.innerWidth > 1450);
-  const dispatch = useDispatch();
-  const moviesIds = (state)=>state.columns['movies-grid'].movies;
-  const moviesData = (state)=>state.movies;
-
-  const selectMovies = createSelector([moviesData, moviesIds], (a, b)=> {
-    return a.filter((movie)=> b.includes(movie.imdbID));
-  });
-  const movies = useSelector(selectMovies);
+  const [displayMovie, setDisplayMovie] = useState({});
+  const [openModal, setOpenModal] = useState(false);
 
   const updateMedia = () => {
     setDesktop(window.innerWidth > 1450);
@@ -63,12 +59,23 @@ function MovieGrid() {
   });
   const classes = useStyles();
   const deleteItem =(itemId) =>{
-    dispatch({type: 'DELETE_FROM_GRID',
-      payload: itemId});
+    deleteItemFromGrid(itemId);
+  };
+  const showMovie = (movieData) =>{
+    setDisplayMovie(movieData);
+    setOpenModal(!openModal);
   };
   return (
     <>
       <Grid container justifyContent="center">
+        <ModalForm
+          isopen={openModal}
+          enableSaveButton={false}
+          header={'Show Movie'} toggle={()=>{
+            setOpenModal(!openModal);
+          }}>
+          <MovieMetaData movie={displayMovie}/>
+        </ModalForm>
         <Droppable droppableId= {'movies-grid'}
           direction='horizontal'>
           {(provided, snapshot)=>
@@ -86,18 +93,21 @@ function MovieGrid() {
                       index={index}
                       postersrc={movie.Poster}
                       deleteItemFromGrid={deleteItem}
-                      rating={movie.imdbRating} id={movie.imdbID}>
+                      rating={movie.imdbRating} id={movie.imdbID}
+                      customClick={()=>showMovie(movie)}>
                       {movie.Plot}</MovieCard>)}
                 </List>
               </Paper>:<List className={classes.list}>
                 {movies?.map((movie, index) =>
                   <MovieChip key={movie.imdbID} title={movie.Title}
                     index={index}
-                    deleteItem={deleteItem} id={movie.imdbID}/>)}
+                    deleteItem={deleteItem} id={movie.imdbID}
+                    customClick={()=>showMovie(movie)}/>)}
               </List>:<></>}
               <br/>
               <Container style={{height: '45vh'}}>
-                <MovieBarGraph data={movies} isLargeScreen={isDesktop}/>
+                <MovieBarGraph data={movies} isLargeScreen={isDesktop}
+                  customClick={showMovie}/>
               </Container>
               <br/>
               {provided.placeholder}
@@ -107,5 +117,10 @@ function MovieGrid() {
       </Grid>
     </>);
 }
+
+MovieGrid.propTypes = {
+  movies: PropTypes.arrayOf(PropTypes.object).isRequired,
+  deleteItemFromGrid: PropTypes.func.isRequired,
+};
 
 export default MovieGrid;
