@@ -14,7 +14,7 @@ import {Chip} from '@material-ui/core';
  * @param {any} props.index unique index of the item in the dragdropcontext
  * @return {ReactNode} Card component with the data provided in props
  */
-function MovieChip({title, id, deleteItem, index}) {
+function MovieChip({title, id, deleteItem, index, customClick}) {
   return (
     <Draggable draggableId={id} index={index}>
       {(provided, snapshot)=>(
@@ -23,7 +23,9 @@ function MovieChip({title, id, deleteItem, index}) {
           innerRef={provided.innerRef} label={title}
           onDelete={()=>{
             deleteItem(id);
-          }}/>
+          }}
+          clickable
+          onClick={customClick}/>
       )}
     </Draggable>
   );
@@ -34,5 +36,6 @@ MovieChip.propTypes = {
   id: PropTypes.any.isRequired,
   index: PropTypes.any.isRequired,
   deleteItem: PropTypes.func.isRequired,
+  customClick: PropTypes.func.isRequired,
 };
 export default MovieChip;

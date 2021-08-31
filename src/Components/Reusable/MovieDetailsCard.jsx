@@ -47,7 +47,7 @@ const useStyles = makeStyles((theme) => ({
  * list of children to be scrollable.
  */
 function MovieCard({title, postersrc, children, rating, id, index,
-  deleteItemFromGrid}) {
+  deleteItemFromGrid, customClick}) {
   const classes = useStyles();
 
   return (
@@ -55,7 +55,8 @@ function MovieCard({title, postersrc, children, rating, id, index,
       {(provided)=>(<Paper className={classes.paper}
         {...provided.draggableProps}
         {...provided.dragHandleProps}
-        innerRef={provided.innerRef}>
+        innerRef={provided.innerRef}
+        onClick={customClick}>
         <CloseOutlined className={classes.closeButton}
           onClick={()=>deleteItemFromGrid(id)}/>
         <Grid container spacing={2}>
@@ -108,5 +109,6 @@ MovieCard.propTypes = {
   id: PropTypes.any.isRequired,
   index: PropTypes.any.isRequired,
   deleteItemFromGrid: PropTypes.func.isRequired,
+  customClick: PropTypes.func.isRequired,
 };
 export default MovieCard;

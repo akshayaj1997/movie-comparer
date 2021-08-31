@@ -18,62 +18,85 @@ The page is divided into 2 parts + Search functionality:
 * * Nivo (https://nivo.rocks/components)
 * * OMDb API (https://www.omdbapi.com/)
 
-### Components in the application
+## User Guide 
+Download or clone the repository onto your system 
+#### Prerequisites
+Install NodeJS and npm (https://nodejs.org/en/download/)
+Check if the installation is successful via
+``
+ node -v
+ npm -v
+``
+#### Install/ running
+
+Run 
+``
+npm install
+`` 
+to install all of the dependencies onto your system.
+
+Get an api key from - https://www.omdbapi.com/apikey.aspx, and place it in the APIKey.js file, else the backend will not service your requests.
+
+After all the dependencies are installed,
+Run 
+``
+npm start
+``
+to run the application.
+
+### Table of Contents
 
 *   [App](#app)
-*   [MovieBarGraph](#moviebargraph)
+*   [errorBoundaryHandler](#errorboundaryhandler)
     *   [Parameters](#parameters)
-*   [Button](#button)
+*   [MovieGrid](#moviegrid)
     *   [Parameters](#parameters-1)
-*   [MovieMetaData](#moviemetadata)
+*   [MovieList](#movielist)
     *   [Parameters](#parameters-2)
-*   [HeaderSubtitle](#headersubtitle)
+*   [MovieBarGraph](#moviebargraph)
     *   [Parameters](#parameters-3)
-*   [CollapsibleArea](#collapsiblearea)
+*   [Button](#button)
     *   [Parameters](#parameters-4)
-*   [ModalForm](#modalform)
+*   [MovieMetaDataSkeleton](#moviemetadataskeleton)
     *   [Parameters](#parameters-5)
-*   [MovieCard](#moviecard)
+*   [ModalForm](#modalform)
     *   [Parameters](#parameters-6)
 *   [MovieChip](#moviechip)
     *   [Parameters](#parameters-7)
-*   [MovieImageItem](#movieimageitem)
+*   [MovieCard](#moviecard)
     *   [Parameters](#parameters-8)
-*   [ItemTitle](#itemtitle)
+*   [MovieMetaData](#moviemetadata)
     *   [Parameters](#parameters-9)
-*   [SearchBar](#searchbar)
+*   [HeaderSubtitle](#headersubtitle)
     *   [Parameters](#parameters-10)
-*   [ErrorBoundary](#errorboundary)
+*   [CollapsibleArea](#collapsiblearea)
     *   [Parameters](#parameters-11)
-    *   [componentDidCatch](#componentdidcatch)
-        *   [Parameters](#parameters-12)
-    *   [render](#render)
-    *   [getDerivedStateFromError](#getderivedstatefromerror)
-        *   [Parameters](#parameters-13)
-*   [MovieGrid](#moviegrid)
+*   [MovieImageItem](#movieimageitem)
+    *   [Parameters](#parameters-12)
+*   [ItemTitle](#itemtitle)
+    *   [Parameters](#parameters-13)
+*   [SearchBar](#searchbar)
     *   [Parameters](#parameters-14)
-*   [MovieList](#movielist)
+*   [SearchComponent](#searchcomponent)
     *   [Parameters](#parameters-15)
-*   [MoviePage](#moviepage)
+*   [setMovie](#setmovie)
     *   [Parameters](#parameters-16)
+*   [loading](#loading)
+*   [MoviePage](#moviepage)
+    *   [Parameters](#parameters-17)
     *   [deleteFromGrid](#deletefromgrid)
-        *   [Parameters](#parameters-17)
-    *   [deleteFromList](#deletefromlist)
         *   [Parameters](#parameters-18)
+    *   [deleteFromList](#deletefromlist)
+        *   [Parameters](#parameters-19)
     *   [onAddClick](#onaddclick)
     *   [toggle](#toggle)
     *   [onSaveClick](#onsaveclick)
     *   [onDragEnd](#ondragend)
-        *   [Parameters](#parameters-19)
-    *   [receiveMovieData](#receivemoviedata)
         *   [Parameters](#parameters-20)
-    *   [render](#render-1)
+    *   [receiveMovieData](#receivemoviedata)
+        *   [Parameters](#parameters-21)
+    *   [render](#render)
 *   [startMovies](#startmovies)
-*   [SearchComponent](#searchcomponent)
-    *   [Parameters](#parameters-21)
-*   [setMovie](#setmovie)
-    *   [Parameters](#parameters-22)
-*   [movieDisplay](#moviedisplay)
 
 ## App
 
@@ -89,6 +112,46 @@ the metadata in the movie details section in the wireframe
 
 Returns **ReactNode** App component rendered from the root
 
+## errorBoundaryHandler
+
+Returns errors
+
+### Parameters
+
+*   `props` **props** {error} error passed to the handler
+
+    *   `props.error`  
+
+Returns **ReactNode** Error Handler
+
+## MovieGrid
+
+Renders movies which are being compared and the comparision graph
+
+### Parameters
+
+*   `props` **[Object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)** {deleteItemFromGrid, movies}
+
+    *   `props.deleteItemFromGrid` **[function](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Statements/function)** :callback to delete movie from grid
+    *   `props.movie` **[Array](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Array)** array of the movie objects to be rendered in grid
+    *   `props.movies`  
+
+Returns **ReactNode** returns movie grid component
+
+## MovieList
+
+Renders movies which have been added to be picked to compare
+
+### Parameters
+
+*   `props` **[Object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)** {deleteItemFromGrid, columnId, movies}
+
+    *   `props.deleteItemFromGrid` **[function](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Statements/function)** :callback to delete movie from grid
+    *   `props.columnId` **string/number** to uniquely identify the droppable area
+    *   `props.movies` **[Array](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Array)** of the movie objects to be rendered in list
+
+Returns **ReactNode** returns movie list component
+
 ## MovieBarGraph
 
 Bar Graph comparing movies based on IMDb Rating
@@ -98,6 +161,8 @@ Bar Graph comparing movies based on IMDb Rating
 *   `data` **[Array](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Array)** array of the movies compared in graphical form
 
     *   `data.data`  
+    *   `data.isLargeScreen`  
+    *   `data.customClick`  
 
 Returns **ReactNode** Graph Component comparing movies based on IMDb Rating
 
@@ -115,6 +180,78 @@ Returns **ReactNode** Graph Component comparing movies based on IMDb Rating
     *   `props.other` **any** any other additional parameters you want to pass
 
 Returns **ReactNode** reusable button
+
+## MovieMetaDataSkeleton
+
+Movie Meta data display element to display the movie data in modal
+
+### Parameters
+
+*   `movie` **[Array](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Array)** object passed to render metadata
+
+Returns **ReactNode** MovieMetaData movie details display element
+
+## ModalForm
+
+Renders the modal form component
+
+### Parameters
+
+*   `props` **[Object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)** {children,enableSaveButton,isopen,maxWidth,header,
+    toggle,savefunc,SaveButton=,...other}
+
+    *   `props.children` **JSXElement** Children to render inside modal body
+    *   `props.enableSaveButton` **[boolean](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Boolean)** enable save button in Modal (optional, default `true`)
+    *   `props.isopen` **[boolean](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Boolean)** show the modal
+    *   `props.maxWidth` **string/bool** maximum width of the modal to render
+    *   `props.header` **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** header/title of the modal
+    *   `props.toggle` **[function](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Statements/function)** function on toggling the modal (open/close)
+    *   `props.SaveButton` **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** text in save button (optional, default `'Save'`)
+    *   `props.other` **any** any other additional parameters you want to pass
+    *   `props.SaveFunction` **[function](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Statements/function)** function to call on save
+    *   `props.savefunc`  
+
+Returns **ReactNode** Modal form component
+
+## MovieChip
+
+Returns list item of movie object in a MUI chip shape for scrollable list
+
+### Parameters
+
+*   `props` **[Object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)** {title, id, deleteItem, index}
+
+    *   `props.title` **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** Movie title
+    *   `props.id` **string/number** imdb id of the movie to uniquely identify it
+    *   `props.index` **any** unique index of the item in the dragdropcontext
+    *   `props.deleteItemFromGrid` **[function](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Statements/function)** callback to delete the item from
+        the list grid
+    *   `props.deleteItem`  
+    *   `props.customClick`  
+
+Returns **ReactNode** Card component with the data provided in props
+
+## MovieCard
+
+Returns list item of movie object for scrollable list
+
+### Parameters
+
+*   `props` **[Object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)** {title, postersrc, children, rating, id, index,
+    deleteItemFromGrid}
+
+    *   `props.title` **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** Movie title
+    *   `props.postersrc` **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** url of the src of the poster of the movie
+    *   `props.children` **JSXElement** children to the movie component
+    *   `props.rating` **string/number** rating of the movie
+    *   `props.id` **string/number** imdb id of the movie to uniquely identify it
+    *   `props.index` **any** unique index of the item in the dragdropcontext
+    *   `props.deleteItemFromGrid` **[function](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Statements/function)** callback to delete the item from
+        the list grid
+    *   `props.customClick`  
+
+Returns **ReactNode** ScrollList Component that allows
+list of children to be scrollable.
 
 ## MovieMetaData
 
@@ -147,7 +284,7 @@ Returns **ReactNode** subtitle
 
 ## CollapsibleArea
 
-Accordian Component used to show additional movie details
+Accordian Component
 
 ### Parameters
 
@@ -158,66 +295,6 @@ Accordian Component used to show additional movie details
     *   `props.children`  
 
 Returns **ReactNode** Accordian component
-
-## ModalForm
-
-Renders the modal form component
-
-### Parameters
-
-*   `props` **[Object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)** {children,enableSaveButton,isopen,maxWidth,header,
-    toggle,savefunc,SaveButton=,...other}
-
-    *   `props.children` **JSXElement** Child components to render inside modal body
-    *   `props.enableSaveButton` **[boolean](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Boolean)** enable save button in Modal (optional, default `true`)
-    *   `props.isopen` **[boolean](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Boolean)** show the modal
-    *   `props.maxWidth` **string/bool** maximum width of the modal to render
-    *   `props.header` **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** header/title of the modal
-    *   `props.toggle` **[function](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Statements/function)** function on toggling the modal (open/close)
-    *   `props.SaveButton` **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** text in save button (optional, default `'Save'`)
-    *   `props.other` **any** any other additional parameters you want to pass
-    *   `props.SaveFunction` **[function](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Statements/function)** function to call on save
-    *   `props.savefunc`  
-
-Returns **ReactNode** Modal form component
-
-## MovieCard
-
-Returns list item of movie object for scrollable list
-
-### Parameters
-
-*   `props` **[Object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)** {title, postersrc, children, rating, id, index,
-    deleteItemFromGrid}
-
-    *   `props.title` **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** Movie title
-    *   `props.postersrc` **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** url of the src of the poster of the movie
-    *   `props.children` **JSXElement** children to the movie component
-    *   `props.rating` **string/number** rating of the movie
-    *   `props.id` **string/number** imdb id of the movie to uniquely identify it
-    *   `props.index` **any** unique index of the item in the dragdropcontext
-    *   `props.deleteItemFromGrid` **[function](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Statements/function)** callback to delete the item from
-        the list grid
-
-Returns **ReactNode** ScrollList Component that allows
-list of children to be scrollable.
-
-## MovieChip
-
-Returns list item of movie object in a MUI chip shape for scrollable list
-
-### Parameters
-
-*   `props` **[Object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)** {title, id, deleteItem, index}
-
-    *   `props.title` **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** Movie title
-    *   `props.id` **string/number** imdb id of the movie to uniquely identify it
-    *   `props.index` **any** unique index of the item in the dragdropcontext
-    *   `props.deleteItemFromGrid` **[function](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Statements/function)** callback to delete the item from
-        the list grid
-    *   `props.deleteItem`  
-
-Returns **ReactNode** Card component with the data provided in props
 
 ## MovieImageItem
 
@@ -266,71 +343,33 @@ Reusable Search Bar component created from MUI
 
 Returns **React.Node** Search Bar component with Movies
 
-## ErrorBoundary
+## SearchComponent
 
-**Extends React.Component**
-
-Error boundary component that will catch all the errors and display the error
+Renders the movie search component to be rendered in the modal form
 
 ### Parameters
 
-*   `props` **any** passed to the component
+*   `$0` **[Object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)** 
 
-### componentDidCatch
+    *   `$0.sendMovieData`  
 
-Error will be caught and displayed on the UI
+Returns **ReactNode** search component
 
-#### Parameters
+## setMovie
 
-*   `error` **any** The error that was thrown.
-*   `errorInfo` **any** An object with a componentStack key containing
-    information about which component threw the error.
+props callback to display movie
 
-### render
+### Parameters
+
+*   `movie` **[Object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)** 
+
+## loading
 
 render Render a React element into the DOM in the supplied
 container and return a reference to the component
-(in this case the error boundary)
+(in this case the search component)
 
-Returns **ReactNode** returns error boundary component
-
-### getDerivedStateFromError
-
-Update state so the next render will show the fallback UI.
-
-#### Parameters
-
-*   `_error` **[error](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Error)** error
-
-Returns **[Object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)** value to update the state of the error
-
-## MovieGrid
-
-Renders movies which are being compared and the comparision graph
-
-### Parameters
-
-*   `props` **[Object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)** {deleteItemFromGrid, movies}
-
-    *   `props.deleteItemFromGrid` **[function](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Statements/function)** : callback to delete movie from grid
-    *   `props.movie` **[Array](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Array)** array of the movie objects to be rendered in grid
-    *   `props.movies`  
-
-Returns **ReactNode** returns movie grid component
-
-## MovieList
-
-Renders movies which have been added to be picked to compare
-
-### Parameters
-
-*   `props` **[Object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)** {deleteItemFromGrid, columnId, movies}
-
-    *   `props.deleteItemFromGrid` **[function](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Statements/function)** :callback to delete movie from grid
-    *   `props.columnId` **string/number** to uniquely identify the droppable area
-    *   `props.movies` **[Array](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Array)** of the movie objects to be rendered in list
-
-Returns **ReactNode** returns movie list component
+Returns **ReactNode** search component to be rendered on the modal form
 
 ## MoviePage
 
@@ -400,31 +439,3 @@ comparison region and list of movies
 ## startMovies
 
 Moving movie object from one grid to list or vice-versa
-
-## SearchComponent
-
-Renders the movie search component to be rendered in the modal form
-
-### Parameters
-
-*   `$0` **[Object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)** 
-
-    *   `$0.sendMovieData`  
-
-Returns **ReactNode** search component
-
-## setMovie
-
-props callback to display movie
-
-### Parameters
-
-*   `movie` **[Object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)** 
-
-## movieDisplay
-
-render Render a React element into the DOM in the supplied
-container and return a reference to the component
-(in this case the search component)
-
-Returns **ReactNode** search component to be rendered on the modal form

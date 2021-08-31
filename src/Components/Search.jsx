@@ -4,6 +4,7 @@ import axios from 'axios';
 import MovieMetaData from './Reusable/MovieMetaData';
 import PropTypes from 'prop-types';
 import MovieMetaDataSkeleton from './Reusable/CardSkeleton';
+import {APIKey} from '../APIKey';
 /**
  * Renders the movie search component to be rendered in the modal form
  * @return {ReactNode} search component
@@ -19,7 +20,7 @@ function SearchComponent({sendMovieData}) {
   async function setMovie(movie) {
     setFetchInProgress(true);
     setMovieDisplay({});
-    const response = await axios.get(`https://www.omdbapi.com/?apikey=15bcf215&i=${movie.imdbID}&r=json`);
+    const response = await axios.get(`https://www.omdbapi.com/?apikey=${APIKey}&i=${movie.imdbID}&r=json`);
     const movies = await response.data;
     setFetchInProgress(false);
     if (movies.Response === 'True') sendMovieData(response.data);

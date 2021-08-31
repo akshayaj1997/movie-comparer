@@ -5,6 +5,7 @@ import MoviePage from './Pages/MovieComparePage';
 import errorBoundaryHandler from './Components/errorBoundaryHandler';
 import {Provider} from 'react-redux';
 import {store} from './state/MovieDetailsReducer';
+import {AppBar, Toolbar, Typography} from '@material-ui/core';
 
 /**
  * SPA application root for an application that compares movies by graphing the
@@ -21,6 +22,11 @@ function App() {
     <ErrorBoundary FallbackComponent={errorBoundaryHandler}>
       <div className="App">
         <Provider store={store}>
+          <AppBar position='sticky'><Toolbar>
+            <Typography variant="h6">
+            Movie Comparer
+            </Typography>
+          </Toolbar></AppBar>
           <MoviePage/>
         </Provider>
       </div>
