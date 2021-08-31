@@ -36,20 +36,16 @@ const useStyles = makeStyles((theme) => ({
 }));
 /**
  * Renders movies which have been added to be picked to compare
- * @param {Object} props {deleteItemFromGrid, columnId, movies}
- * @param {function} props.deleteItemFromGrid:callback to delete movie from grid
+ * @param {Object} props { columnId, movies}
  * @param {Array} props.movies of the movie objects to be rendered in list
  * @param {string/number} props.columnId to uniquely identify the droppable area
  * @return {ReactNode} returns movie list component
  */
-function MovieList({deleteItemFromGrid, columnId, movies}) {
+function MovieList({columnId, movies}) {
   const classes = useStyles();
   const scrollingListRef = useRef(null);
   const [openModal, setOpenModal] = useState(false);
   const [movieData, setMovieData] = useState({});
-  const deleteFromGrid = (item) => {
-    deleteItemFromGrid(item);
-  };
   const handleScrollButtonOnClick = (offset) => {
     const scrollByVal = scrollingListRef.current.scrollWidth >
     window.innerWidth*0.7?
@@ -94,7 +90,6 @@ function MovieList({deleteItemFromGrid, columnId, movies}) {
                 <MovieImageItem key={movie.imdbID} title={movie.Title}
                   index={index}
                   postersrc={movie.Poster}
-                  deleteItemFromGrid={deleteFromGrid}
                   rating={movie.imdbRating} id={movie.imdbID}
                   customClick={()=>{
                     setMovieData(movie);
@@ -115,7 +110,6 @@ function MovieList({deleteItemFromGrid, columnId, movies}) {
 MovieList.propTypes = {
   columnId: PropTypes.any,
   movies: PropTypes.arrayOf(PropTypes.object).isRequired,
-  deleteItemFromGrid: PropTypes.func.isRequired,
 };
 
 export default MovieList;

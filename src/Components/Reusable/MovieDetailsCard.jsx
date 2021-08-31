@@ -9,6 +9,7 @@ import {CloseOutlined} from '@material-ui/icons';
 import {Draggable} from 'react-beautiful-dnd';
 import PropTypes from 'prop-types';
 import {Hidden} from '@material-ui/core';
+import {useDispatch} from 'react-redux';
 const useStyles = makeStyles((theme) => ({
   root: {
     flexGrow: 1,
@@ -47,9 +48,18 @@ const useStyles = makeStyles((theme) => ({
  * list of children to be scrollable.
  */
 function MovieCard({title, postersrc, children, rating, id, index,
-  deleteItemFromGrid, customClick}) {
+  customClick}) {
   const classes = useStyles();
+  const dispatch = useDispatch();
 
+  /**
+   * deletes item from grid/graph component
+   * @param {string} itemId the item that needs to be deleted
+   */
+  function deleteFromGrid(itemId) {
+    dispatch({type: 'DELETE_FROM_GRID',
+      payload: itemId});
+  }
   return (
     <Draggable draggableId={id} index={index}>
       {(provided)=>(<Paper className={classes.paper}
@@ -58,7 +68,7 @@ function MovieCard({title, postersrc, children, rating, id, index,
         innerRef={provided.innerRef}
         onClick={customClick}>
         <CloseOutlined className={classes.closeButton}
-          onClick={()=>deleteItemFromGrid(id)}/>
+          onClick={()=>deleteFromGrid(id)}/>
         <Grid container spacing={2}>
           <Hidden smDown>
             <Grid item xs={1} sm={3} md={3} lg={3} xl={3}>
@@ -108,7 +118,6 @@ MovieCard.propTypes = {
   rating: PropTypes.string.isRequired,
   id: PropTypes.any.isRequired,
   index: PropTypes.any.isRequired,
-  deleteItemFromGrid: PropTypes.func.isRequired,
   customClick: PropTypes.func.isRequired,
 };
 export default MovieCard;

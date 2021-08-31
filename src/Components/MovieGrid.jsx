@@ -39,12 +39,11 @@ const useStyles = makeStyles(() => ({
 }));
 /**
  * Renders movies which are being compared and the comparision graph
- * @param {Object} props {deleteItemFromGrid, movies}
- * @param {function} props.deleteItemFromGrid:callback to delete movie from grid
+ * @param {Object} props {movies}
  * @param {Array} props.movie array of the movie objects to be rendered in grid
  * @return {ReactNode} returns movie grid component
  */
-function MovieGrid({deleteItemFromGrid, movies}) {
+function MovieGrid({movies}) {
   const [isDesktop, setDesktop] = useState(window.innerWidth > 1450);
   const [displayMovie, setDisplayMovie] = useState({});
   const [openModal, setOpenModal] = useState(false);
@@ -58,9 +57,6 @@ function MovieGrid({deleteItemFromGrid, movies}) {
     return () => window.removeEventListener('resize', updateMedia);
   });
   const classes = useStyles();
-  const deleteItem =(itemId) =>{
-    deleteItemFromGrid(itemId);
-  };
   const showMovie = (movieData) =>{
     setDisplayMovie(movieData);
     setOpenModal(!openModal);
@@ -92,7 +88,6 @@ function MovieGrid({deleteItemFromGrid, movies}) {
                     <MovieCard key={movie.imdbID} title={movie.Title}
                       index={index}
                       postersrc={movie.Poster}
-                      deleteItemFromGrid={deleteItem}
                       rating={movie.imdbRating} id={movie.imdbID}
                       customClick={()=>showMovie(movie)}>
                       {movie.Plot}</MovieCard>)}
@@ -101,7 +96,7 @@ function MovieGrid({deleteItemFromGrid, movies}) {
                 {movies?.map((movie, index) =>
                   <MovieChip key={movie.imdbID} title={movie.Title}
                     index={index}
-                    deleteItem={deleteItem} id={movie.imdbID}
+                    id={movie.imdbID}
                     customClick={()=>showMovie(movie)}/>)}
               </List>:<></>}
               <br/>
@@ -120,7 +115,6 @@ function MovieGrid({deleteItemFromGrid, movies}) {
 
 MovieGrid.propTypes = {
   movies: PropTypes.arrayOf(PropTypes.object).isRequired,
-  deleteItemFromGrid: PropTypes.func.isRequired,
 };
 
 export default MovieGrid;

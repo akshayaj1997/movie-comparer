@@ -7,6 +7,7 @@ import {Draggable} from 'react-beautiful-dnd';
 import PropTypes from 'prop-types';
 import {Close} from '@material-ui/icons';
 import {IconButton, Paper} from '@material-ui/core';
+import {useDispatch} from 'react-redux';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -48,8 +49,18 @@ const useStyles = makeStyles((theme) => ({
  * list of children to be horizontally scrollable.
  */
 function MovieImageItem({title, postersrc, rating,
-  id, index, deleteItemFromGrid, customClick}) {
+  id, index, customClick}) {
   const classes = useStyles();
+  const dispatch = useDispatch();
+
+  /**
+   * deletes item from list component
+   * @param {string} itemId the item that needs to be deleted
+   */
+  function deleteFromList(itemId) {
+    dispatch({type: 'DELETE_FROM_LIST',
+      payload: itemId});
+  }
 
   return (
     <Draggable draggableId={id} index={index}>
@@ -69,7 +80,7 @@ function MovieImageItem({title, postersrc, rating,
             position='top'
             actionIcon={<IconButton className={classes.actionIcon}
               onClick={()=>{
-                deleteItemFromGrid(id);
+                deleteFromList(id);
               }}>
               <Close/>
             </IconButton>}
@@ -85,7 +96,6 @@ MovieImageItem.propTypes = {
   rating: PropTypes.oneOfType([PropTypes.string, PropTypes.number]).isRequired,
   id: PropTypes.oneOfType([PropTypes.string, PropTypes.number]).isRequired,
   index: PropTypes.any.isRequired,
-  deleteItemFromGrid: PropTypes.func.isRequired,
   customClick: PropTypes.func.isRequired,
 };
 

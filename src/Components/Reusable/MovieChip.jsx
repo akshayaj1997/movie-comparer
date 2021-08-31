@@ -3,6 +3,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import {Draggable} from 'react-beautiful-dnd';
 import {Chip} from '@material-ui/core';
+import {useDispatch} from 'react-redux';
 
 /**
  * Returns list item of movie object in a MUI chip shape for scrollable list
@@ -14,7 +15,17 @@ import {Chip} from '@material-ui/core';
  * @param {any} props.index unique index of the item in the dragdropcontext
  * @return {ReactNode} Card component with the data provided in props
  */
-function MovieChip({title, id, deleteItem, index, customClick}) {
+function MovieChip({title, id, index, customClick}) {
+  const dispatch = useDispatch();
+
+  /**
+   * deletes item from grid/graph component
+   * @param {string} itemId the item that needs to be deleted
+   */
+  function deleteFromGrid(itemId) {
+    dispatch({type: 'DELETE_FROM_GRID',
+      payload: itemId});
+  }
   return (
     <Draggable draggableId={id} index={index}>
       {(provided, snapshot)=>(
@@ -22,7 +33,7 @@ function MovieChip({title, id, deleteItem, index, customClick}) {
           {...provided.dragHandleProps}
           innerRef={provided.innerRef} label={title}
           onDelete={()=>{
-            deleteItem(id);
+            deleteFromGrid(id);
           }}
           clickable
           onClick={customClick}/>
@@ -35,7 +46,6 @@ MovieChip.propTypes = {
   title: PropTypes.string.isRequired,
   id: PropTypes.any.isRequired,
   index: PropTypes.any.isRequired,
-  deleteItem: PropTypes.func.isRequired,
   customClick: PropTypes.func.isRequired,
 };
 export default MovieChip;
