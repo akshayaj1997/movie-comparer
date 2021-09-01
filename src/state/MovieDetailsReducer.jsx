@@ -51,17 +51,24 @@ export function moviesReducer(state = initialState, action) {
         }};}
     case ADD_MOVIE:
       {
-        return {
+        const newIDs = [];
+        for (const i of action.payload) {
+          newIDs.push(i.imdbID);
+        }
+
+        const newState = {
           ...state,
-          movies: [...state.movies, action.payload],
+          movies: [...state.movies, ...action.payload],
           columns: {
             ...state.columns,
             'movies-list': {
               ...state.columns['movies-list'],
               movies: [...state.columns['movies-list'].movies,
-                action.payload?.imdbID]},
+                ...newIDs]},
           },
-        };};
+        };
+        return newState;
+      };
     case ON_DRAG_END: {
       if (!action.payload.destination) {
         return state;

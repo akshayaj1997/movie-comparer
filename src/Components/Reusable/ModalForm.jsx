@@ -131,6 +131,11 @@ function ModalForm({
                 ) : (
                     <></>
                 )}
+        <Tooltip title="Save the changes" placement="left" arrow>
+          <Button type="button" onClick={save} color="primary">
+           Add all movies
+          </Button>
+        </Tooltip>
       </DialogActions>
     </Dialog>
   );

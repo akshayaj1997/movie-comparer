@@ -25,6 +25,7 @@ function SearchBar({movieDisplay}) {
                     [];
     setOptions(movies);
     if (options.length === 0) setNoOptionsText(responseData.Error);
+    if (options.length > 0) movieDisplay(movies);
   };
 
   React.useEffect(() => {
@@ -38,6 +39,7 @@ function SearchBar({movieDisplay}) {
       id="search-component"
       style={{width: '80%'}}
       open={open}
+      multiple
       onOpen={() => {
         setOpen(true);
       }}
@@ -52,10 +54,10 @@ function SearchBar({movieDisplay}) {
       options={options}
       loading={loading}
       fullWidth
-      onChange={(event, newValue)=> {
-        if (options.length>0) movieDisplay(newValue);
-      }
-      }
+      // onChange={(event, newValue)=> {
+      //   if (options.length>0) movieDisplay(newValue);
+      // }
+      // }
       renderInput={(params) => (
         <TextField
           {...params}

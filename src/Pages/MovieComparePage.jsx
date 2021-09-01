@@ -25,7 +25,7 @@ class MoviePage extends Component {
       openModal: false,
       errorMsg: '',
       showError: false,
-      movieData: {},
+      movieData: [],
     };
     this.toggle = this.toggle.bind(this);
     this.onAddClick = this.onAddClick.bind(this);
@@ -72,18 +72,18 @@ class MoviePage extends Component {
  */
   onSaveClick() {
     const moviesData = this.state.movieData;
-    if (this.props.movies
-        .findIndex((el)=> moviesData?.imdbID === el.imdbID) >= 0) {
-      this.setState({...this.state,
-        errorMsg: 'This movie already exists in the comparitive list.',
-        showError: true});
-      return;
-    }
-    if (moviesData?.imdbRating === 'N/A') {
-      this.setState({...this.state,
-        errorMsg: 'There is no comparable rating on this movie.',
-        showError: true}); return;
-    };
+    // if (this.props.movies
+    //     .findIndex((el)=> moviesData?.imdbID === el.imdbID) >= 0) {
+    //   this.setState({...this.state,
+    //     errorMsg: 'This movie already exists in the comparitive list.',
+    //     showError: true});
+    //   return;
+    // }
+    // if (moviesData?.imdbRating === 'N/A') {
+    //   this.setState({...this.state,
+    //     errorMsg: 'There is no comparable rating on this movie.',
+    //     showError: true}); return;
+    // };
     this.props.addMovie(moviesData);
     this.toggle();
   }
