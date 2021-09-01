@@ -7,7 +7,8 @@ import {Draggable} from 'react-beautiful-dnd';
 import PropTypes from 'prop-types';
 import {Close} from '@material-ui/icons';
 import {IconButton, Paper} from '@material-ui/core';
-import {useDispatch} from 'react-redux';
+import {useContext} from 'react';
+import {Context} from '../../state/contextProvider/Context';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -51,15 +52,14 @@ const useStyles = makeStyles((theme) => ({
 function MovieImageItem({title, postersrc, rating,
   id, index, customClick}) {
   const classes = useStyles();
-  const dispatch = useDispatch();
+  const context = useContext(Context);
 
   /**
    * deletes item from list component
    * @param {string} itemId the item that needs to be deleted
    */
   function deleteFromList(itemId) {
-    dispatch({type: 'DELETE_FROM_LIST',
-      payload: itemId});
+    context.deleteFromList(itemId);
   }
 
   return (

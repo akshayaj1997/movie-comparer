@@ -3,7 +3,8 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import {Draggable} from 'react-beautiful-dnd';
 import {Chip} from '@material-ui/core';
-import {useDispatch} from 'react-redux';
+import {useContext} from 'react';
+import {Context} from '../../state/contextProvider/Context';
 
 /**
  * Returns list item of movie object in a MUI chip shape for scrollable list
@@ -16,15 +17,14 @@ import {useDispatch} from 'react-redux';
  * @return {ReactNode} Card component with the data provided in props
  */
 function MovieChip({title, id, index, customClick}) {
-  const dispatch = useDispatch();
+  const context = useContext(Context);
 
   /**
    * deletes item from grid/graph component
    * @param {string} itemId the item that needs to be deleted
    */
   function deleteFromGrid(itemId) {
-    dispatch({type: 'DELETE_FROM_GRID',
-      payload: itemId});
+    context.deleteFromGrid(itemId);
   }
   return (
     <Draggable draggableId={id} index={index}>

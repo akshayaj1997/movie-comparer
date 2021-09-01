@@ -7,9 +7,9 @@ import {DragDropContext} from 'react-beautiful-dnd';
 import MovieList from '../Components/MovieList';
 import SearchComponent from '../Components/Search';
 import MovieGrid from '../Components/MovieGrid';
-import {connect} from 'react-redux';
 import {Grid, IconButton, Snackbar} from '@material-ui/core';
 import {CloseOutlined} from '@material-ui/icons';
+import {Context} from '../state/contextProvider/Context';
 
 /**
  * Movie Page component
@@ -40,7 +40,7 @@ class MoviePage extends Component {
    * @param {string} itemId the item that needs to be deleted
    */
   deleteFromGrid(itemId) {
-    this.props.deleteFromGrid(itemId);
+    this.context.deleteFromGrid(itemId);
   }
 
   /**
@@ -48,7 +48,7 @@ class MoviePage extends Component {
    * @param {string} itemId the item that needs to be deleted
    */
   deleteFromList(itemId) {
-    this.props.deleteFromList(itemId);
+    this.context.deleteFromList(itemId);
   }
   /**
    * Opens the modal box to add the movie
@@ -72,7 +72,7 @@ class MoviePage extends Component {
  */
   onSaveClick() {
     const moviesData = this.state.movieData;
-    if (this.props.movies
+    if (this.context.state.movies
         .findIndex((el)=> moviesData?.imdbID === el.imdbID) >= 0) {
       this.setState({...this.state,
         errorMsg: 'This movie already exists in the comparitive list.',
@@ -84,7 +84,7 @@ class MoviePage extends Component {
         errorMsg: 'There is no comparable rating on this movie.',
         showError: true}); return;
     };
-    this.props.addMovie(moviesData);
+    this.context.addMovie(moviesData);
     this.toggle();
   }
   /**
@@ -93,7 +93,7 @@ class MoviePage extends Component {
   * and dropping
   */
   onDragEnd(result) {
-    this.props.onDragEnd(result);
+    this.context.onDragEnd(result);
   };
 
   /**
@@ -143,10 +143,10 @@ class MoviePage extends Component {
             <SearchComponent sendMovieData= {this.receiveMovieData}/>
           </ModalForm>
           <h1>Movie Comparer</h1>
-          {this.props.columnOrder.map((columnId) => {
-            const column = this.props.columns[columnId];
+          {this.context.state.columnOrder.map((columnId) => {
+            const column = this.context.state.columns[columnId];
             const movies = column.movies.map((movie) =>
-              this.props.movies.find((el) => el.imdbID === movie));
+              this.context.state.movies.find((el) => el.imdbID === movie));
 
             return <div key={column.id}>{columnId==='movies-list'?
           <MovieList movies={movies}
@@ -164,21 +164,5 @@ class MoviePage extends Component {
     </>);
   }
 }
-
-const mapStateToProps = (state) =>({
-  movies: state.movies,
-  movieData: state.movieData,
-  columns: state.columns,
-  columnOrder: state.columnOrder,
-});
-const mapDispatchToProps = (dispatch) => ({
-  deleteFromList: (itemId) => dispatch({type: 'DELETE_FROM_LIST',
-    payload: itemId}),
-  deleteFromGrid: (itemId) => dispatch({type: 'DELETE_FROM_GRID',
-    payload: itemId}),
-  addMovie: (movie) => dispatch({type: 'ADD_MOVIE',
-    payload: movie}),
-  onDragEnd: (result) => dispatch({type: 'ON_DRAG_END', payload: result}),
-});
-
-export default connect(mapStateToProps, mapDispatchToProps)(MoviePage);
+MoviePage.contextType = Context;
+export default MoviePage;

@@ -1,5 +1,4 @@
-/* eslint-disable require-jsdoc */
-import {createStore} from 'redux';
+
 export const DELETE_FROM_LIST = 'DELETE_FROM_LIST';
 export const DELETE_FROM_GRID = 'DELETE_FROM_GRID';
 export const ADD_MOVIE = 'ADD_MOVIE';
@@ -22,6 +21,14 @@ export const initialState = {
   },
   columnOrder: ['movies-grid', 'movies-list'],
 };
+
+/**
+ * Reducer that performs the state change operations of the store of the app
+ * @param {object} state previous state of the store
+ * @param {object/function} action action performed
+ * that triggered a dispatch to request a change in state
+ * @return {object} new state created after the action dispatch is complete
+ */
 export function moviesReducer(state = initialState, action) {
   switch (action.type) {
     case DELETE_FROM_GRID:
@@ -131,5 +138,3 @@ export function moviesReducer(state = initialState, action) {
       return initialState;
   }
 };
-
-export const store = createStore(moviesReducer);

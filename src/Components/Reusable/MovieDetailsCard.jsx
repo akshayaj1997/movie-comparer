@@ -9,7 +9,8 @@ import {CloseOutlined} from '@material-ui/icons';
 import {Draggable} from 'react-beautiful-dnd';
 import PropTypes from 'prop-types';
 import {Hidden} from '@material-ui/core';
-import {useDispatch} from 'react-redux';
+import {useContext} from 'react';
+import {Context} from '../../state/contextProvider/Context';
 const useStyles = makeStyles((theme) => ({
   root: {
     flexGrow: 1,
@@ -50,15 +51,14 @@ const useStyles = makeStyles((theme) => ({
 function MovieCard({title, postersrc, children, rating, id, index,
   customClick}) {
   const classes = useStyles();
-  const dispatch = useDispatch();
+  const context = useContext(Context);
 
   /**
    * deletes item from grid/graph component
    * @param {string} itemId the item that needs to be deleted
    */
   function deleteFromGrid(itemId) {
-    dispatch({type: 'DELETE_FROM_GRID',
-      payload: itemId});
+    context.deleteFromGrid(itemId);
   }
   return (
     <Draggable draggableId={id} index={index}>

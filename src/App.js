@@ -3,9 +3,8 @@ import './App.css';
 import {ErrorBoundary} from 'react-error-boundary';
 import MoviePage from './Pages/MovieComparePage';
 import errorBoundaryHandler from './Components/errorBoundaryHandler';
-import {Provider} from 'react-redux';
-import {store} from './state/MovieDetailsReducer';
 import {AppBar, Toolbar, Typography} from '@material-ui/core';
+import {ContextProvider} from './state/contextProvider/Context';
 
 /**
  * SPA application root for an application that compares movies by graphing the
@@ -21,14 +20,14 @@ function App() {
   return (
     <ErrorBoundary FallbackComponent={errorBoundaryHandler}>
       <div className="App">
-        <Provider store={store}>
+        <ContextProvider>
           <AppBar position='sticky'><Toolbar>
             <Typography variant="h6">
             Movie Comparer
             </Typography>
           </Toolbar></AppBar>
           <MoviePage/>
-        </Provider>
+        </ContextProvider>
       </div>
     </ErrorBoundary>
   );
